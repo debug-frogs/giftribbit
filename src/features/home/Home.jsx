@@ -52,20 +52,7 @@ const Home = () => {
                 <Button
                     variant='contained'
                 >
-                    <Grid
-                        container
-                        spacing={2}
-                        alignItems='center'
-                    >
-                        <Grid item>
-                            <Icon>
-                                <FaChalkboardTeacher />
-                            </Icon>
-                        </Grid>
-                        <Grid item>
-                            Sign up as a teacher
-                        </Grid>
-                    </Grid>
+                    Sign up as a teacher
                 </Button>
             </Grid>
         </Grid>
