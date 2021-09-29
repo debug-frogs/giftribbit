@@ -1,0 +1,32 @@
+{
+  "name": "ribbit",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@emotion/cache": "^11.4.0",
+    "@emotion/react": "^11.4.1",
+    "@emotion/server": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.0",
+    "@mui/material": "^5.0.0",
+    "@mui/styles": "^5.0.0",
+    "@reduxjs/toolkit": "^1.6.1",
+    "amplify": "^0.0.11",
+    "axios": "^0.21.4",
+    "clsx": "^1.1.1",
+    "framer-motion": "^4.1.17",
+    "next": "11.1.2",
+    "object-hash": "^2.2.0",
+    "prop-types": "^15.7.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-icons": "^4.2.0",
+    "react-redux": "^7.2.5"
+  }
+}
