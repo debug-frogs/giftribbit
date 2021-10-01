@@ -1,0 +1,6 @@
+{
+  "authSelections": "userPoolOnly",
+  "resourceName": "giftribbit",
+  "serviceType": "imported",
+  "region": "us-west-1"
+}
