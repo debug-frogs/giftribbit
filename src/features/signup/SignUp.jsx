@@ -33,9 +33,6 @@ const SignUp = () => {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>
-                        Email *
-                    </Typography>
                     <TextField
                         fullWidth
                         required
@@ -48,9 +45,6 @@ const SignUp = () => {
                     />
                 </Grid>
                 <Grid item>
-                    <Typography>
-                        Password *
-                    </Typography>
                     <TextField
                         fullWidth
                         required
