@@ -7,8 +7,13 @@ import Router from "next/router";
 import Loading from "../features/loading/Loading";
 import { CacheProvider } from "@emotion/react";
 import createEmotionCache from '../../lib/createEmotionCache';
+import Amplify from 'aws-amplify'
+import config from '../aws-exports'
+Amplify.configure({
+    ...config,
+    // ssr: true
+})
 
-// Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 const MyApp = (props) => {

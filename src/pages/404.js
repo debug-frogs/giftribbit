@@ -1,7 +1,7 @@
-import React from 'react';
 import {Grid, Typography} from "@mui/material";
 import {FaHeartBroken} from "react-icons/fa";
 import theme from "../theme";
+import {Auth} from "aws-amplify";
 
 const Custom404 = () => {
 
