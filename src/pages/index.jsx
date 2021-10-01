@@ -1,5 +1,5 @@
 import Home from "../features/home/Home";
-import {Auth} from "aws-amplify";
+import {Auth, Logger} from "aws-amplify";
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 
@@ -17,6 +17,7 @@ const index = (props) => {
 export default index
 
 export async function getServerSideProps(context) {
+    const logger = new Logger('index')
     try {
         const user = await Auth.currentAuthenticatedUser();
 
@@ -25,11 +26,13 @@ export async function getServerSideProps(context) {
                 isAuthorized: !!user,
             }
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.log(error)
+        logger.error(error)
         return {
             props: {},
         }
-    } finally {
     }
+    finally {}
 }

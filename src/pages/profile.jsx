@@ -1,7 +1,7 @@
 import {createContext, useEffect} from "react";
 import Profile from "../features/profile/Profile";
 import {Box, Container, Hidden, Paper} from "@mui/material";
-import {Auth} from 'aws-amplify';
+import {Auth, Logger} from 'aws-amplify';
 import {useDispatch} from "react-redux";
 import theme from "../theme";
 
@@ -42,23 +42,26 @@ export default ProfilePage
 
 
 export async function getServerSideProps(context) {
-        try {
-            const user = await Auth.currentAuthenticatedUser();
+    const logger = new Logger('profile')
+    try {
+        const user = await Auth.currentAuthenticatedUser();
 
-            return {
-                props: {
-                    isAuthorized: !!user,
-                    profile: {
-                        sub: user?.attributes?.sub,
-                        email: user?.attributes?.email,
-                    }
+        return {
+            props: {
+                isAuthorized: !!user,
+                profile: {
+                    sub: user?.attributes?.sub,
+                    email: user?.attributes?.email,
                 }
             }
-        } catch (error) {
-            console.log(error)
-            return {
-                props: {},
-            }
-        } finally {
+        }
     }
+    catch (error) {
+        console.log(error)
+        logger.error(error)
+        return {
+            props: {},
+        }
+    }
+    finally {}
 }

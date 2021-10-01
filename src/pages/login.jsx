@@ -1,7 +1,7 @@
 import React, {useEffect} from "react"
 import LogIn from '../features/login/LogIn'
-import {Box, Container, Hidden, Paper} from "@mui/material";
-import {Auth} from "aws-amplify";
+import {Box, Container, Paper} from "@mui/material";
+import {Auth, Logger} from "aws-amplify";
 import {useDispatch} from "react-redux";
 import theme from "../theme";
 
@@ -39,19 +39,21 @@ const login = (props) => {
 export default login;
 
 export async function getServerSideProps(context) {
+    const logger = new Logger('login')
     try {
         const user = await Auth.currentAuthenticatedUser();
-
         return {
             props: {
                 isAuthorized: !!user,
             }
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.log(error)
+        logger.error(error)
         return {
             props: {},
         }
-    } finally {
     }
+    finally {}
 }

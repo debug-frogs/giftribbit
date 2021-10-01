@@ -1,10 +1,11 @@
-import {Auth} from "aws-amplify";
+import {Auth, Logger} from "aws-amplify";
 
 
 export default async (req, res) => {
     if (req.method !== 'POST')
         res.status(405).end()
     else {
+        const logger = new Logger('api-auth-signup')
         try {
             const email = req.body.email
             const password = req.body.password
@@ -14,13 +15,13 @@ export default async (req, res) => {
                 password: password
             })
 
-            console.log(user)
-
             res.status(200).end()
-        } catch (error) {
-            console.log(error)
-            res.status(405).end()
-        } finally {
         }
+        catch (error) {
+            console.log(error)
+            logger.error(error)
+            res.status(405).end()
+        }
+        finally {}
     }
 }

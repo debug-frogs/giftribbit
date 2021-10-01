@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {Box, Container, Hidden, Paper} from "@mui/material";
 import SignUp from "../features/signup/SignUp";
-import {Auth} from "aws-amplify";
+import {Auth, Logger} from "aws-amplify";
 import {useDispatch} from "react-redux";
 import Profile from "../features/profile/Profile";
 import theme from "../theme";
@@ -40,6 +40,7 @@ const signup = (props) => {
 export default signup
 
 export async function getServerSideProps(context) {
+    const logger = new Logger('signup')
     try {
         const user = await Auth.currentAuthenticatedUser();
 
@@ -50,11 +51,13 @@ export async function getServerSideProps(context) {
                 }
             }
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.log(error)
+        logger.error(error)
         return {
             props: {},
         }
-    } finally {
     }
+    finally {}
 }
