@@ -1,1 +1,11 @@
-{}
+{
+  "auth": {
+    "giftribbit6364dd51": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
