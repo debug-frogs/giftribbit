@@ -4,7 +4,7 @@ export const profileSlice = createSlice({
     name: 'auth',
     initialState: {
         isAuthorized: false,
-        isAuthPage: true,
+        isAuthPage: false,
     },
     reducers: {
         setIsAuthorized: (state, action) => {
@@ -16,7 +16,7 @@ export const profileSlice = createSlice({
     },
 })
 
-export const {setSub, setIsAuthPage} = profileSlice.actions
+export const {setIsAuthorized, setIsAuthPage} = profileSlice.actions
 
 export const selectIsAuthorized = (state) => state.authorized.isAuthorized
 

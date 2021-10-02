@@ -2,48 +2,68 @@ import {createContext, useEffect} from "react";
 import Profile from "../features/profile/Profile";
 import {Box, Container, Paper} from "@mui/material";
 import {withSSRContext} from 'aws-amplify';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import theme from "../theme";
 import {useRouter} from "next/router";
+import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 
 export const ProfileContext = createContext({});
 
-const ProfilePage = (props) => {
+const ProfilePage = ({isUserAuthorized, userAttributes}) => {
     const router = useRouter()
     const dispatch = useDispatch()
+    const isAuthPage = useSelector(selectIsAuthPage)
+    const isAuthorized = useSelector(selectIsAuthorized)
 
     useEffect(() => {
-        dispatch({type: 'auth/setIsAuthPage', payload: false})
+        if (isAuthPage) {
+            dispatch({type: 'auth/setIsAuthPage', payload: false})
+        }
     },[])
 
     useEffect(() => {
-        dispatch({type: 'auth/setIsAuthorized', payload: props.isAuthorized})
-        return () => !props.isAuthorized ? () => router.push('/signin') : null
+        if (isUserAuthorized && userAttributes && !isAuthorized) {
+            dispatch({type: 'auth/setIsAuthorized', payload: true})
+        }
+        else if (!isUserAuthorized && userAttributes && isAuthorized){
+            dispatch({type: 'auth/setIsAuthorized', payload: false})
+        }
+    },[])
+
+    useEffect(() => {
+        if (!isUserAuthorized) {
+            router.push('/signin').then()
+        }
     }, []);
 
-    return (
-        <ProfileContext.Provider value={props.profile}>
-            <Container
-                sx={{ display: { sm: 'block', xs: 'none' } }}
-                maxWidth='xs'
-            >
-                <Paper
-                    variant='outlined'
-                    sx={{ borderColor: theme.palette.secondary.main}}
+    if (!isUserAuthorized) {
+        return null
+    }
+    else {
+        return (
+            <ProfileContext.Provider value={userAttributes}>
+                <Container
+                    sx={{ display: { sm: 'block', xs: 'none' } }}
+                    maxWidth='xs'
                 >
-                    <Box p={3}>
-                        <Profile />
-                    </Box>
-                </Paper>
-            </Container>
-            <Container
-                maxWidth='xs'
-                sx={{ display: { sm: 'none', xs: 'block' } }}
-            >
-                <Profile />
-            </Container>
-        </ProfileContext.Provider>
-    )
+                    <Paper
+                        variant='outlined'
+                        sx={{ borderColor: theme.palette.secondary.main}}
+                    >
+                        <Box p={3}>
+                            <Profile />
+                        </Box>
+                    </Paper>
+                </Container>
+                <Container
+                    maxWidth='xs'
+                    sx={{ display: { sm: 'none', xs: 'block' } }}
+                >
+                    <Profile />
+                </Container>
+            </ProfileContext.Provider>
+        )
+    }
 }
 
 export default ProfilePage
@@ -52,15 +72,12 @@ export default ProfilePage
 export async function getServerSideProps(context) {
         try {
             const {Auth} = withSSRContext(context)
-            const user = await Auth.currentAuthenticatedUser()
+            const user = await Auth.currentAuthenticatedUser().catch(() => null)
 
             return {
                 props: {
-                    isAuthorized: !!user,
-                    profile: {
-                        sub: user?.attributes?.sub,
-                        email: user?.attributes?.email,
-                    }
+                    isUserAuthorized: !!user,
+                    userAttributes: user?.attributes ? user.attributes : null
                 }
             }
         }

@@ -8,20 +8,17 @@ import {
     AmplifySignUp
 } from "@aws-amplify/ui-react";
 import {Auth} from "aws-amplify";
-import {useDispatch} from "react-redux";
 import {useRouter} from "next/router";
 
 
-const TeacherAuthenticator = ({initialAuthState="signup"}) => {
+const AuthenticatorParent = ({initialAuthState="signup"}) => {
     const router = useRouter()
-    const dispatch = useDispatch()
 
     const handleAuthStateChange = ((nextAuthState, authData) => {
-        if (authData && nextAuthState === 'signedin') {
-            router.push('/profile')
-                .then(() => dispatch({type: 'auth/setIsAuthorized', payload: true}))
+        if (nextAuthState === 'signedin' && authData){
+            router.push('/profile').then()
         }
-    });
+    })
 
     const handleSignUp = async (formData) => {
         const param = {
@@ -42,7 +39,7 @@ const TeacherAuthenticator = ({initialAuthState="signup"}) => {
                 handleAuthStateChange={handleAuthStateChange}
             >
                 <AmplifySignUp
-                    headerText="Teacher SignUp"
+                    headerText="Parent SignUp"
                     handleSignUp={handleSignUp}
                     slot="sign-up"
                     usernameAlias="email"
@@ -57,12 +54,6 @@ const TeacherAuthenticator = ({initialAuthState="signup"}) => {
                             type: "last_name",
                             label: "Last name *",
                             placeholder: "Enter your last name",
-                            inputProps: { required: true },
-                        },
-                        {
-                            type: "school_name",
-                            label: "School name *",
-                            placeholder: "Enter your schools name",
                             inputProps: { required: true },
                         },
                         {
@@ -100,4 +91,4 @@ const TeacherAuthenticator = ({initialAuthState="signup"}) => {
         </AmplifyAuthContainer>
     )
 }
-export default TeacherAuthenticator;
+export default AuthenticatorParent;

@@ -2,7 +2,7 @@ import {Button} from "@mui/material";
 import {NextLinkComposed} from "../../../lib/Link";
 import React from "react";
 
-const SignInButton = () => {
+const ButtonSignIn = () => {
     return (
         <Button
             variant='contained'
@@ -16,4 +16,4 @@ const SignInButton = () => {
     )
 };
 
-export default SignInButton;
+export default ButtonSignIn;

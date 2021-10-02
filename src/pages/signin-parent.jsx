@@ -1,25 +1,36 @@
 import React, {useEffect} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {withSSRContext} from "aws-amplify";
-import ParentAuthenticator from "../features/auth/ParentAuthenticator";
+import AuthenticatorParent from "../features/auth/AuthenticatorParent";
 import {useRouter} from "next/router";
+import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 
-const SignInParent = (props) => {
+const SignInParent = ({isUserAuthorized}) => {
     const router = useRouter()
     const dispatch = useDispatch()
+    const isAuthPage = useSelector(selectIsAuthPage)
+    const isAuthorized = useSelector(selectIsAuthorized)
 
     useEffect(() => {
-        dispatch({type: 'auth/setIsAuthPage', payload: true})
+        if (!isAuthPage) {
+            dispatch({type: 'auth/setIsAuthPage', payload: true})
+        }
     },[])
 
     useEffect(() => {
-        dispatch({type: 'auth/setIsAuthorized', payload: props.isAuthorized})
-        return () => props.isAuthorized ? () => router.push('/profile') : null
+        if (isUserAuthorized) {
+            router.push('/profile').then()
+        }
     }, []);
 
-    return (
-        <ParentAuthenticator initialAuthState='signin'/>
-    );
+    if (isUserAuthorized){
+        return null
+    }
+    else {
+        return (
+            <AuthenticatorParent initialAuthState='signin'/>
+        )
+    }
 };
 
 export default SignInParent;
@@ -27,12 +38,12 @@ export default SignInParent;
 export async function getServerSideProps(context) {
     try {
         const {Auth} = withSSRContext(context)
-        const user = await Auth.currentAuthenticatedUser()
+        const user = await Auth.currentAuthenticatedUser().catch(() => null)
 
         return {
             props: {
                 auth: {
-                    isAuthorized: !!user,
+                    isUserAuthorized: !!user,
                 }
             }
         }
