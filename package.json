@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^1.2.19",
     "@babel/core": "^7.0.0",
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
