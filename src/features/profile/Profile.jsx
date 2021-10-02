@@ -3,9 +3,11 @@ import {Button, Divider, Grid, Typography} from "@mui/material";
 import User from "./User";
 import axios from "../../../lib/axios";
 import Router from "next/router";
-import {Logger} from "aws-amplify";
+import {Auth, Logger} from "aws-amplify";
 
 const Profile = () => {
+    console.log('Profile', Auth.currentAuthenticatedUser())
+
     const handleLogout = () => {
         axios.post('/api/auth/signout')
             .then(async (res) => {
