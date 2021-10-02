@@ -9,7 +9,7 @@ const ButtonSignOut = () => {
 
     const handleAuthStateChange = ((nextAuthState, authData) => {
         if (nextAuthState === 'signedout' && !authData){
-            router.push('/profile').then()
+            router.push('/').then()
         }
     })
 
