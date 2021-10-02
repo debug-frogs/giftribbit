@@ -18,7 +18,7 @@ const Signin = (props) => {
     }, []);
 
     return (
-        <TeacherAuthenticator initialAuthState='signin'/>
+        <TeacherAuthenticator initialAuthState='signup'/>
     );
 };
 

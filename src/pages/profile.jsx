@@ -1,19 +1,25 @@
 import {createContext, useEffect} from "react";
 import Profile from "../features/profile/Profile";
 import {Box, Container, Paper} from "@mui/material";
-import {Auth, withSSRContext} from 'aws-amplify';
+import {withSSRContext} from 'aws-amplify';
 import {useDispatch} from "react-redux";
 import theme from "../theme";
+import {useRouter} from "next/router";
 
 export const ProfileContext = createContext({});
 
 const ProfilePage = (props) => {
-
+    const router = useRouter()
     const dispatch = useDispatch()
-    useEffect(async () => {
-        dispatch({type: 'auth/setIsAuthorized', payload: props.isAuthorized})
+
+    useEffect(() => {
         dispatch({type: 'auth/setIsAuthPage', payload: false})
     },[])
+
+    useEffect(() => {
+        dispatch({type: 'auth/setIsAuthorized', payload: props.isAuthorized})
+        return () => !props.isAuthorized ? () => router.push('/signin') : null
+    }, []);
 
     return (
         <ProfileContext.Provider value={props.profile}>
@@ -57,11 +63,12 @@ export async function getServerSideProps(context) {
                     }
                 }
             }
-        } catch (error) {
+        }
+        catch (error) {
             console.log(error)
             return {
                 props: {},
             }
-        } finally {
-    }
+        }
+        finally {}
 }

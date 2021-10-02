@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {useDispatch} from "react-redux";
-import { withSSRContext} from "aws-amplify";
-import TeacherAuthenticator from "../features/auth/TeacherAuthenticator";
+import {withSSRContext} from "aws-amplify";
+import ParentAuthenticator from "../features/auth/ParentAuthenticator";
 import {useRouter} from "next/router";
 
-const Signin = (props) => {
+const SignInParent = (props) => {
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -18,11 +18,11 @@ const Signin = (props) => {
     }, []);
 
     return (
-        <TeacherAuthenticator initialAuthState='signin'/>
+        <ParentAuthenticator initialAuthState='signin'/>
     );
 };
 
-export default Signin;
+export default SignInParent;
 
 export async function getServerSideProps(context) {
     try {

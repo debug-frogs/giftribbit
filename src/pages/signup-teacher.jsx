@@ -14,11 +14,11 @@ const Signin = (props) => {
 
     useEffect(() => {
         dispatch({type: 'auth/setIsAuthorized', payload: props.isAuthorized})
-        return () => props.isAuthorized ? () => router.push('/profile') : null
+        return () => props.isAuthorized ? () => router.replace('/profile') : null
     }, []);
 
     return (
-        <TeacherAuthenticator initialAuthState='signin'/>
+        <TeacherAuthenticator initialAuthState='signup'/>
     );
 };
 
