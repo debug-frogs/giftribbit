@@ -3,6 +3,8 @@ import {useState} from "react";
 import axios from "../../../lib/axios";
 import Router from "next/router";
 import {NextLinkComposed} from "../../../lib/Link";
+import * as logger from "next/dist/build/output/log";
+import {Logger} from "aws-amplify";
 
 const SignUp = () => {
     const [email, setEmail] = useState('')
@@ -17,7 +19,12 @@ const SignUp = () => {
                 email: email,
                 password: password
             })
-            .then(async (res) => await Router.push('/confirm'))
+            .then(async (res) => {
+                const logger = new Logger('signup')
+                logger.info(res)
+                console.log(res)
+                return await Router.push('/confirm')
+            })
     }
 
     return (

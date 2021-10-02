@@ -19,9 +19,8 @@ const signin = async (req, res) => {
             res.status(200).end()
         }
         catch (error) {
-            console.log(error)
             logger.error(error)
-            res.status(405).end()
+            res.status(405).json(error)
         }
         finally {}
     }

@@ -1,13 +1,19 @@
 import React from 'react';
-import {Box, Button, Divider, Grid, Paper, Typography} from "@mui/material";
+import {Button, Divider, Grid, Typography} from "@mui/material";
 import User from "./User";
 import axios from "../../../lib/axios";
 import Router from "next/router";
+import {Logger} from "aws-amplify";
 
 const Profile = () => {
     const handleLogout = () => {
         axios.post('/api/auth/signout')
-            .then(async (res) => await Router.push('/'))
+            .then(async (res) => {
+                const logger = new Logger('signup')
+                logger.info(res)
+                console.log(res)
+                return await Router.push('/')
+            })
     }
 
     return (
