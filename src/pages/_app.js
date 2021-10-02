@@ -11,6 +11,7 @@ import Amplify from 'aws-amplify'
 import config from '../aws-exports'
 Amplify.configure({
     ...config,
+    authenticationFlowType: 'USER_PASSWORD_AUTH',
     // ssr: true
 })
 
