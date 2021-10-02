@@ -1,6 +1,6 @@
 import {AppBar, Grid, Toolbar} from "@mui/material";
-import LogInButton from "../login/LogInButton";
-import {selectIsAuthorized} from "../authorized/authorizedSlice";
+import LogInButton from "../auth/LogInButton";
+import {selectIsAuthorized} from "../auth/authSlice";
 import {useSelector} from "react-redux";
 import ProfileButton from "../profile/ProfileButton";
 

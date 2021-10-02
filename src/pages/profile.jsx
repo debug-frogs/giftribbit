@@ -1,16 +1,18 @@
 import {createContext, useEffect} from "react";
 import Profile from "../features/profile/Profile";
-import {Box, Container, Hidden, Paper} from "@mui/material";
-import {Auth} from 'aws-amplify';
+import {Box, Container, Paper} from "@mui/material";
+import {Auth, withSSRContext} from 'aws-amplify';
 import {useDispatch} from "react-redux";
 import theme from "../theme";
 
 export const ProfileContext = createContext({});
 
 const ProfilePage = (props) => {
+
     const dispatch = useDispatch()
-    useEffect(() => {
+    useEffect(async () => {
         dispatch({type: 'auth/setIsAuthorized', payload: props.isAuthorized})
+        dispatch({type: 'auth/setIsAuthPage', payload: false})
     },[])
 
     return (
@@ -43,6 +45,7 @@ export default ProfilePage
 
 export async function getServerSideProps(context) {
         try {
+            const {Auth} = withSSRContext(context)
             const user = await Auth.currentAuthenticatedUser()
 
             return {

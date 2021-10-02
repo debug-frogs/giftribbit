@@ -4,6 +4,7 @@ import User from "./User";
 import axios from "../../../lib/axios";
 import Router from "next/router";
 import {Auth} from "aws-amplify";
+import SignOutButton from "../auth/SignOutButton";
 
 const Profile = () => {
     const handleLogout = () => {
@@ -29,13 +30,7 @@ const Profile = () => {
                 <Divider />
             </Grid>
             <Grid item>
-                <Button
-                    fullWidth
-                    variant='contained'
-                    onClick={handleLogout}
-                >
-                    Logout
-                </Button>
+                <SignOutButton />
             </Grid>
         </Grid>
     )

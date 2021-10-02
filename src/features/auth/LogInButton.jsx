@@ -9,7 +9,7 @@ const LogInButton = () => {
             color='primary'
             size='small'
             component={NextLinkComposed}
-            to={{pathname: '/login',}}
+            to={{pathname: '/signin',}}
         >
             Login
         </Button>

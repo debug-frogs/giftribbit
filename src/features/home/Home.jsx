@@ -1,7 +1,7 @@
 import {Container, Grid, Typography} from "@mui/material";
 import {GiFrogPrince} from 'react-icons/gi'
 import theme from "../../theme";
-import SignUpButton from "../signup/SignUpButton";
+import SignUpButton from "../auth/SignUpButton";
 
 const Home = () => {
     return (

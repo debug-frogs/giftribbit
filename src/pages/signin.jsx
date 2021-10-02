@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
-import {Auth} from "aws-amplify";
-import {useDispatch} from "react-redux";
+import React, {useEffect} from 'react';
 import Authenticator from "../features/auth/Authenticator";
+import {useDispatch} from "react-redux";
+import {Auth} from "aws-amplify";
 
-const signup = (props) => {
+const SignIn = (props) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch({type: 'auth/setIsAuthorized', payload: props.isAuthorized})
@@ -11,11 +11,11 @@ const signup = (props) => {
     },[])
 
     return (
-        <Authenticator initialAuthState='signup'/>
-    )
+        <Authenticator initialAuthState='signin'/>
+    );
 };
 
-export default signup
+export default SignIn;
 
 export async function getServerSideProps(context) {
     try {

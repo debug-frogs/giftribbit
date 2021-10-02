@@ -7,6 +7,7 @@ const index = (props) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch({type: 'auth/setIsAuthorized', payload: props.isAuthorized})
+        dispatch({type: 'auth/setIsAuthPage', payload: false})
     },[])
 
     return (
