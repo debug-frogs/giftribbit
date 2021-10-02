@@ -14,7 +14,7 @@ const Footer = () => {
             >
                 <Grid item>
                     <Typography
-                        variant="body2"
+                        variant="caption"
                         color="textSecondary"
                         display='inline'
                     >

@@ -1,3 +1,4 @@
+import './app.css'
 import {Provider} from 'react-redux'
 import {store} from '../store'
 import React from "react";
@@ -5,10 +6,17 @@ import Layout from "../features/layout/Layout";
 import Head from "next/head";
 import Router from "next/router";
 import Loading from "../features/loading/Loading";
-import { CacheProvider } from "@emotion/react";
+import {CacheProvider, ThemeProvider} from "@emotion/react";
 import createEmotionCache from '../../lib/createEmotionCache';
+import Amplify from 'aws-amplify'
+import config from '../aws-exports'
+import theme from "../theme";
+import {CssBaseline} from "@mui/material";
+Amplify.configure({
+    ...config,
+    ssr: true
+})
 
-// Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 const MyApp = (props) => {
@@ -36,10 +44,13 @@ const MyApp = (props) => {
                 <title>GiftRibbit</title>
             </Head>
             <Provider store={store}>
-                <Loading isLoading={loading}/>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline/>
+                    <Loading isLoading={loading}/>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </ThemeProvider>
             </Provider>
         </CacheProvider>
     )

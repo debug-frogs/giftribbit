@@ -1,20 +1,19 @@
-import React from 'react';
 import {Button} from "@mui/material";
 import {NextLinkComposed} from "../../../lib/Link";
+import React from "react";
 
-const SignIn = () => {
-
+const ButtonSignIn = () => {
     return (
         <Button
             variant='contained'
             color='primary'
             size='small'
             component={NextLinkComposed}
-            to={{pathname: '/',}}
+            to={{pathname: '/signin',}}
         >
             Login
         </Button>
     )
 };
 
-export default SignIn;
+export default ButtonSignIn;

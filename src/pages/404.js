@@ -1,9 +1,14 @@
-import React from 'react';
 import {Grid, Typography} from "@mui/material";
 import {FaHeartBroken} from "react-icons/fa";
 import theme from "../theme";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
 
 const Custom404 = () => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch({type: 'auth/setIsAuthPage', payload: false})
+    },[])
 
     return (
         <Grid

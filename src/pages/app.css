@@ -1,0 +1,30 @@
+:root {
+    --amplify-primary-color: #18A0FB;
+    --amplify-primary-contrast: #fff;
+    --amplify-primary-tint: rgb(70, 179, 251);
+    --amplify-primary-shade: rgb(16, 112, 175);
+    --amplify-secondary-color: #152939;
+    --amplify-secondary-contrast: #fff;
+    --amplify-secondary-tint: #31465f;
+    --amplify-secondary-shade: #1F2A37;
+    --amplify-tertiary-color: #5d8aff;
+    --amplify-tertiary-contrast: #fff;
+    --amplify-tertiary-tint: #7da1ff;
+    --amplify-tertiary-shade: #537BE5;
+    --amplify-font-family: 'Roboto', sans-serif;
+    --amplify-text-xxs: 0.75rem;
+    --amplify-text-xs: 0.81rem;
+    --amplify-text-sm: 0.875rem;
+    --amplify-text-md: 1rem;
+    --amplify-text-lg: 1.25rem;
+    --amplify-text-xl: 1.5rem;
+    --amplify-text-xxl: 2.125rem;
+}
+
+amplify-sign-in{}
+amplify-confirm-sign-in{}
+amplify-sign-up{}
+amplify-confirm-sign-up{}
+amplify-forgot-password{}
+amplify-require-new-password{}
+amplify-verify-contact{}

@@ -1,8 +1,11 @@
-import React from 'react';
 import {AppBar, Grid, Toolbar} from "@mui/material";
-import SignIn from "../signin/SignIn";
+import ButtonSignIn from "../auth/ButtonSignIn";
+import {selectIsAuthorized} from "../auth/authSlice";
+import {useSelector} from "react-redux";
+import ProfileButton from "../profile/ProfileButton";
 
 const Navigation = () => {
+    const isAuthorized = useSelector(selectIsAuthorized)
 
     return (
         <AppBar
@@ -17,9 +20,9 @@ const Navigation = () => {
                     alignItems='center'
                     wrap='nowrap'
                 >
-                    <Grid item />
-                    <Grid item>
-                        <SignIn/>
+                    <Grid item/>
+                    <Grid item >
+                        { isAuthorized ?  <ProfileButton /> : <ButtonSignIn/>}
                     </Grid>
                 </Grid>
             </Toolbar>
