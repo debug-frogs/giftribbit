@@ -9,6 +9,8 @@ import {
 } from "@aws-amplify/ui-react";
 import {Auth} from "aws-amplify";
 import {useRouter} from "next/router";
+import {DataStore} from "@aws-amplify/datastore";
+import {Parent} from "../../models";
 
 
 const AuthenticatorParent = ({initialAuthState="signup"}) => {
@@ -21,14 +23,42 @@ const AuthenticatorParent = ({initialAuthState="signup"}) => {
     })
 
     const handleSignUp = async (formData) => {
-        const param = {
-            attributes: {
-                email: formData.attributes.email,
-            },
-            password: formData.password,
-            username: formData.username
+        try {
+            const password = formData.password
+            const username = formData.username
+            const email = formData.attributes.email
+
+            const param = {
+                attributes: {
+                    email: email,
+                },
+                password: password,
+                username: username
+            }
+
+            /* Signup new user with Amplify Auth*/
+            const user =  await Auth.signUp(param)
+
+            const userSub = user.userSub
+            const firstName = formData.attributes.first_name
+            const lastName = formData.attributes.last_name
+
+            /* Create or Update a new parent data content */
+            const newParent = await DataStore.save(
+                new Parent({
+                    "sub": userSub,
+                    "email": email,
+                    "first_name": firstName,
+                    "last_name": lastName,
+                })
+            )
+
+            return user
         }
-        return await Auth.signUp(param);
+        catch (error) {
+            console.log(error)
+            return null
+        }
     }
 
     return (
