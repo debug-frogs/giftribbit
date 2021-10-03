@@ -32,43 +32,10 @@ const TeacherProfile = () => {
                 <Divider />
             </Grid>
             <Grid item>
-                <Grid
-                    container
-                    alignItems='center'
-                    spacing={3}
-                >
-                    <Grid item>
-                        <Typography style={{ fontWeight: 600 }}>
-                            Parents
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Grid
-                            container
-                            spacing={1}
-                        >
-                            <Grid item>
-                                <IconButton
-                                    color='secondary'
-                                    size='small'
-                                >
-                                    <FaUserPlus />
-                                </IconButton>
-                            </Grid>
-                            <Grid item>
-                                <IconButton
-                                    color='secondary'
-                                    size='small'
-                                >
-                                    <FaUserMinus />
-                                </IconButton>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                <TeacherListOfParents />
             </Grid>
             <Grid item>
-                <TeacherListOfParents />
+                <Divider />
             </Grid>
             <Grid item>
                 <ButtonSignOut />
