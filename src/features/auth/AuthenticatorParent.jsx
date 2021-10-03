@@ -41,13 +41,16 @@ const AuthenticatorParent = ({initialAuthState="signup"}) => {
             const userSub = user.userSub
             const firstName = formData.attributes.first_name
             const lastName = formData.attributes.last_name
+            const child = formData.attributes.child
 
             /* Create a new parent data content */
             const newParent = await DataStore.save(
                 new Parent({
                     "sub": userSub,
+                    "email": email,
                     "first_name": firstName,
                     "last_name": lastName,
+                    "child": child,
                 })
             )
 
@@ -82,6 +85,12 @@ const AuthenticatorParent = ({initialAuthState="signup"}) => {
                             type: "last_name",
                             label: "Last name *",
                             placeholder: "Enter your last name",
+                            inputProps: { required: true },
+                        },
+                        {
+                            type: "child",
+                            label: "Parent of *",
+                            placeholder: "Enter your child first name",
                             inputProps: { required: true },
                         },
                         {

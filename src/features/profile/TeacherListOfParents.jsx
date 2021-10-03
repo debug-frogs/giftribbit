@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ProfileContext} from "../../pages/profile";
-import {Box, Button, Container, Divider, Grid, IconButton, Modal, Paper, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, Grid, IconButton, Modal, Paper, TextField, Typography} from "@mui/material";
 import {FaUserPlus} from "react-icons/fa";
 import {DataStore} from "aws-amplify";
 import {Parent, Teacher} from "../../models";
@@ -12,28 +12,34 @@ const TeacherListOfParents = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [parentSub, setParentSub] = useState('')
+    const [parentEmail, setParentEmail] = useState('')
     const [parents, setParents] = useState([])
 
     useEffect(async () => {
-        const [currentTeacher] = await DataStore.query(Teacher, c => c.sub === sub)
-        const p = await DataStore.query(Parent, c => c.teacherID === currentTeacher.id)
-        setParents(p)
+        /* get the parents details form Data content */
+        const teacher = (await DataStore.query(Teacher)).find(c => c.sub === sub)
+        const parentList = (await DataStore.query(Parent)).filter(c => c.teacherID === teacher.id)
+        setParents(parentList)
     }, []);
 
 
     const handleClick = async () => {
-        /* Create a new parent data content */
-        const [parent] = await DataStore.query(Parent, c => c.sub === parentSub)
-        const [currentTeacher] = await DataStore.query(Teacher, c => c.sub === sub)
+        /* Update a parent teacher relationship */
+        const teacher = (await DataStore.query(Teacher)).find(c => c.sub === sub)
+        const parent = (await DataStore.query(Parent)).find(c => c.email === parentEmail)
 
-        await DataStore.save(
-            Parent.copyOf(parent, updated => {
-                updated.teacherID = currentTeacher.id
-            }))
-            .catch(error => {console.log(error)})
-            .then(res => {console.log(res)})
-            .finally(() => {handleClose()})
+        try {
+            await DataStore.save(
+                Parent.copyOf(parent, updated => {
+                    updated.teacherID = teacher.id
+                }))
+        }
+        catch (error) {
+            console.log(error)
+        }
+        finally {
+            handleClose()
+        }
     }
 
     return (
@@ -86,10 +92,10 @@ const TeacherListOfParents = () => {
                                                 <TextField
                                                     fullWidth
                                                     label={'Enter the parent Sub Id'}
-                                                    value={parentSub}
+                                                    value={parentEmail}
                                                     onChange={
                                                         (event) => {
-                                                            setParentSub(event.target.value)
+                                                            setParentEmail(event.target.value)
                                                         }}
                                                 />
                                             </Grid>
@@ -114,7 +120,7 @@ const TeacherListOfParents = () => {
                     container
                     direction='column'
                 >
-                    {parents.map( (p, i) =>
+                    {parents?.map( (p, i) =>
                         <Grid
                             item
                             key={i}

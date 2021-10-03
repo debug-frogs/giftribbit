@@ -17,22 +17,15 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "AWSEmail",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "first_name": {
                     "name": "first_name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "last_name": {
-                    "name": "last_name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "school": {
-                    "name": "school",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -51,6 +44,20 @@ export const schema = {
                         "connectionType": "HAS_MANY",
                         "associatedWith": "teacherID"
                     }
+                },
+                "last_name": {
+                    "name": "last_name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "school": {
+                    "name": "school",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -108,6 +115,13 @@ export const schema = {
                     "name": "sub",
                     "isArray": false,
                     "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "AWSEmail",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -193,5 +207,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "ab943ea4780f8d7e8db0cd5c8252bde2"
+    "version": "226859fc91d71d2b00cb6cba992073d4"
 };

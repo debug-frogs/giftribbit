@@ -15,10 +15,11 @@ type ParentMetaData = {
 export declare class Teacher {
   readonly id: string;
   readonly sub: string;
+  readonly email?: string;
   readonly first_name?: string;
+  readonly Parents?: (Parent | null)[];
   readonly last_name?: string;
   readonly school?: string;
-  readonly Parents?: (Parent | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Teacher, TeacherMetaData>);
@@ -28,6 +29,7 @@ export declare class Teacher {
 export declare class Parent {
   readonly id: string;
   readonly sub?: string;
+  readonly email?: string;
   readonly first_name?: string;
   readonly last_name?: string;
   readonly child?: string;

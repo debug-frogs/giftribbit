@@ -78,6 +78,28 @@ const TeacherInfo = () => {
                     </Grid>
                 </Grid>
             </Grid>
+            <Grid item>
+                <Grid
+                    container
+                    spacing={1}
+                    alignItems='center'
+                >
+                    <Grid item>
+                        <Typography
+                            display='inline'
+                        >
+                            Parent of:
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography
+                            display='inline'
+                        >
+                            {userAttributes?.child}
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Grid>
     );
 };

@@ -1,13 +1,12 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useEffect} from "react";
 import {Box, Container, Paper} from "@mui/material";
-import {graphqlOperation, withSSRContext} from 'aws-amplify';
+import {withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import theme from "../theme";
 import {useRouter} from "next/router";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import Profile from "../features/profile/Profile";
 import {Parent, Teacher} from "../models";
-import {listParents, listTeachers} from "../graphql/queries";
 
 export const ProfileContext = createContext({});
 
@@ -74,23 +73,20 @@ export default ProfilePage
 
 export async function getServerSideProps(context) {
         try {
-            const {API, Auth} = withSSRContext(context)
+            const {Auth} = withSSRContext(context)
+            const {DataStore} = withSSRContext(context.req)
 
+            /* get the current user from Auth*/
             const user = await Auth.currentAuthenticatedUser().catch(() => null)
             const userSub = user?.attributes?.sub
 
-            const teacherData = await API.graphql(graphqlOperation(listTeachers));
-            const parentData = await API.graphql(graphqlOperation(listParents));
+            /* get the user details form Data content */
+            const teacher = (await DataStore.query(Teacher)).find(t => t.sub === userSub)
+            const parent = (await DataStore.query(Parent)).find(t => t.sub === userSub)
 
-            const teachers = teacherData?.data?.listTeachers?.items
-            const parents = parentData?.data?.listParents?.items
-
-            const teacher = Array.isArray(teachers) ? teachers.find(t => t.sub === userSub) : null
-            const parent = Array.isArray(parents) ? parents.find(t => t.sub === userSub) : null
-
+            /* build out the parent object */
             const userAttributes = parent ? {...parent, group: 'parent'}
                 : teacher ? {...teacher, group: 'teacher'} : {}
-            userAttributes.email = user?.attributes?.email
             delete userAttributes.id
             delete userAttributes.createdAt
             delete userAttributes.updatedAt

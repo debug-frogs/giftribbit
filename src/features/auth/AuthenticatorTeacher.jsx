@@ -47,6 +47,7 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
             const newTeacher = await DataStore.save(
                 new Teacher({
                     "sub": userSub,
+                    "email": email,
                     "first_name": firstName,
                     "last_name": lastName,
                     "school": schoolName

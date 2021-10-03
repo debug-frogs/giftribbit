@@ -1,9 +1,8 @@
 import React from 'react';
-import {Divider, Grid, IconButton, Typography} from "@mui/material";
+import {Divider, Grid, Typography} from "@mui/material";
 import TeacherInfo from "./TeacherInfo";
 import ButtonSignOut from "../auth/ButtonSignOut";
 import TeacherListOfParents from "./TeacherListOfParents";
-import {FaUserPlus, FaUserMinus} from 'react-icons/fa'
 
 const TeacherProfile = () => {
     return (
