@@ -1,84 +1,5 @@
 export const schema = {
     "models": {
-        "Classroom": {
-            "name": "Classroom",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "Teacher": {
-                    "name": "Teacher",
-                    "isArray": false,
-                    "type": {
-                        "model": "Teacher"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "classroomTeacherId"
-                    }
-                },
-                "Parents": {
-                    "name": "Parents",
-                    "isArray": true,
-                    "type": {
-                        "model": "Parent"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "classroomID"
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Classrooms",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
         "Teacher": {
             "name": "Teacher",
             "fields": {
@@ -93,14 +14,7 @@ export const schema = {
                     "name": "sub",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "email": {
-                    "name": "email",
-                    "isArray": false,
-                    "type": "AWSEmail",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "first_name": {
@@ -123,6 +37,20 @@ export const schema = {
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
+                },
+                "Parents": {
+                    "name": "Parents",
+                    "isArray": true,
+                    "type": {
+                        "model": "Parent"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "teacherID"
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -179,14 +107,7 @@ export const schema = {
                 "sub": {
                     "name": "sub",
                     "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "email": {
-                    "name": "email",
-                    "isArray": false,
-                    "type": "String",
+                    "type": "ID",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -211,8 +132,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "classroomID": {
-                    "name": "classroomID",
+                "teacherID": {
+                    "name": "teacherID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
@@ -245,9 +166,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byClassroom",
+                        "name": "byTeacher",
                         "fields": [
-                            "classroomID"
+                            "teacherID"
                         ]
                     }
                 },
@@ -272,5 +193,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "1a28230ba9310febd1012cbaaa5d039d"
+    "version": "ab943ea4780f8d7e8db0cd5c8252bde2"
 };

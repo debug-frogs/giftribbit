@@ -8,8 +8,8 @@ import {
     AmplifySignUp
 } from "@aws-amplify/ui-react";
 import {Auth} from "aws-amplify";
-import { DataStore } from '@aws-amplify/datastore';
-import { Classroom, Teacher } from '../../models';
+import {DataStore} from '@aws-amplify/datastore';
+import {Teacher} from '../../models';
 import {useRouter} from "next/router";
 
 
@@ -36,6 +36,7 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
                 username: username
             }
 
+            /* Signup new user with Amplify Auth*/
             const user =  await Auth.signUp(param)
 
             const userSub = user.userSub
@@ -43,6 +44,7 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
             const lastName = formData.attributes.last_name
             const schoolName = formData.attributes.school_name
 
+            /* Create new teacher data content */
             const newTeacher = await DataStore.save(
                 new Teacher({
                     "sub": userSub,
@@ -50,12 +52,6 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
                     "first_name": firstName,
                     "last_name": lastName,
                     "school": schoolName
-                })
-            )
-
-            const newClassroom = await DataStore.save(
-                new Classroom({
-                    Teacher: newTeacher
                 })
             )
 

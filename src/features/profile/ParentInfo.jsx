@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import {Grid, Typography} from "@mui/material";
 import {ProfileContext} from "../../pages/profile";
 
-const UserInfo = () => {
-    const userAttributes = useContext(ProfileContext);
+const TeacherInfo = () => {
+    const userAttributes = useContext(ProfileContext)
 
     return (
         <Grid
@@ -22,7 +22,7 @@ const UserInfo = () => {
                         <Typography
                             display='inline'
                         >
-                            first name:
+                            First name:
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -44,7 +44,7 @@ const UserInfo = () => {
                         <Typography
                             display='inline'
                         >
-                            last name:
+                            Last name:
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -66,7 +66,7 @@ const UserInfo = () => {
                         <Typography
                             display='inline'
                         >
-                            email:
+                            Email:
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -88,14 +88,14 @@ const UserInfo = () => {
                         <Typography
                             display='inline'
                         >
-                            sub:
+                            Child's name:
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Typography
                             display='inline'
                         >
-                            {userAttributes?.sub}
+                            {userAttributes?.child}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -104,4 +104,4 @@ const UserInfo = () => {
     );
 };
 
-export default UserInfo;
+export default TeacherInfo;

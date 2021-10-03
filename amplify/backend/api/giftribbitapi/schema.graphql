@@ -1,24 +1,18 @@
-type Classroom @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  Teacher: Teacher @connection
-  Parents: [Parent] @connection(keyName: "byClassroom", fields: ["id"])
-}
-
 type Teacher @model @auth(rules: [{allow: public}]) {
   id: ID!
-  sub: ID
-  email: AWSEmail
+  sub: ID!
   first_name: String
   last_name: String
   school: String
+  Parents: [Parent] @connection(keyName: "byTeacher", fields: ["id"])
 }
 
-type Parent @model @auth(rules: [{allow: public}]) @key(name: "byClassroom", fields: ["classroomID"]) {
+type Parent @model @auth(rules: [{allow: public}]) @key(name: "byTeacher", fields: ["teacherID"]) {
   id: ID!
-  sub: String
-  email: String
+  sub: ID
   first_name: String
   last_name: String
   child: String
-  classroomID: ID
+  teacherID: ID
 }
+ 

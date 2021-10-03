@@ -1,9 +1,9 @@
 import React from 'react';
 import {Divider, Grid, Typography} from "@mui/material";
-import UserInfo from "./UserInfo";
 import ButtonSignOut from "../auth/ButtonSignOut";
+import ParentInfo from "./ParentInfo";
 
-const ProfileTeacher = () => {
+const ParentProfile = () => {
     return (
         <Grid
             container
@@ -12,11 +12,11 @@ const ProfileTeacher = () => {
         >
             <Grid item>
                 <Typography style={{ fontWeight: 600 }}>
-                    Teacher Profile
+                    Parent Profile
                 </Typography>
             </Grid>
             <Grid item>
-                <UserInfo/>
+                <ParentInfo/>
             </Grid>
             <Grid item>
                 <Divider />
@@ -25,7 +25,7 @@ const ProfileTeacher = () => {
                 <ButtonSignOut />
             </Grid>
         </Grid>
-    )
+    );
 };
 
-export default ProfileTeacher
+export default ParentProfile;

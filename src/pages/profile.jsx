@@ -1,11 +1,12 @@
 import {createContext, useEffect} from "react";
-import ProfileTeacher from "../features/profile/ProfileTeacher";
 import {Box, Container, Paper} from "@mui/material";
-import {withSSRContext} from 'aws-amplify';
+import {API, graphqlOperation, withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import theme from "../theme";
 import {useRouter} from "next/router";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
+import {listParents, listTeachers} from "../graphql/queries";
+import Profile from "../features/profile/Profile";
 
 export const ProfileContext = createContext({});
 
@@ -51,15 +52,9 @@ const ProfilePage = ({isUserAuthorized, userAttributes}) => {
                         sx={{ borderColor: theme.palette.secondary.main}}
                     >
                         <Box p={3}>
-                            <ProfileTeacher />
+                            <Profile />
                         </Box>
                     </Paper>
-                </Container>
-                <Container
-                    maxWidth='xs'
-                    sx={{ display: { sm: 'none', xs: 'block' } }}
-                >
-                    <ProfileTeacher />
                 </Container>
             </ProfileContext.Provider>
         )
@@ -73,13 +68,28 @@ export async function getServerSideProps(context) {
         try {
             const {Auth} = withSSRContext(context)
             const user = await Auth.currentAuthenticatedUser().catch(() => null)
+            const userSub = user?.attributes?.sub
+            const teachers = await API.graphql(graphqlOperation(listTeachers))
+                .then( res => res?.data?.listTeachers?.items)
+            const parents = await API.graphql(graphqlOperation(listParents))
+                .then( res => res?.data?.listParents?.items)
 
+            const teacher = (Array.isArray(teachers) && teachers.length) ?
+                teachers.find(teacher => teacher.sub === userSub)
+                : {group: 'parent'}
 
+            const parent = (Array.isArray(parents) && parents.length) ?
+                parents.find(parent => parent.sub === userSub)
+                : {group: 'teacher'}
+
+            const userAttributes = user?.attributes ? {...user.attributes, ...parent, ...teacher} : null
+
+            console.log(userAttributes)
 
             return {
                 props: {
                     isUserAuthorized: !!user,
-                    userAttributes: user?.attributes ? user.attributes : null
+                    userAttributes: user?.attributes ? userAttributes : null
                 }
             }
         }
