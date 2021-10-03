@@ -33,7 +33,6 @@ export declare class Teacher {
   readonly first_name?: string;
   readonly last_name?: string;
   readonly school?: string;
-  readonly Classroom?: Classroom;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Teacher, TeacherMetaData>);
@@ -48,7 +47,6 @@ export declare class Parent {
   readonly last_name?: string;
   readonly child?: string;
   readonly classroomID?: string;
-  readonly Classroom?: Classroom;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Parent, ParentMetaData>);

@@ -124,19 +124,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Classroom": {
-                    "name": "Classroom",
-                    "isArray": false,
-                    "type": {
-                        "model": "Classroom"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "teacherClassroomId"
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -231,19 +218,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Classroom": {
-                    "name": "Classroom",
-                    "isArray": false,
-                    "type": {
-                        "model": "Classroom"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "parentClassroomId"
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -298,5 +272,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "91abc8bba350ee258f1789310926a843"
+    "version": "1a28230ba9310febd1012cbaaa5d039d"
 };
