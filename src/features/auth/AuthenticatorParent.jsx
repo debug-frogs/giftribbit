@@ -7,9 +7,8 @@ import {
     AmplifySignIn,
     AmplifySignUp
 } from "@aws-amplify/ui-react";
-import {Auth} from "aws-amplify";
+import {Auth, DataStore} from "aws-amplify";
 import {useRouter} from "next/router";
-import {DataStore} from "@aws-amplify/datastore";
 import {Parent} from "../../models";
 
 
@@ -39,15 +38,16 @@ const AuthenticatorParent = ({initialAuthState="signup"}) => {
             /* Signup new user with Amplify Auth*/
             const user =  await Auth.signUp(param)
 
+            console.log(user)
+
             const userSub = user.userSub
             const firstName = formData.attributes.first_name
             const lastName = formData.attributes.last_name
 
-            /* Create or Update a new parent data content */
+            /* Create a new parent data content */
             const newParent = await DataStore.save(
                 new Parent({
                     "sub": userSub,
-                    "email": email,
                     "first_name": firstName,
                     "last_name": lastName,
                 })

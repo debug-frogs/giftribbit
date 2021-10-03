@@ -1,11 +1,10 @@
 import {createContext, useEffect} from "react";
 import {Box, Container, Paper} from "@mui/material";
-import {API, DataStore, graphqlOperation, withSSRContext} from 'aws-amplify';
+import {DataStore, withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import theme from "../theme";
 import {useRouter} from "next/router";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
-import {listParents, listTeachers} from "../graphql/queries";
 import Profile from "../features/profile/Profile";
 import {Parent, Teacher} from "../models";
 
@@ -78,6 +77,8 @@ export async function getServerSideProps(context) {
             const [teacher] = await DataStore.query(Teacher, teacher =>
                 teacher.sub === userSub
             )
+
+            console.log(parent, teacher)
 
             const userAttributes = parent ? {...parent, group: 'parent'}
                 : teacher ? {...teacher, group: 'teacher'} : {}

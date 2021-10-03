@@ -7,8 +7,7 @@ import {
     AmplifySignIn,
     AmplifySignUp
 } from "@aws-amplify/ui-react";
-import {Auth} from "aws-amplify";
-import {DataStore} from '@aws-amplify/datastore';
+import {Auth, DataStore} from "aws-amplify";
 import {Teacher} from '../../models';
 import {useRouter} from "next/router";
 
@@ -48,7 +47,6 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
             const newTeacher = await DataStore.save(
                 new Teacher({
                     "sub": userSub,
-                    "email": email,
                     "first_name": firstName,
                     "last_name": lastName,
                     "school": schoolName
