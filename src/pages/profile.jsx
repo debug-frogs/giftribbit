@@ -1,5 +1,5 @@
 import {createContext, useEffect} from "react";
-import Profile from "../features/profile/Profile";
+import ProfileTeacher from "../features/profile/ProfileTeacher";
 import {Box, Container, Paper} from "@mui/material";
 import {withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
@@ -51,7 +51,7 @@ const ProfilePage = ({isUserAuthorized, userAttributes}) => {
                         sx={{ borderColor: theme.palette.secondary.main}}
                     >
                         <Box p={3}>
-                            <Profile />
+                            <ProfileTeacher />
                         </Box>
                     </Paper>
                 </Container>
@@ -59,7 +59,7 @@ const ProfilePage = ({isUserAuthorized, userAttributes}) => {
                     maxWidth='xs'
                     sx={{ display: { sm: 'none', xs: 'block' } }}
                 >
-                    <Profile />
+                    <ProfileTeacher />
                 </Container>
             </ProfileContext.Provider>
         )
@@ -73,6 +73,8 @@ export async function getServerSideProps(context) {
         try {
             const {Auth} = withSSRContext(context)
             const user = await Auth.currentAuthenticatedUser().catch(() => null)
+
+
 
             return {
                 props: {
