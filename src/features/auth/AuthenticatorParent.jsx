@@ -38,8 +38,6 @@ const AuthenticatorParent = ({initialAuthState="signup"}) => {
             /* Signup new user with Amplify Auth*/
             const user =  await Auth.signUp(param)
 
-            console.log(user)
-
             const userSub = user.userSub
             const firstName = formData.attributes.first_name
             const lastName = formData.attributes.last_name

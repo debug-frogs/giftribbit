@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {withSSRContext} from "aws-amplify";
 import AuthenticatorParent from "../features/auth/AuthenticatorParent";
@@ -12,16 +12,16 @@ const SignInParent = ({isUserAuthorized}) => {
     const isAuthorized = useSelector(selectIsAuthorized)
 
     useEffect(() => {
+        if (isUserAuthorized) {
+            router.push('/profile').then()
+        }
+    }, [])
+
+    useEffect(() => {
         if (!isAuthPage) {
             dispatch({type: 'auth/setIsAuthPage', payload: true})
         }
     },[])
-
-    useEffect(() => {
-        if (isUserAuthorized) {
-            router.push('/profile').then()
-        }
-    }, []);
 
     if (isUserAuthorized){
         return null

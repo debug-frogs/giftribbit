@@ -1,12 +1,13 @@
-import {createContext, useEffect} from "react";
+import {createContext, useEffect, useState} from "react";
 import {Box, Container, Paper} from "@mui/material";
-import {DataStore, withSSRContext} from 'aws-amplify';
+import {graphqlOperation, withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import theme from "../theme";
 import {useRouter} from "next/router";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import Profile from "../features/profile/Profile";
 import {Parent, Teacher} from "../models";
+import {listParents, listTeachers} from "../graphql/queries";
 
 export const ProfileContext = createContext({});
 
@@ -15,6 +16,13 @@ const ProfilePage = ({isUserAuthorized, userAttributes}) => {
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
+
+    useEffect(() => {
+        if (!isUserAuthorized && !isAuthorized) {
+            window.addEventListener('unload', event => {localStorage.clear()})
+            router.push('/').then()
+        }
+    }, []);
 
     useEffect(() => {
         if (isAuthPage) {
@@ -30,12 +38,6 @@ const ProfilePage = ({isUserAuthorized, userAttributes}) => {
             dispatch({type: 'auth/setIsAuthorized', payload: false})
         }
     },[])
-
-    useEffect(() => {
-        if (!isUserAuthorized) {
-            router.push('/signin').then()
-        }
-    }, []);
 
     if (!isUserAuthorized) {
         return null
@@ -56,6 +58,12 @@ const ProfilePage = ({isUserAuthorized, userAttributes}) => {
                         </Box>
                     </Paper>
                 </Container>
+                <Container
+                    sx={{ display: { sm: 'none', xs: 'block' } }}
+                    maxWidth='xs'
+                >
+                    <Profile />
+                </Container>
             </ProfileContext.Provider>
         )
     }
@@ -66,23 +74,22 @@ export default ProfilePage
 
 export async function getServerSideProps(context) {
         try {
-            const {Auth} = withSSRContext(context)
+            const {API, Auth} = withSSRContext(context)
+
             const user = await Auth.currentAuthenticatedUser().catch(() => null)
             const userSub = user?.attributes?.sub
 
-            const [parent] = await DataStore.query(Parent, parent =>
-                parent.sub === userSub
-            )
+            const teacherData = await API.graphql(graphqlOperation(listTeachers));
+            const parentData = await API.graphql(graphqlOperation(listParents));
 
-            const [teacher] = await DataStore.query(Teacher, teacher =>
-                teacher.sub === userSub
-            )
+            const teachers = teacherData?.data?.listTeachers?.items
+            const parents = parentData?.data?.listParents?.items
 
-            console.log(parent, teacher)
+            const teacher = Array.isArray(teachers) ? teachers.find(t => t.sub === userSub) : null
+            const parent = Array.isArray(parents) ? parents.find(t => t.sub === userSub) : null
 
             const userAttributes = parent ? {...parent, group: 'parent'}
                 : teacher ? {...teacher, group: 'teacher'} : {}
-
             userAttributes.email = user?.attributes?.email
             delete userAttributes.id
             delete userAttributes.createdAt
