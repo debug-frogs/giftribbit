@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ProfileContext} from "../../pages/profile";
-import {Box, Button, Container, Grid, IconButton, Modal, Paper, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, Divider, Grid, IconButton, Modal, Paper, TextField, Typography} from "@mui/material";
 import {FaUserPlus} from "react-icons/fa";
 import {DataStore} from "aws-amplify";
 import {Parent, Teacher} from "../../models";
@@ -110,26 +110,19 @@ const TeacherListOfParents = () => {
                 </Grid>
             </Grid>
             <Grid item>
-                <Grid container>
-                    {parents.map( (p, i) => {
-                        console.log(p)
-                        return(
-                            <Grid
-                                item
-                                key={i}
-                            >
-                                <Grid container>
-                                    <Grid item>
-                                        <Typography>
-                                            {p.id}
-                                        </Typography>
-                                        <Typography>
-                                            Name: {p.first_name}&nbsp;{p.last_name}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        )}
+                <Grid
+                    container
+                    direction='column'
+                >
+                    {parents.map( (p, i) =>
+                        <Grid
+                            item
+                            key={i}
+                        >
+                            <Typography>
+                                Name: {p.first_name}&nbsp;{p.last_name}
+                            </Typography>
+                        </Grid>
                     )}
                 </Grid>
             </Grid>
