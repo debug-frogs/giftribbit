@@ -22,6 +22,50 @@ const UserInfo = () => {
                         <Typography
                             display='inline'
                         >
+                            first name:
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography
+                            display='inline'
+                        >
+                            {userAttributes?.first_name}
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid item>
+                <Grid
+                    container
+                    spacing={1}
+                    alignItems='center'
+                >
+                    <Grid item>
+                        <Typography
+                            display='inline'
+                        >
+                            last name:
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography
+                            display='inline'
+                        >
+                            {userAttributes?.last_name}
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid item>
+                <Grid
+                    container
+                    spacing={1}
+                    alignItems='center'
+                >
+                    <Grid item>
+                        <Typography
+                            display='inline'
+                        >
                             email:
                         </Typography>
                     </Grid>
@@ -57,7 +101,6 @@ const UserInfo = () => {
                 </Grid>
             </Grid>
         </Grid>
-
     );
 };
 
