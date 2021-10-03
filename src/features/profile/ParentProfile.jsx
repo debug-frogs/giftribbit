@@ -2,6 +2,7 @@ import React from 'react';
 import {Divider, Grid, Typography} from "@mui/material";
 import ButtonSignOut from "../auth/ButtonSignOut";
 import ParentInfo from "./ParentInfo";
+import ParentClassroom from './ParentClassroom'
 
 const ParentProfile = () => {
     return (
@@ -22,9 +23,7 @@ const ParentProfile = () => {
                 <Divider />
             </Grid>
             <Grid item>
-                <Typography style={{ fontWeight: 600 }}>
-                    Classroom
-                </Typography>
+                <ParentClassroom />
             </Grid>
             <Grid item>
                 <Divider />

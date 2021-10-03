@@ -23,14 +23,6 @@ const TeacherProfile = () => {
                 <Divider />
             </Grid>
             <Grid item>
-                <Typography style={{ fontWeight: 600 }}>
-                    Classroom
-                </Typography>
-            </Grid>
-            <Grid item>
-                <Divider />
-            </Grid>
-            <Grid item>
                 <TeacherListOfParents />
             </Grid>
             <Grid item>
