@@ -1,12 +1,18 @@
 import {createContext, useEffect} from "react";
 import {Box, Container, Paper} from "@mui/material";
-import {withSSRContext} from 'aws-amplify';
+import Amplify, {withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import theme from "../theme";
 import {useRouter} from "next/router";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import Profile from "../features/profile/Profile";
 import {Parent, Teacher} from "../models";
+import config from '../aws-exports'
+
+Amplify.configure({
+    ...config,
+    ssr: true
+})
 
 export const ProfileContext = createContext({});
 
@@ -16,12 +22,12 @@ const ProfilePage = ({isUserAuthorized, userAttributes}) => {
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
 
-    useEffect(() => {
+    /* protected page */
+    useEffect( () => {
         if (!isUserAuthorized && !isAuthorized) {
-            window.addEventListener('unload', event => {localStorage.clear()})
             router.push('/').then()
         }
-    }, []);
+    }, [])
 
     useEffect(() => {
         if (isAuthPage) {
@@ -84,7 +90,7 @@ export async function getServerSideProps(context) {
             const teacher = (await DataStore.query(Teacher)).find(t => t.sub === userSub)
             const parent = (await DataStore.query(Parent)).find(t => t.sub === userSub)
 
-            /* build out the parent object */
+            /* build out the user profile object */
             const userAttributes = parent ? {...parent, group: 'parent'}
                 : teacher ? {...teacher, group: 'teacher'} : {}
             delete userAttributes.id
@@ -93,6 +99,31 @@ export async function getServerSideProps(context) {
             delete userAttributes._version
             delete userAttributes._lastChangedAt
             delete userAttributes._deleted
+
+            if (parent?.teacherID) {
+                const teacherData = {...(await DataStore.query(Teacher)).find(c => c.id === parent.teacherID)}
+                delete teacherData.createdAt
+                delete teacherData.updatedAt
+                delete teacherData._version
+                delete teacherData._lastChangedAt
+                delete teacherData._deleted
+                delete userAttributes.teacherID
+                userAttributes.Teacher = teacherData
+            }
+
+            if (teacher?.id) {
+                const parentsList = (await DataStore.query(Parent)).filter(c => c.teacherID === teacher.id)
+                userAttributes.Parents = parentsList.map(c => {
+                    const p = {...c}
+                    delete p.createdAt
+                    delete p.updatedAt
+                    delete p._version
+                    delete p._lastChangedAt
+                    delete p._deleted
+                    delete p.teacherID
+                    return p
+                })
+            }
 
             return {
                 props: {

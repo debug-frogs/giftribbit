@@ -1,10 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { withSSRContext} from "aws-amplify";
-import AuthenticatorTeacher from "../features/auth/AuthenticatorTeacher";
 import {useRouter} from "next/router";
 import AuthenticatorParent from "../features/auth/AuthenticatorParent";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
+import Amplify from 'aws-amplify'
+import config from '../aws-exports'
+Amplify.configure({
+    ...config,
+    ssr: true
+})
 
 const Signin = ({isUserAuthorized}) => {
     const router = useRouter()
@@ -12,6 +17,7 @@ const Signin = ({isUserAuthorized}) => {
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
 
+    /* protected page */
     useEffect(() => {
         if (isUserAuthorized) {
             router.push('/profile').then()

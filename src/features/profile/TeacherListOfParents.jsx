@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ProfileContext} from "../../pages/profile";
 import {Box, Button, Container, Grid, IconButton, Modal, Paper, TextField, Typography} from "@mui/material";
 import {FaUserPlus} from "react-icons/fa";
@@ -7,22 +7,14 @@ import {Parent, Teacher} from "../../models";
 import hash from 'object-hash'
 
 const TeacherListOfParents = () => {
-    const {sub} = useContext(ProfileContext)
+    const {Parents} = useContext(ProfileContext)
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const [parentEmail, setParentEmail] = useState('')
-    const [parents, setParents] = useState([])
-
-    useEffect(async () => {
-        /* get the parents details from Data */
-        const teacher = (await DataStore.query(Teacher)).find(c => c.sub === sub)
-        const parentList = (await DataStore.query(Parent)).filter(c => c.teacherID === teacher.id)
-        setParents(parentList)
-    }, []);
-
+    const [parents, setParents] = useState(Parents ? Parents : [])
 
     const handleClick = async () => {
         /* Update a parent teacher relationship */
@@ -35,6 +27,9 @@ const TeacherListOfParents = () => {
                     Parent.copyOf(parent, updated => {
                         updated.teacherID = teacher.id
                     }))
+                    .then((res) => {
+                        console.log(res)
+                    })
             }
             else{
                 throw new Error('Cannot add parent because parent teacher relationship already exists')
@@ -134,7 +129,7 @@ const TeacherListOfParents = () => {
                     container
                     direction='column'
                 >
-                    {parents?.map( (parent) =>
+                    {parents && parents?.map( (parent) =>
                         <Grid
                             item
                             key={hash(parent)}

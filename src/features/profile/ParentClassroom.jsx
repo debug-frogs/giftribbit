@@ -1,18 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {Grid, Typography} from "@mui/material";
-import {DataStore} from "aws-amplify";
-import {Teacher} from "../../models";
 import {ProfileContext} from "../../pages/profile";
 
 const ParentClassroom = () => {
-    const {teacherID} = useContext(ProfileContext)
-    const [teacher, setTeacher] = useState({})
-
-    useEffect(async () => {
-        /* get the teacher details from Data */
-        const teacher = (await DataStore.query(Teacher)).find(c => c.id === teacherID)
-        setTeacher(teacher)
-    }, []);
+    const {Teacher} = useContext(ProfileContext)
 
     return (
         <Grid
@@ -27,7 +18,7 @@ const ParentClassroom = () => {
             </Grid>
             <Grid item>
                 <Typography>
-                    {teacher?.first_name}&nbsp;{teacher?.last_name}
+                    {Teacher?.first_name}&nbsp;{Teacher?.last_name}
                 </Typography>
             </Grid>
         </Grid>
