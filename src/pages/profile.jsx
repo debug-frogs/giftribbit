@@ -1,12 +1,13 @@
 import {createContext, useEffect} from "react";
 import {Box, Container, Paper} from "@mui/material";
-import {API, graphqlOperation, withSSRContext} from 'aws-amplify';
+import {API, DataStore, graphqlOperation, withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import theme from "../theme";
 import {useRouter} from "next/router";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import {listParents, listTeachers} from "../graphql/queries";
 import Profile from "../features/profile/Profile";
+import {Parent, Teacher} from "../models";
 
 export const ProfileContext = createContext({});
 
@@ -69,22 +70,25 @@ export async function getServerSideProps(context) {
             const {Auth} = withSSRContext(context)
             const user = await Auth.currentAuthenticatedUser().catch(() => null)
             const userSub = user?.attributes?.sub
-            const teachers = await API.graphql(graphqlOperation(listTeachers))
-                .then( res => res?.data?.listTeachers?.items)
-            const parents = await API.graphql(graphqlOperation(listParents))
-                .then( res => res?.data?.listParents?.items)
 
-            const teacher = (Array.isArray(teachers) && teachers.length) ?
-                teachers.find(teacher => teacher.sub === userSub)
-                : {group: 'parent'}
+            const [parent] = await DataStore.query(Parent, parent =>
+                parent.sub === userSub
+            )
 
-            const parent = (Array.isArray(parents) && parents.length) ?
-                parents.find(parent => parent.sub === userSub)
-                : {group: 'teacher'}
+            const [teacher] = await DataStore.query(Teacher, teacher =>
+                teacher.sub === userSub
+            )
 
-            const userAttributes = user?.attributes ? {...user.attributes, ...parent, ...teacher} : null
+            const userAttributes = parent ? {...parent, group: 'parent'}
+                : teacher ? {...teacher, group: 'teacher'} : {}
 
-            console.log(userAttributes)
+            userAttributes.email = user?.attributes?.email
+            delete userAttributes.id
+            delete userAttributes.createdAt
+            delete userAttributes.updatedAt
+            delete userAttributes._version
+            delete userAttributes._lastChangedAt
+            delete userAttributes._deleted
 
             return {
                 props: {
