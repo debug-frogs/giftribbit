@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {withSSRContext} from "aws-amplify";
 import AuthenticatorParent from "../features/auth/AuthenticatorParent";
-import {useRouter} from "next/router";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import Amplify from 'aws-amplify'
 import config from '../aws-exports'
@@ -12,17 +11,9 @@ Amplify.configure({
 })
 
 const SignInParent = ({isUserAuthorized}) => {
-    const router = useRouter()
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
-
-    /* protected page */
-    useEffect(() => {
-        if (isUserAuthorized) {
-            router.push('/profile').then()
-        }
-    }, [])
 
     useEffect(() => {
         if (!isAuthPage) {
@@ -46,6 +37,16 @@ export async function getServerSideProps(context) {
     try {
         const {Auth} = withSSRContext(context)
         const user = await Auth.currentAuthenticatedUser().catch(() => null)
+
+        /* protected page */
+        if (user) {
+            return {
+                redirect: {
+                    destination: '/profile',
+                    permanent: false,
+                },
+            }
+        }
 
         return {
             props: {

@@ -10,16 +10,13 @@ import {
 import {Auth, DataStore} from "aws-amplify";
 import {useRouter} from "next/router";
 import {Parent} from "../../models";
-import {useEffect, useState} from "react";
 
 
 const AuthenticatorParent = ({initialAuthState="signup"}) => {
     const router = useRouter()
 
-    const [redirecting, setRedirecting] = useState(false)
     const handleAuthStateChange = ((nextAuthState, authData) => {
-        if (nextAuthState === 'signedin' && authData && !redirecting){
-            setRedirecting(true)
+        if (nextAuthState === 'signedin' && authData){
             router.replace('/profile').then()
         }
     })

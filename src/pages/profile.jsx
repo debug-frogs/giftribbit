@@ -3,7 +3,6 @@ import {Box, Container, Paper} from "@mui/material";
 import Amplify, {withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import theme from "../theme";
-import {useRouter} from "next/router";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import Profile from "../features/profile/Profile";
 import {Parent, Teacher} from "../models";
@@ -17,17 +16,9 @@ Amplify.configure({
 export const ProfileContext = createContext({});
 
 const ProfilePage = ({isUserAuthorized, userAttributes}) => {
-    const router = useRouter()
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
-
-    /* protected page */
-    useEffect( () => {
-        if (!isUserAuthorized && !isAuthorized) {
-            router.push('/').then()
-        }
-    }, [])
 
     useEffect(() => {
         if (isAuthPage) {
@@ -82,18 +73,30 @@ export async function getServerSideProps(context) {
             const {Auth} = withSSRContext(context)
             const {DataStore} = withSSRContext(context.req)
 
+
+
             /* get the current user from Auth*/
             const user = await Auth.currentAuthenticatedUser().catch(() => null)
-            const userSub = user?.attributes?.sub
+
+            /* protected page */
+            if (!user) {
+                return {
+                    redirect: {
+                        destination: '/',
+                        permanent: false,
+                    },
+                }
+            }
 
             /* get the user details form Data content */
+            const userSub = user?.attributes?.sub
             const teacher = (await DataStore.query(Teacher)).find(t => t.sub === userSub)
             const parent = (await DataStore.query(Parent)).find(t => t.sub === userSub)
 
             /* build out the user profile object */
             const userAttributes = parent ? {...parent, group: 'parent'}
                 : teacher ? {...teacher, group: 'teacher'} : {}
-            delete userAttributes.id
+            // delete userAttributes.id
             delete userAttributes.createdAt
             delete userAttributes.updatedAt
             delete userAttributes._version

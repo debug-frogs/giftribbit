@@ -7,7 +7,7 @@ import {Parent, Teacher} from "../../models";
 import hash from 'object-hash'
 
 const TeacherListOfParents = () => {
-    const {Parents} = useContext(ProfileContext)
+    const {id, Parents} = useContext(ProfileContext)
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -18,17 +18,30 @@ const TeacherListOfParents = () => {
 
     const handleClick = async () => {
         /* Update a parent teacher relationship */
-        const teacher = (await DataStore.query(Teacher)).find(c => c.sub === sub)
+        const teacher = (await DataStore.query(Teacher, id))
         const parent = (await DataStore.query(Parent)).find(c => c.email === parentEmail)
+
+        if (!parent) return handleClose()
 
         try {
             if (!parent.teacherID) {
+                /* update parent in Data */
                 await DataStore.save(
                     Parent.copyOf(parent, updated => {
                         updated.teacherID = teacher.id
                     }))
                     .then((res) => {
-                        console.log(res)
+                        /* add new parent in useState */
+                        const newParent = {...parent}
+                        delete newParent.createdAt
+                        delete newParent.updatedAt
+                        delete newParent._version
+                        delete newParent._lastChangedAt
+                        delete newParent._deleted
+
+                        let newParents = parents
+                        newParents.push(newParent)
+                        setParents(newParents)
                     })
             }
             else{
