@@ -17,7 +17,7 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
 
     const handleAuthStateChange = ((nextAuthState, authData) => {
         if (nextAuthState === 'signedin' && authData){
-            router.replace('/profile').then()
+            router.reload()
         }
     })
 
