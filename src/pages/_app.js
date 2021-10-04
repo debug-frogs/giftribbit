@@ -8,10 +8,10 @@ import Router from "next/router";
 import Loading from "../features/loading/Loading";
 import {CacheProvider, ThemeProvider} from "@emotion/react";
 import createEmotionCache from '../../lib/createEmotionCache';
-import Amplify from 'aws-amplify'
-import config from '../aws-exports'
 import theme from "../theme";
 import {CssBaseline} from "@mui/material";
+import Amplify from 'aws-amplify'
+import config from '../aws-exports'
 Amplify.configure({
     ...config,
     ssr: true

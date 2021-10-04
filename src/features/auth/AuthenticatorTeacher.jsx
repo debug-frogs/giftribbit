@@ -7,7 +7,8 @@ import {
     AmplifySignIn,
     AmplifySignUp
 } from "@aws-amplify/ui-react";
-import {Auth} from "aws-amplify";
+import {Auth, DataStore} from "aws-amplify";
+import {Teacher} from '../../models';
 import {useRouter} from "next/router";
 
 
@@ -16,19 +17,49 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
 
     const handleAuthStateChange = ((nextAuthState, authData) => {
         if (nextAuthState === 'signedin' && authData){
-            router.push('/profile').then()
+            router.reload()
         }
     })
 
     const handleSignUp = async (formData) => {
-        const param = {
-            attributes: {
-                email: formData.attributes.email,
-            },
-            password: formData.password,
-            username: formData.username
+        try {
+            const password = formData.password
+            const username = formData.username
+            const email = formData.attributes.email
+
+            const param = {
+                attributes: {
+                    email: email,
+                },
+                password: password,
+                username: username
+            }
+
+            /* Signup new user with Amplify Auth*/
+            const user =  await Auth.signUp(param)
+
+            const userSub = user.userSub
+            const firstName = formData.attributes.first_name
+            const lastName = formData.attributes.last_name
+            const schoolName = formData.attributes.school_name
+
+            /* Create new teacher data content */
+            const newTeacher = await DataStore.save(
+                new Teacher({
+                    "sub": userSub,
+                    "email": email,
+                    "first_name": firstName,
+                    "last_name": lastName,
+                    "school": schoolName
+                })
+            )
+
+            return user
         }
-        return await Auth.signUp(param);
+        catch (error) {
+            console.log(error)
+            return null
+        }
     }
 
     return (
