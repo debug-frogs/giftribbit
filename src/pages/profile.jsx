@@ -69,77 +69,75 @@ export default ProfilePage
 
 
 export async function getServerSideProps(context) {
-        try {
-            const {Auth} = withSSRContext(context)
-            const {DataStore} = withSSRContext(context.req)
+    try {
+        const {Auth} = withSSRContext(context)
+        const {DataStore} = withSSRContext(context.req)
 
+        /* get the current user from Auth*/
+        const user = await Auth.currentAuthenticatedUser().catch(() => null)
 
-
-            /* get the current user from Auth*/
-            const user = await Auth.currentAuthenticatedUser().catch(() => null)
-
-            /* protected page */
-            if (!user) {
-                return {
-                    redirect: {
-                        destination: '/',
-                        permanent: false,
-                    },
-                }
-            }
-
-            /* get the user details form Data content */
-            const userSub = user?.attributes?.sub
-            const teacher = (await DataStore.query(Teacher)).find(t => t.sub === userSub)
-            const parent = (await DataStore.query(Parent)).find(t => t.sub === userSub)
-
-            /* build out the user profile object */
-            const userAttributes = parent ? {...parent, group: 'parent'}
-                : teacher ? {...teacher, group: 'teacher'} : {}
-            // delete userAttributes.id
-            delete userAttributes.createdAt
-            delete userAttributes.updatedAt
-            delete userAttributes._version
-            delete userAttributes._lastChangedAt
-            delete userAttributes._deleted
-
-            if (parent?.teacherID) {
-                const teacherData = {...(await DataStore.query(Teacher)).find(c => c.id === parent.teacherID)}
-                delete teacherData.createdAt
-                delete teacherData.updatedAt
-                delete teacherData._version
-                delete teacherData._lastChangedAt
-                delete teacherData._deleted
-                delete userAttributes.teacherID
-                userAttributes.Teacher = teacherData
-            }
-
-            if (teacher?.id) {
-                const parentsList = (await DataStore.query(Parent)).filter(c => c.teacherID === teacher.id)
-                userAttributes.Parents = parentsList.map(c => {
-                    const p = {...c}
-                    delete p.createdAt
-                    delete p.updatedAt
-                    delete p._version
-                    delete p._lastChangedAt
-                    delete p._deleted
-                    delete p.teacherID
-                    return p
-                })
-            }
-
+        /* protected page */
+        if (!user) {
             return {
-                props: {
-                    isUserAuthorized: !!user,
-                    userAttributes: user?.attributes ? userAttributes : null
-                }
+                redirect: {
+                    destination: '/',
+                    permanent: false,
+                },
             }
         }
-        catch (error) {
-            console.log(error)
-            return {
-                props: {},
+
+        /* get the user details form Data content */
+        const userSub = user?.attributes?.sub
+        const teacher = (await DataStore.query(Teacher)).find(t => t.sub === userSub)
+        const parent = (await DataStore.query(Parent)).find(t => t.sub === userSub)
+
+        /* build out the user profile object */
+        const userAttributes = parent ? {...parent, group: 'parent'}
+            : teacher ? {...teacher, group: 'teacher'} : {}
+        // delete userAttributes.id
+        delete userAttributes.createdAt
+        delete userAttributes.updatedAt
+        delete userAttributes._version
+        delete userAttributes._lastChangedAt
+        delete userAttributes._deleted
+
+        if (parent?.teacherID) {
+            const teacherData = {...(await DataStore.query(Teacher)).find(c => c.id === parent.teacherID)}
+            delete teacherData.createdAt
+            delete teacherData.updatedAt
+            delete teacherData._version
+            delete teacherData._lastChangedAt
+            delete teacherData._deleted
+            delete userAttributes.teacherID
+            userAttributes.Teacher = teacherData
+        }
+
+        if (teacher?.id) {
+            const parentsList = (await DataStore.query(Parent)).filter(c => c.teacherID === teacher.id)
+            userAttributes.Parents = parentsList.map(c => {
+                const p = {...c}
+                delete p.createdAt
+                delete p.updatedAt
+                delete p._version
+                delete p._lastChangedAt
+                delete p._deleted
+                delete p.teacherID
+                return p
+            })
+        }
+
+        return {
+            props: {
+                isUserAuthorized: !!user,
+                userAttributes: user?.attributes ? userAttributes : null
             }
         }
-        finally {}
+    }
+    catch (error) {
+        console.log(error)
+        return {
+            props: {},
+        }
+    }
+    finally {}
 }
