@@ -45,10 +45,7 @@ const ProfilePage = ({isUserAuthorized, userAttributes}) => {
                     sx={{ display: { sm: 'block', xs: 'none' } }}
                     maxWidth='xs'
                 >
-                    <Paper
-                        variant='outlined'
-                        sx={{ borderColor: theme.palette.secondary.main}}
-                    >
+                    <Paper>
                         <Box p={3}>
                             <Profile />
                         </Box>
