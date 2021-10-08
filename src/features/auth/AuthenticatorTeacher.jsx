@@ -7,9 +7,8 @@ import {
     AmplifySignIn,
     AmplifySignUp
 } from "@aws-amplify/ui-react";
-import {Auth, DataStore} from "aws-amplify";
-import {Teacher} from '../../models';
 import {useRouter} from "next/router";
+import axios from "../../../lib/axios";
 
 
 const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
@@ -26,33 +25,20 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
             const password = formData.password
             const username = formData.username
             const email = formData.attributes.email
-
-            const param = {
-                attributes: {
-                    email: email,
-                },
-                password: password,
-                username: username
-            }
-
-            /* Signup new user with Amplify Auth*/
-            const user =  await Auth.signUp(param)
-
-            const userSub = user.userSub
             const firstName = formData.attributes.first_name
             const lastName = formData.attributes.last_name
             const schoolName = formData.attributes.school_name
 
-            /* Create new teacher data content */
-            const newTeacher = await DataStore.save(
-                new Teacher({
-                    "sub": userSub,
-                    "email": email,
-                    "first_name": firstName,
-                    "last_name": lastName,
-                    "school": schoolName
+            const user = await axios.post('/api/signup-teacher',
+                {
+                    password: password,
+                    username: username,
+                    email: email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    schoolName: schoolName
                 })
-            )
+                .then(res => res.data)
 
             return user
         }
