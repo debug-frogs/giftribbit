@@ -6,12 +6,12 @@ import TeacherProfile from "./TeacherProfile";
 const Profile = () => {
     const profile = useContext(ProfileContext)
 
-    switch (profile?.group){
-        case 'parent':
+    switch (profile?.__typename){
+        case 'Parent':
             return (
                 <ParentProfile />
             )
-        case 'teacher':
+        case 'Teacher':
             return (
                 <TeacherProfile />
             )

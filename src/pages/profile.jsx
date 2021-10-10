@@ -4,8 +4,8 @@ import Amplify, {withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import Profile from "../features/profile/Profile";
-import {Parent, Teacher} from "../models";
 import config from '../aws-exports'
+import axios from "../../lib/axios";
 
 Amplify.configure({
     ...config,
@@ -82,45 +82,11 @@ export async function getServerSideProps(context) {
             }
         }
 
-        /* get the user details form Data content */
-        const userSub = user?.attributes?.sub
-        const teacher = (await DataStore.query(Teacher)).find(t => t.sub === userSub)
-        const parent = (await DataStore.query(Parent)).find(t => t.sub === userSub)
+        const sub = user.attributes.sub
 
-        /* build out the user profile object */
-        const userAttributes = parent ? {...parent, group: 'parent'}
-            : teacher ? {...teacher, group: 'teacher'} : {}
-        // delete userAttributes.id
-        delete userAttributes.createdAt
-        delete userAttributes.updatedAt
-        delete userAttributes._version
-        delete userAttributes._lastChangedAt
-        delete userAttributes._deleted
+        const res = await axios.get(`https://azvnd86wik.execute-api.us-west-1.amazonaws.com/default/${sub}`)
+        const userAttributes = res.data
 
-        if (parent?.teacherID) {
-            const teacherData = {...(await DataStore.query(Teacher)).find(c => c.id === parent.teacherID)}
-            delete teacherData.createdAt
-            delete teacherData.updatedAt
-            delete teacherData._version
-            delete teacherData._lastChangedAt
-            delete teacherData._deleted
-            delete userAttributes.teacherID
-            userAttributes.Teacher = teacherData
-        }
-
-        if (teacher?.id) {
-            const parentsList = (await DataStore.query(Parent)).filter(c => c.teacherID === teacher.id)
-            userAttributes.Parents = parentsList.map(c => {
-                const p = {...c}
-                delete p.createdAt
-                delete p.updatedAt
-                delete p._version
-                delete p._lastChangedAt
-                delete p._deleted
-                delete p.teacherID
-                return p
-            })
-        }
 
         return {
             props: {

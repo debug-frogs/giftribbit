@@ -20,6 +20,12 @@
           "appId": "dvcphyfdliprj",
           "type": "cicd"
         }
+      },
+      "function": {
+        "fetchProfile": {
+          "deploymentBucketName": "amplify-giftribbit-apifix-201554-deployment",
+          "s3Key": "amplify-builds/fetchProfile-37356273596230785856-build.zip"
+        }
       }
     }
   }
