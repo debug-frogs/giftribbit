@@ -2,6 +2,7 @@ import {createContext, useEffect} from "react";
 import {Box, Container, Paper} from "@mui/material";
 import Amplify, {withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
+import theme from "../theme";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import Profile from "../features/profile/Profile";
 import {Parent, Teacher} from "../models";
