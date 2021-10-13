@@ -1,0 +1,17 @@
+import {NextLinkComposed} from "../../../lib/Link";
+import {Icon, IconButton} from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+const ProfileButton = () => {
+    return (
+        <IconButton
+            color='secondary'
+            component={NextLinkComposed}
+            to={{pathname: '/profile',}}
+        >
+            <AccountCircleIcon fontSize='large'/>
+        </IconButton>
+    );
+};
+
+export default ProfileButton;

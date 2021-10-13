@@ -1,0 +1,20 @@
+type Teacher @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  sub: ID!
+  email: AWSEmail
+  first_name: String
+  Parents: [Parent] @connection(keyName: "byTeacher", fields: ["id"])
+  last_name: String
+  school: String
+}
+
+type Parent @model @auth(rules: [{allow: public}]) @key(name: "byTeacher", fields: ["teacherID"]) {
+  id: ID!
+  sub: ID
+  email: AWSEmail
+  first_name: String
+  last_name: String
+  child: String
+  teacherID: ID
+}
+ 

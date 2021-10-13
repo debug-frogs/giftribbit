@@ -1,7 +1,7 @@
-import {Button, Container, Grid, Hidden, Icon, Typography} from "@mui/material";
+import {Container, Grid, Typography} from "@mui/material";
 import {GiFrogPrince} from 'react-icons/gi'
 import theme from "../../theme";
-import {FaChalkboardTeacher} from 'react-icons/fa'
+import TeacherSignUpButton from "../auth/ButtonSignUpTeacher";
 
 const Home = () => {
     return (
@@ -33,27 +33,25 @@ const Home = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Hidden smDown>
-                <Grid item>
-                    <Container
-                        maxWidth='md'
-                    >
-                        <Typography
-                            align='center'
-                            variant='body1'
-                        >
-                            GiftRibbit provides elementary school teachers an interface to request classroom supplies and donations for student success! Are you a teacher who is in need of additional classroom supplies?
-                            Sign up today!
-                        </Typography>
-                    </Container>
-                </Grid>
-            </Hidden>
-            <Grid item>
-                <Button
-                    variant='contained'
+            <Grid
+                item
+                sx={{ display: { sm: 'block', xs: 'none' } }}
+            >
+                <Container
+                    maxWidth='sm'
                 >
-                    Sign up as a teacher
-                </Button>
+                    <Typography
+                        align='center'
+                        variant='body2'
+                    >
+                        GiftRibbit provides elementary school teachers an interface to request
+                        classroom supplies and donations for student success! Are you a teacher
+                        who is in need of additional classroom supplies? Sign up today!
+                    </Typography>
+                </Container>
+            </Grid>
+            <Grid item>
+                <TeacherSignUpButton />
             </Grid>
         </Grid>
     )
