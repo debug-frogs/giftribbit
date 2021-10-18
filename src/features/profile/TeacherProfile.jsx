@@ -23,7 +23,7 @@ const TeacherProfile = () => {
                 <Divider />
             </Grid>
             <Grid item>
-                {/*<TeacherListOfParents />*/}
+                <TeacherListOfParents />
             </Grid>
             <Grid item>
                 <Divider />

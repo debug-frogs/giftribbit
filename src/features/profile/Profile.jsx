@@ -4,9 +4,9 @@ import ParentProfile from "./ParentProfile";
 import TeacherProfile from "./TeacherProfile";
 
 const Profile = () => {
-    const profile = useContext(ProfileContext)
+    const {__typename} = useContext(ProfileContext)
 
-    switch (profile?.__typename){
+    switch (__typename){
         case 'Parent':
             return (
                 <ParentProfile />

@@ -80,6 +80,7 @@ const queryParentById = async (id) => {
         `
         query getParent {
             getParent(id: "${id}") {
+                id
                 child
                 email
                 first_name
@@ -102,6 +103,7 @@ const queryTeacherById = async (id) => {
         `
         query getTeacher {
             getTeacher(id: "${id}") {
+                id
                 email
                 first_name
                 last_name
@@ -109,6 +111,7 @@ const queryTeacherById = async (id) => {
                 sub
                 Parents {
                     items {
+                        id
                         child
                         email
                         first_name

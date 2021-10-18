@@ -2,9 +2,8 @@ import React, {useContext, useState} from 'react';
 import {ProfileContext} from "../../pages/profile";
 import {Box, Button, Container, Grid, IconButton, Modal, Paper, TextField, Typography} from "@mui/material";
 import {FaUserPlus} from "react-icons/fa";
-import {DataStore} from "aws-amplify";
-import {Parent, Teacher} from "../../models";
 import hash from 'object-hash'
+import axios from "../../../lib/axios";
 
 const TeacherListOfParents = () => {
     const {id, Parents} = useContext(ProfileContext)
@@ -14,46 +13,29 @@ const TeacherListOfParents = () => {
     const handleClose = () => setOpen(false);
 
     const [parentEmail, setParentEmail] = useState('')
-    const [parents, setParents] = useState(Parents ? Parents : [])
+    const [parents, setParents] = useState(Parents ? Parents.items : [])
 
     const handleClick = async () => {
-        /* Update a parent teacher relationship */
-        const teacher = (await DataStore.query(Teacher, id))
-        const parent = (await DataStore.query(Parent)).find(c => c.email === parentEmail)
+        await axios.post('/api/update-parent-teacherid',
+            {
+                id: id,
+                parentEmail: parentEmail,
+            })
+            .then(res => {
+                const parent = res.data
 
-        if (!parent) return handleClose()
+                const newParent = {...parent}
+                delete newParent.createdAt
+                delete newParent.updatedAt
+                delete newParent._version
+                delete newParent._lastChangedAt
+                delete newParent._deleted
 
-        try {
-            if (!parent.teacherID) {
-                /* update parent in Data */
-                await DataStore.save(
-                    Parent.copyOf(parent, updated => {
-                        updated.teacherID = teacher.id
-                    }))
-                    .then((res) => {
-                        /* add new parent in useState */
-                        const newParent = {...parent}
-                        delete newParent.createdAt
-                        delete newParent.updatedAt
-                        delete newParent._version
-                        delete newParent._lastChangedAt
-                        delete newParent._deleted
-
-                        let newParents = parents
-                        newParents.push(newParent)
-                        setParents(newParents)
-                    })
-            }
-            else{
-                throw new Error('Cannot add parent because parent teacher relationship already exists')
-            }
-        }
-        catch (error) {
-            console.log(error)
-        }
-        finally {
-            handleClose()
-        }
+                let newParents = parents
+                newParents.push(newParent)
+                setParents(newParents)
+            })
+            .finally(() => handleClose())
     }
 
     return (

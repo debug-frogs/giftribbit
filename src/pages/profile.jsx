@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import Profile from "../features/profile/Profile";
 import config from '../aws-exports'
-import axios from "../../lib/axios";
 
 Amplify.configure({
     ...config,
@@ -68,7 +67,7 @@ export async function getServerSideProps(context) {
     try {
         const {Auth, API} = withSSRContext(context)
 
-        /* get the current user from Auth*/
+        /* get the current user from Auth */
         const user = await Auth.currentAuthenticatedUser().catch(() => null)
 
         /* protected page */

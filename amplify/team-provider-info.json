@@ -24,7 +24,7 @@
       "function": {
         "fetchProfile": {
           "deploymentBucketName": "amplify-giftribbit-apifix-201554-deployment",
-          "s3Key": "amplify-builds/fetchProfile-37356273596230785856-build.zip"
+          "s3Key": "amplify-builds/fetchProfile-384d61354f7a4961314a-build.zip"
         }
       }
     }
