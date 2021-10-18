@@ -66,8 +66,7 @@ export default ProfilePage
 
 export async function getServerSideProps(context) {
     try {
-        const {Auth} = withSSRContext(context)
-        const {DataStore} = withSSRContext(context.req)
+        const {Auth, API} = withSSRContext(context)
 
         /* get the current user from Auth*/
         const user = await Auth.currentAuthenticatedUser().catch(() => null)
@@ -83,10 +82,7 @@ export async function getServerSideProps(context) {
         }
 
         const sub = user.attributes.sub
-
-        const res = await axios.get(`https://azvnd86wik.execute-api.us-west-1.amazonaws.com/default/${sub}`)
-        const userAttributes = res.data
-
+        const userAttributes = await API.get("fetchprofileapi", `/fetchprofile/${sub}`)
 
         return {
             props: {
