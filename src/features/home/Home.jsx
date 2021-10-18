@@ -1,7 +1,8 @@
 import {Container, Grid, Typography} from "@mui/material";
 import {GiFrogPrince} from 'react-icons/gi'
 import theme from "../../theme";
-import TeacherSignUpButton from "../auth/ButtonSignUpTeacher";
+import TeacherSignupButton from "../auth/TeacherSignupButton";
+import ParentSignupButton from "../auth/ParentSignupButton";
 
 const Home = () => {
     return (
@@ -51,7 +52,18 @@ const Home = () => {
                 </Container>
             </Grid>
             <Grid item>
-                <TeacherSignUpButton />
+                <Grid
+                    container
+                    alignItems='center'
+                    spacing={5}
+                >
+                    <Grid item>
+                        <TeacherSignupButton />
+                    </Grid>
+                    <Grid item>
+                        <ParentSignupButton />
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     )
