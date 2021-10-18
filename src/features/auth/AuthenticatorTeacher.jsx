@@ -94,6 +94,7 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
                     ]}
                 />
                 <AmplifySignIn
+                    hideSignUp
                     headerText="Sign in to your account"
                     slot="sign-in"
                     usernameAlias="email"
