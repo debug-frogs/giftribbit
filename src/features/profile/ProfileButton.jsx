@@ -9,7 +9,7 @@ const ProfileButton = () => {
             component={NextLinkComposed}
             to={{pathname: '/profile',}}
         >
-            <AccountCircleIcon fontSize='large'/>
+            <AccountCircleIcon/>
         </IconButton>
     );
 };
