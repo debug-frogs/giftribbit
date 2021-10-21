@@ -49,35 +49,45 @@ const appsyncClient = new AWSAppSyncClient(
 
 /* GraphQL Queries */
 const queryUserBySub = async (sub) => {
-    const query = gql(
-        `query getUser{
-            listParents(filter: {sub: {eq: "${sub}"}})
-            {
-                items {
-                    id
+    try {
+        const query = gql(`
+            query getUser{
+                listParents(filter: {sub: {eq: "${sub}"}})
+                {
+                    items {
+                        id
+                    }
                 }
-            }
-            listTeachers(filter: {sub: {eq: "${sub}"}}) 
-            {
-                items {
-                    id
+                listTeachers(filter: {sub: {eq: "${sub}"}}) 
+                {
+                    items {
+                        id
+                    }
                 }
-            }
-        }`
-    );
+            }`
+        );
 
-    const client = await appsyncClient.hydrated();
-    const {data} = await client.query({query});
-    const {listParents, listTeachers} = data
+        const client = await appsyncClient.hydrated();
 
-    const [user] = [...listParents.items, ...listTeachers.items]
+        const {data} = await client.query({query});
 
-    return user
+        const {listParents, listTeachers} = data
+
+        const [user] = [...listParents.items, ...listTeachers.items]
+
+        return user
+    }
+    catch(error) {
+        console.log(error)
+        return {}
+    }
+
 }
 
 const queryParentById = async (id) => {
-    const query = gql(
-        `
+    try {
+        const query = gql(
+            `
         query getParent {
             getParent(id: "${id}") {
                 id
@@ -89,18 +99,26 @@ const queryParentById = async (id) => {
                 teacherID
             }
         }`
-    );
+        );
 
-    const client = await appsyncClient.hydrated();
-    const {data} = await client.query({query});
-    const {getParent} = data
+        const client = await appsyncClient.hydrated();
 
-    return getParent
+        const {data} = await client.query({query});
+
+        const {getParent} = data
+
+        return getParent
+    }
+    catch (error) {
+        console.log(error)
+        return {}
+    }
 }
 
 const queryTeacherById = async (id) => {
-    const query = gql(
-        `
+    try{
+        const query = gql(
+            `
         query getTeacher {
             getTeacher(id: "${id}") {
                 id
@@ -120,29 +138,41 @@ const queryTeacherById = async (id) => {
                 }
             }
         }`
-    );
+        );
 
-    const client = await appsyncClient.hydrated();
-    const {data} = await client.query({query});
-    const {getTeacher} = data
+        const client = await appsyncClient.hydrated();
 
-    return getTeacher
+        const {data} = await client.query({query});
+
+        const {getTeacher} = data
+
+        return getTeacher
+    }
+    catch (error) {
+        console.log(error)
+        return {}
+    }
+
 }
 
 
 exports.handler = async (event) => {
     const { sub } = event.pathParameters;
+
     const data = await queryUserBySub(sub)
 
-    let user;
-    switch (data.__typename) {
-        case "Parent": {
-            user = await queryParentById(data.id)
-            break
-        }
-        case "Teacher": {
-            user = await queryTeacherById(data.id)
-            break
+    let user = {};
+
+    if (data) {
+        switch (data.__typename) {
+            case "Parent": {
+                user = await queryParentById(data.id)
+                break
+            }
+            case "Teacher": {
+                user = await queryTeacherById(data.id)
+                break
+            }
         }
     }
 
