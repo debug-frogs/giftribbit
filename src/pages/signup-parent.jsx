@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { withSSRContext} from "aws-amplify";
-import AuthenticatorParent from "../features/auth/AuthenticatorParent";
+import ParentAuthenticator from "../features/auth/ParentAuthenticator";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 
 
@@ -21,7 +21,7 @@ const SignupParent = ({isUserAuthorized}) => {
     }
     else {
         return (
-            <AuthenticatorParent initialAuthState='signup'/>
+            <ParentAuthenticator initialAuthState='signup'/>
         )
     }
 };
