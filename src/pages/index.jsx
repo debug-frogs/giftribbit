@@ -3,12 +3,7 @@ import {withSSRContext} from "aws-amplify";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
-import Amplify from 'aws-amplify'
-import config from '../aws-exports'
-Amplify.configure({
-    ...config,
-    ssr: true
-})
+
 
 const index = ({isUserAuthorized}) => {
     const dispatch = useDispatch()

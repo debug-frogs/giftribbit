@@ -1,6 +1,4 @@
-import Amplify, {withSSRContext} from "aws-amplify";
-import config from "../../aws-exports.js";
-Amplify.configure({ ...config, ssr: true });
+import {withSSRContext} from "aws-amplify";
 
 
 export default async (req, res) => {

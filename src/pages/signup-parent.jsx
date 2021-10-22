@@ -3,12 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { withSSRContext} from "aws-amplify";
 import AuthenticatorParent from "../features/auth/AuthenticatorParent";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
-import Amplify from 'aws-amplify'
-import config from '../aws-exports'
-Amplify.configure({
-    ...config,
-    ssr: true
-})
+
 
 const SignupParent = ({isUserAuthorized}) => {
     const dispatch = useDispatch()
