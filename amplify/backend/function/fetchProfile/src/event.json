@@ -1,8 +1,0 @@
-{
-  "resource": "/{sub}",
-  "path": "/7b6f4cc2-d6a9-4347-b27e-e23dfb5eccb0",
-  "httpMethod": "GET",
-  "pathParameters": {
-    "sub": "7b6f4cc2-d6a9-4347-b27e-e23dfb5eccb0"
-  }
-}
