@@ -1,15 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Grid, Typography} from "@mui/material";
-import {ProfileContext} from "../../pages/profile";
+import {ProfileContext} from "../../../pages/profile";
 import {DataStore} from "aws-amplify";
-import {Teacher} from "../../models";
+import {Teacher} from "../../../models";
 
-const ParentClassroom = () => {
+
+const fetchTeacher = async (teacherID) => {
+    return await DataStore.query(Teacher, teacherID)
+}
+
+
+const Classroom = () => {
     const {teacherID} = useContext(ProfileContext)
     const [teacher, setTeacher] = useState({})
 
     useEffect(async () => {
-        const teacher = await DataStore.query(Teacher, teacherID);
+        const teacher = await fetchTeacher(teacherID)
         setTeacher(teacher)
     },[])
 
@@ -34,4 +40,4 @@ const ParentClassroom = () => {
     );
 };
 
-export default ParentClassroom;
+export default Classroom;

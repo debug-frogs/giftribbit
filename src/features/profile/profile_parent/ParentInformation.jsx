@@ -1,9 +1,10 @@
 import React, {useContext} from 'react';
 import {Grid, Typography} from "@mui/material";
-import {ProfileContext} from "../../pages/profile";
+import {ProfileContext} from "../../../pages/profile";
 
 const TeacherInfo = () => {
-    const userAttributes = useContext(ProfileContext)
+    const [profile] = useContext(ProfileContext)
+    const {first_name, last_name, email, child} = profile
 
     return (
         <Grid
@@ -29,7 +30,7 @@ const TeacherInfo = () => {
                         <Typography
                             display='inline'
                         >
-                            {userAttributes?.first_name}
+                            {first_name}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -51,7 +52,7 @@ const TeacherInfo = () => {
                         <Typography
                             display='inline'
                         >
-                            {userAttributes?.last_name}
+                            {last_name}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -73,7 +74,7 @@ const TeacherInfo = () => {
                         <Typography
                             display='inline'
                         >
-                            {userAttributes?.email}
+                            {email}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -95,7 +96,7 @@ const TeacherInfo = () => {
                         <Typography
                             display='inline'
                         >
-                            {userAttributes?.child}
+                            {child}
                         </Typography>
                     </Grid>
                 </Grid>

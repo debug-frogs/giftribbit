@@ -1,14 +1,47 @@
-import {
-    AmplifyAuthContainer,
-    AmplifyAuthenticator,
-    AmplifyConfirmSignIn,
-    AmplifyForgotPassword,
-    AmplifyRequireNewPassword,
-    AmplifySignIn,
-    AmplifySignUp
-} from "@aws-amplify/ui-react";
+import {AmplifyAuthContainer, AmplifyAuthenticator, AmplifyConfirmSignIn, AmplifyForgotPassword, AmplifyRequireNewPassword, AmplifySignIn, AmplifySignUp} from "@aws-amplify/ui-react";
 import {useRouter} from "next/router";
 import axios from "../../../lib/axios";
+import {DataStore} from "aws-amplify";
+import {Parent} from "../../models";
+
+
+const handleParentSignUp = async (formData) => {
+    try {
+        const password = formData.password
+        const username = formData.username
+        const email = formData.attributes.email
+        const firstName = formData.attributes.first_name
+        const lastName = formData.attributes.last_name
+        const child = formData.attributes.child
+
+        /* Create a new user with Auth */
+        const {data} = await axios.post('/api/user-signup',
+            {
+                password: password,
+                username: username,
+                email: email,
+            })
+
+        const userSub = data.userSub
+
+        /* Create new parent data with DataStore */
+        const parent = await DataStore.save(
+            new Parent({
+                "sub": userSub,
+                "email": email,
+                "first_name": firstName,
+                "last_name": lastName,
+                "child": child,
+            })
+        )
+
+        return data
+    }
+    catch (error) {
+        console.log(error)
+        return null
+    }
+}
 
 
 const AuthenticatorParent = ({initialAuthState="signup"}) => {
@@ -20,34 +53,6 @@ const AuthenticatorParent = ({initialAuthState="signup"}) => {
         }
     })
 
-    const handleSignUp = async (formData) => {
-        try {
-            const password = formData.password
-            const username = formData.username
-            const email = formData.attributes.email
-            const firstName = formData.attributes.first_name
-            const lastName = formData.attributes.last_name
-            const child = formData.attributes.child
-
-            const user = await axios.post('/api/signup-parent',
-                {
-                    password: password,
-                    username: username,
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName,
-                    child: child
-                })
-                .then(res => res.data)
-
-            return user
-        }
-        catch (error) {
-            console.log(error)
-            return null
-        }
-    }
-
     return (
         <AmplifyAuthContainer >
             <AmplifyAuthenticator
@@ -57,7 +62,7 @@ const AuthenticatorParent = ({initialAuthState="signup"}) => {
             >
                 <AmplifySignUp
                     headerText="Parent SignUp"
-                    handleSignUp={handleSignUp}
+                    handleSignUp={handleParentSignUp}
                     slot="sign-up"
                     usernameAlias="email"
                     formFields={[

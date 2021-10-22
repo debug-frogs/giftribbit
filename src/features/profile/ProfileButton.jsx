@@ -1,5 +1,5 @@
 import {NextLinkComposed} from "../../../lib/Link";
-import {Icon, IconButton} from "@mui/material";
+import {IconButton} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const ProfileButton = () => {

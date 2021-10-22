@@ -1,14 +1,47 @@
-import {
-    AmplifyAuthContainer,
-    AmplifyAuthenticator,
-    AmplifyConfirmSignIn,
-    AmplifyForgotPassword,
-    AmplifyRequireNewPassword,
-    AmplifySignIn,
-    AmplifySignUp
-} from "@aws-amplify/ui-react";
+import {AmplifyAuthContainer, AmplifyAuthenticator, AmplifyConfirmSignIn, AmplifyForgotPassword, AmplifyRequireNewPassword, AmplifySignIn, AmplifySignUp} from "@aws-amplify/ui-react";
 import {useRouter} from "next/router";
 import axios from "../../../lib/axios";
+import {DataStore} from "aws-amplify";
+import {Teacher} from "../../models";
+
+
+const handleTeacherSignUp = async (formData) => {
+    try {
+        const password = formData.password
+        const username = formData.username
+        const email = formData.attributes.email
+        const firstName = formData.attributes.first_name
+        const lastName = formData.attributes.last_name
+        const schoolName = formData.attributes.school_name
+
+        /* Create a new user with Auth */
+        const {data} = await axios.post('/api/user-signup',
+            {
+                password: password,
+                username: username,
+                email: email,
+            })
+
+        const userSub = data.userSub
+
+        /* Create new parent data with DataStore */
+        const teacher = await DataStore.save(
+            new Teacher({
+                "sub": userSub,
+                "email": email,
+                "first_name": firstName,
+                "last_name": lastName,
+                "school": schoolName
+            })
+        )
+
+        return data
+    }
+    catch (error) {
+        console.log(error)
+        return null
+    }
+}
 
 
 const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
@@ -20,34 +53,6 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
         }
     })
 
-    const handleSignUp = async (formData) => {
-        try {
-            const password = formData.password
-            const username = formData.username
-            const email = formData.attributes.email
-            const firstName = formData.attributes.first_name
-            const lastName = formData.attributes.last_name
-            const schoolName = formData.attributes.school_name
-
-            const user = await axios.post('/api/signup-teacher',
-                {
-                    password: password,
-                    username: username,
-                    email: email,
-                    firstName: firstName,
-                    lastName: lastName,
-                    schoolName: schoolName
-                })
-                .then(res => res.data)
-
-            return user
-        }
-        catch (error) {
-            console.log(error)
-            return null
-        }
-    }
-
     return (
         <AmplifyAuthContainer >
             <AmplifyAuthenticator
@@ -57,7 +62,7 @@ const AuthenticatorTeacher = ({initialAuthState="signup"}) => {
             >
                 <AmplifySignUp
                     headerText="Teacher SignUp"
-                    handleSignUp={handleSignUp}
+                    handleSignUp={handleTeacherSignUp}
                     slot="sign-up"
                     usernameAlias="email"
                     formFields={[

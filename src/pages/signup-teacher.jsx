@@ -10,7 +10,7 @@ Amplify.configure({
     ssr: true
 })
 
-const Signin = ({isUserAuthorized}) => {
+const SignupTeacher = ({isUserAuthorized}) => {
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
@@ -31,7 +31,7 @@ const Signin = ({isUserAuthorized}) => {
     }
 };
 
-export default Signin;
+export default SignupTeacher;
 
 export async function getServerSideProps(context) {
     try {

@@ -1,12 +1,13 @@
 import React, {useContext} from 'react';
 import {ProfileContext} from "../../pages/profile";
-import ParentProfile from "./ParentProfile";
-import TeacherProfile from "./TeacherProfile";
+import ParentProfile from "./profile_parent/ParentProfile";
+import TeacherProfile from "./profile_teacher/TeacherProfile";
 
 const Profile = () => {
-    const {__typename} = useContext(ProfileContext)
+    const [profile] = useContext(ProfileContext)
+    const {type} = profile
 
-    switch (__typename){
+    switch (type){
         case 'Parent':
             return (
                 <ParentProfile />

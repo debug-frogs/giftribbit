@@ -9,7 +9,6 @@ Amplify Params - DO NOT EDIT */
 const gql = require('graphql-tag');
 const AWSAppSyncClient = require('aws-appsync').default;
 const AWS = require('aws-sdk');
-// require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 
@@ -68,13 +67,9 @@ const queryUserBySub = async (sub) => {
         );
 
         const client = await appsyncClient.hydrated();
-
         const {data} = await client.query({query});
-
         const {listParents, listTeachers} = data
-
         const [user] = [...listParents.items, ...listTeachers.items]
-
         return user
     }
     catch(error) {
@@ -86,8 +81,7 @@ const queryUserBySub = async (sub) => {
 
 const queryParentById = async (id) => {
     try {
-        const query = gql(
-            `
+        const query = gql(`
         query getParent {
             getParent(id: "${id}") {
                 id
@@ -102,11 +96,8 @@ const queryParentById = async (id) => {
         );
 
         const client = await appsyncClient.hydrated();
-
         const {data} = await client.query({query});
-
         const {getParent} = data
-
         return getParent
     }
     catch (error) {
@@ -117,8 +108,7 @@ const queryParentById = async (id) => {
 
 const queryTeacherById = async (id) => {
     try{
-        const query = gql(
-            `
+        const query = gql(`
         query getTeacher {
             getTeacher(id: "${id}") {
                 id
@@ -141,11 +131,8 @@ const queryTeacherById = async (id) => {
         );
 
         const client = await appsyncClient.hydrated();
-
         const {data} = await client.query({query});
-
         const {getTeacher} = data
-
         return getTeacher
     }
     catch (error) {
@@ -156,13 +143,11 @@ const queryTeacherById = async (id) => {
 }
 
 
-exports.handler = async (event) => {
+exports.handler = async (event, context, callback) => {
     const { sub } = event.pathParameters;
-
     const data = await queryUserBySub(sub)
 
     let user = {};
-
     if (data) {
         switch (data.__typename) {
             case "Parent": {
@@ -176,7 +161,7 @@ exports.handler = async (event) => {
         }
     }
 
-    const response = {
+    return {
         statusCode: 200,
         headers: {
             "Access-Control-Allow-Origin": "*",
@@ -184,5 +169,5 @@ exports.handler = async (event) => {
         },
         body: JSON.stringify(user),
     };
-    return response;
 };
+
