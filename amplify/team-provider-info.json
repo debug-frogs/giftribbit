@@ -18,7 +18,7 @@
       "function": {
         "fetchProfile": {
           "deploymentBucketName": "amplify-giftribbit-staging-41801-deployment",
-          "s3Key": "amplify-builds/fetchProfile-6e5a656c6545784d616c-build.zip"
+          "s3Key": "amplify-builds/fetchProfile-4a4a6971706b70614f70-build.zip"
         }
       },
       "hosting": {
