@@ -5,8 +5,19 @@ import {DataStore} from "aws-amplify";
 import {Teacher} from "../../../models";
 
 
-const fetchTeacher = async (teacherID) => {
-    return await DataStore.query(Teacher, teacherID)
+const fetchTeacher = (teacherID) => {
+    return new Promise((async (resolve, reject) => {
+        try {
+            const [teacher] = await DataStore.query(Teacher, teacherID)
+            if (teacher) {
+                return resolve(teacher)
+            } else {
+                return reject(new Error("teacher not found"))
+            }
+        } catch (error) {
+            reject(error)
+        }
+    }))
 }
 
 
@@ -15,8 +26,12 @@ const Classroom = () => {
     const [teacher, setTeacher] = useState({})
 
     useEffect(async () => {
-        const teacher = await fetchTeacher(teacherID)
-        setTeacher(teacher)
+        fetchTeacher(teacherID)
+            .then( teacher => {
+                setTeacher(teacher)
+            })
+            .catch(error => {})
+        
     },[])
 
     return (
