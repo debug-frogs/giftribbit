@@ -44,7 +44,7 @@ const handleParentSignUp = async (formData) => {
 }
 
 
-const AuthenticatorParent = ({initialAuthState="signup"}) => {
+const ParentAuthenticator = ({initialAuthState="signup"}) => {
     const router = useRouter()
 
     const handleAuthStateChange = ((nextAuthState, authData) => {
@@ -119,4 +119,4 @@ const AuthenticatorParent = ({initialAuthState="signup"}) => {
         </AmplifyAuthContainer>
     )
 }
-export default AuthenticatorParent;
+export default ParentAuthenticator;
