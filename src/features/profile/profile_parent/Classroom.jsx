@@ -31,7 +31,7 @@ const Classroom = () => {
                 setTeacher(teacher)
             })
             .catch(error => {})
-        
+
     },[])
 
     return (
