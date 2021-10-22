@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import { withSSRContext} from "aws-amplify";
-import AuthenticatorTeacher from "../features/auth/AuthenticatorTeacher";
+import TeacherAuthenticator from "../features/auth/TeacherAuthenticator";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 
 
@@ -21,7 +21,7 @@ const SignupTeacher = ({isUserAuthorized}) => {
     }
     else {
         return (
-            <AuthenticatorTeacher initialAuthState='signup'/>
+            <TeacherAuthenticator initialAuthState='signup'/>
         )
     }
 };
