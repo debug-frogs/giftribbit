@@ -5,10 +5,11 @@ import {DataStore} from "aws-amplify";
 import {Teacher} from "../../../models";
 
 
-const fetchTeacher = (teacherID) => {
+const fetchTeacher = (teacherID = "") => {
     return new Promise((async (resolve, reject) => {
         try {
             const [teacher] = await DataStore.query(Teacher, teacherID)
+
             if (teacher) {
                 return resolve(teacher)
             } else {

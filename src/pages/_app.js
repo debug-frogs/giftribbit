@@ -12,10 +12,7 @@ import theme from "../theme";
 import {CssBaseline} from "@mui/material";
 import Amplify from 'aws-amplify'
 import config from '../aws-exports'
-Amplify.configure({
-    ...config,
-    ssr: true
-})
+Amplify.configure({...config, ssr: true})
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -25,9 +22,7 @@ const MyApp = (props) => {
     const [loading, setLoading] = React.useState(false);
     React.useEffect(() => {
         const start = () => setLoading(true);
-
         const end = () => setLoading(false);
-
         Router.events.on("routeChangeStart", start);
         Router.events.on("routeChangeComplete", end);
         Router.events.on("routeChangeError", end);

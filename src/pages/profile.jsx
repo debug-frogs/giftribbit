@@ -4,7 +4,7 @@ import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import {Parent, Teacher} from "../models";
 import ProfileLayout from "../features/profile/ProfileLayout";
 
-import Amplify, {withSSRContext, DataStore} from "aws-amplify";
+import Amplify, {withSSRContext, DataStore, Hub} from "aws-amplify";
 import config from "../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
@@ -51,7 +51,6 @@ const fetchProfile = (userSub) => {
                     type: "Teacher"
                 })
             }
-
             /* implied else - user not found */
             return reject(new Error("User not found"))
         }
@@ -67,18 +66,39 @@ export const ProfileContext = createContext({});
 
 const ProfilePage = ({isUserAuthorized, userSub}) => {
     const [profile, setProfile] = useState({});
+    const [dataStoreIsReady, setDataStoreIsReady] = useState(false)
+
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
 
+    /* confirm that DataStore is ready */
+    useEffect(async () => {
+        const datastoreListener = Hub.listen("datastore", (capsule) => {
+            const {payload: {event}} = capsule;
+
+            if (event === "ready") {
+                setDataStoreIsReady(true)
+                Hub.remove("datastore", datastoreListener)
+            }
+        });
+        await DataStore.start()
+        return () => {
+            Hub.remove("datastore", datastoreListener)
+        };
+    }, []);
+
+
     /* fetch user profile information */
     useEffect(async () => {
-        fetchProfile(userSub)
-            .then(profile => {
-                setProfile(profile)
-            })
-            .catch(error => {})
-    },[])
+        if (dataStoreIsReady){
+            await fetchProfile(userSub)
+                .then(profile => {
+                    setProfile(profile)
+                })
+                .catch(error => {})
+        }
+    },[dataStoreIsReady])
 
     /* indicate that this is not a login or signup page */
     useEffect(() => {
@@ -94,7 +114,7 @@ const ProfilePage = ({isUserAuthorized, userSub}) => {
         }
     },[])
 
-    if (!isUserAuthorized || !Object.keys(profile).length) {
+    if (!isUserAuthorized || !Object.keys(profile).length || !dataStoreIsReady) {
         return null
     }
     else {

@@ -47,8 +47,10 @@ const handleTeacherSignUp = async (formData) => {
 const TeacherAuthenticator = ({initialAuthState="signup"}) => {
     const router = useRouter()
 
-    const handleAuthStateChange = ((nextAuthState, authData) => {
-        if (nextAuthState === 'signedin' && authData){
+    const handleAuthStateChange = (async (nextAuthState, authData) => {
+        if (nextAuthState === 'signedin' && authData) {
+            /* Clear offline data */
+            await DataStore.clear()
             router.reload()
         }
     })
