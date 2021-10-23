@@ -1,3 +1,24 @@
+type Item @model @auth(rules: [{allow: public}]) @key(name: "byDonation", fields: ["donationID"]) @key(name: "byClassroom", fields: ["classroomID"]) {
+  id: ID!
+  summary: String
+  url: String
+  classroomID: ID
+  donationID: ID
+}
+
+type Donation @model @auth(rules: [{allow: public}]) @key(name: "byClassroom", fields: ["classroomID"]) {
+  id: ID!
+  classroomID: ID
+  Items: [Item] @connection(keyName: "byDonation", fields: ["id"])
+}
+
+type Classroom @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Parents: [Parent] @connection(keyName: "byClassroom", fields: ["id"])
+  Donations: [Donation] @connection(keyName: "byClassroom", fields: ["id"])
+  Items: [Item] @connection(keyName: "byClassroom", fields: ["id"])
+}
+
 type Teacher @model @auth(rules: [{allow: public}]) {
   id: ID!
   sub: ID!
@@ -6,9 +27,10 @@ type Teacher @model @auth(rules: [{allow: public}]) {
   Parents: [Parent] @connection(keyName: "byTeacher", fields: ["id"])
   last_name: String
   school: String
+  Classroom: Classroom @connection
 }
 
-type Parent @model @auth(rules: [{allow: public}]) @key(name: "byTeacher", fields: ["teacherID"]) {
+type Parent @model @auth(rules: [{allow: public}]) @key(name: "byTeacher", fields: ["teacherID"]) @key(name: "byClassroom", fields: ["classroomID"]) {
   id: ID!
   sub: ID
   email: AWSEmail
@@ -16,5 +38,7 @@ type Parent @model @auth(rules: [{allow: public}]) @key(name: "byTeacher", field
   last_name: String
   child: String
   teacherID: ID
+  classroomID: ID
+  Donation: Donation @connection
 }
  
