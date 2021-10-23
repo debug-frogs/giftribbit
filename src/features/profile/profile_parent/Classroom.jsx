@@ -8,8 +8,7 @@ import {Teacher} from "../../../models";
 const fetchTeacher = (teacherID = "") => {
     return new Promise((async (resolve, reject) => {
         try {
-            const [teacher] = await DataStore.query(Teacher, teacherID)
-
+            const teacher = await DataStore.query(Teacher, teacherID)
             if (teacher) {
                 return resolve(teacher)
             } else {
@@ -23,7 +22,8 @@ const fetchTeacher = (teacherID = "") => {
 
 
 const Classroom = () => {
-    const {teacherID} = useContext(ProfileContext)
+    const [profile] = useContext(ProfileContext)
+    const {teacherID} = profile
     const [teacher, setTeacher] = useState({})
 
     useEffect(async () => {
