@@ -1,8 +1,11 @@
 import Home from "../features/home/Home";
-import {withSSRContext} from "aws-amplify";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
+
+import Amplify, {withSSRContext} from "aws-amplify";
+import config from "../aws-exports.js";
+Amplify.configure({ ...config, ssr: true });
 
 
 const index = ({isUserAuthorized}) => {

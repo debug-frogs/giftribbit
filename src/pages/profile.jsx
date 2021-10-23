@@ -1,10 +1,12 @@
 import {createContext, useEffect, useState} from "react";
-import {DataStore, withSSRContext} from 'aws-amplify';
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import {Parent, Teacher} from "../models";
 import ProfileLayout from "../features/profile/ProfileLayout";
 
+import Amplify, {withSSRContext, DataStore} from "aws-amplify";
+import config from "../aws-exports.js";
+Amplify.configure({ ...config, ssr: true });
 
 const fetchProfile = (userSub) => {
     return new Promise(async (resolve, reject) => {
