@@ -4,11 +4,10 @@ import {useSelector} from "react-redux";
 import Navigation from "../navigation/Navigation";
 import Footer from "../footer/Footer";
 import MaterialUiLoadingIcon from "../loading/MaterialUiLoadingIcon";
-import {selectIsLoading} from "../loading/loadingSlice";
 import {selectIsAuthPage} from "../auth/authSlice";
 
 const Layout = (props) => {
-    const isLoading = useSelector(selectIsLoading)
+    const isLoading = props.isLoading
     const isAuthPage = useSelector(selectIsAuthPage)
 
     if (isAuthPage) {
