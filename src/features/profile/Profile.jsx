@@ -7,6 +7,7 @@ const Profile = () => {
     const [profile] = useContext(ProfileContext)
     const {type} = profile
 
+
     switch (type){
         case 'Parent':
             return (
