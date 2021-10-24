@@ -76,7 +76,6 @@ export const getDonation = /* GraphQL */ `
     getDonation(id: $id) {
       id
       classroomID
-      parentID
       _version
       _deleted
       _lastChangedAt
@@ -98,6 +97,20 @@ export const getDonation = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Parent {
+        id
+        email
+        first_name
+        last_name
+        child
+        teacherID
+        classroomID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -111,7 +124,6 @@ export const listDonations = /* GraphQL */ `
       items {
         id
         classroomID
-        parentID
         _version
         _deleted
         _lastChangedAt
@@ -132,6 +144,20 @@ export const listDonations = /* GraphQL */ `
           }
           nextToken
           startedAt
+        }
+        Parent {
+          id
+          email
+          first_name
+          last_name
+          child
+          teacherID
+          classroomID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
       }
       nextToken
@@ -155,7 +181,6 @@ export const syncDonations = /* GraphQL */ `
       items {
         id
         classroomID
-        parentID
         _version
         _deleted
         _lastChangedAt
@@ -176,6 +201,20 @@ export const syncDonations = /* GraphQL */ `
           }
           nextToken
           startedAt
+        }
+        Parent {
+          id
+          email
+          first_name
+          last_name
+          child
+          teacherID
+          classroomID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
         }
       }
       nextToken
@@ -212,7 +251,6 @@ export const getClassroom = /* GraphQL */ `
         items {
           id
           classroomID
-          parentID
           _version
           _deleted
           _lastChangedAt
@@ -233,6 +271,20 @@ export const getClassroom = /* GraphQL */ `
             }
             nextToken
             startedAt
+          }
+          Parent {
+            id
+            email
+            first_name
+            last_name
+            child
+            teacherID
+            classroomID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
           }
         }
         nextToken
@@ -264,24 +316,6 @@ export const getClassroom = /* GraphQL */ `
             _lastChangedAt
             createdAt
             updatedAt
-            Donations {
-              items {
-                id
-                classroomID
-                parentID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-                Items {
-                  nextToken
-                  startedAt
-                }
-              }
-              nextToken
-              startedAt
-            }
           }
           nextToken
           startedAt
@@ -301,36 +335,6 @@ export const getClassroom = /* GraphQL */ `
           _lastChangedAt
           createdAt
           updatedAt
-          Donations {
-            items {
-              id
-              classroomID
-              parentID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-              Items {
-                items {
-                  id
-                  summary
-                  url
-                  classroomID
-                  donationID
-                  _version
-                  _deleted
-                  _lastChangedAt
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-                startedAt
-              }
-            }
-            nextToken
-            startedAt
-          }
         }
         nextToken
         startedAt
@@ -372,7 +376,6 @@ export const listClassrooms = /* GraphQL */ `
           items {
             id
             classroomID
-            parentID
             _version
             _deleted
             _lastChangedAt
@@ -393,6 +396,20 @@ export const listClassrooms = /* GraphQL */ `
               }
               nextToken
               startedAt
+            }
+            Parent {
+              id
+              email
+              first_name
+              last_name
+              child
+              teacherID
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
             }
           }
           nextToken
@@ -424,20 +441,6 @@ export const listClassrooms = /* GraphQL */ `
               _lastChangedAt
               createdAt
               updatedAt
-              Donations {
-                items {
-                  id
-                  classroomID
-                  parentID
-                  _version
-                  _deleted
-                  _lastChangedAt
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-                startedAt
-              }
             }
             nextToken
             startedAt
@@ -457,24 +460,6 @@ export const listClassrooms = /* GraphQL */ `
             _lastChangedAt
             createdAt
             updatedAt
-            Donations {
-              items {
-                id
-                classroomID
-                parentID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-                Items {
-                  nextToken
-                  startedAt
-                }
-              }
-              nextToken
-              startedAt
-            }
           }
           nextToken
           startedAt
@@ -525,7 +510,6 @@ export const syncClassrooms = /* GraphQL */ `
           items {
             id
             classroomID
-            parentID
             _version
             _deleted
             _lastChangedAt
@@ -546,6 +530,20 @@ export const syncClassrooms = /* GraphQL */ `
               }
               nextToken
               startedAt
+            }
+            Parent {
+              id
+              email
+              first_name
+              last_name
+              child
+              teacherID
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
             }
           }
           nextToken
@@ -577,20 +575,6 @@ export const syncClassrooms = /* GraphQL */ `
               _lastChangedAt
               createdAt
               updatedAt
-              Donations {
-                items {
-                  id
-                  classroomID
-                  parentID
-                  _version
-                  _deleted
-                  _lastChangedAt
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-                startedAt
-              }
             }
             nextToken
             startedAt
@@ -610,24 +594,6 @@ export const syncClassrooms = /* GraphQL */ `
             _lastChangedAt
             createdAt
             updatedAt
-            Donations {
-              items {
-                id
-                classroomID
-                parentID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-                Items {
-                  nextToken
-                  startedAt
-                }
-              }
-              nextToken
-              startedAt
-            }
           }
           nextToken
           startedAt
@@ -666,36 +632,6 @@ export const getTeacher = /* GraphQL */ `
           _lastChangedAt
           createdAt
           updatedAt
-          Donations {
-            items {
-              id
-              classroomID
-              parentID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-              Items {
-                items {
-                  id
-                  summary
-                  url
-                  classroomID
-                  donationID
-                  _version
-                  _deleted
-                  _lastChangedAt
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-                startedAt
-              }
-            }
-            nextToken
-            startedAt
-          }
         }
         nextToken
         startedAt
@@ -736,24 +672,6 @@ export const listTeachers = /* GraphQL */ `
             _lastChangedAt
             createdAt
             updatedAt
-            Donations {
-              items {
-                id
-                classroomID
-                parentID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-                Items {
-                  nextToken
-                  startedAt
-                }
-              }
-              nextToken
-              startedAt
-            }
           }
           nextToken
           startedAt
@@ -803,24 +721,6 @@ export const syncTeachers = /* GraphQL */ `
             _lastChangedAt
             createdAt
             updatedAt
-            Donations {
-              items {
-                id
-                classroomID
-                parentID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-                Items {
-                  nextToken
-                  startedAt
-                }
-              }
-              nextToken
-              startedAt
-            }
           }
           nextToken
           startedAt
@@ -846,36 +746,6 @@ export const getParent = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Donations {
-        items {
-          id
-          classroomID
-          parentID
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-          Items {
-            items {
-              id
-              summary
-              url
-              classroomID
-              donationID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-            }
-            nextToken
-            startedAt
-          }
-        }
-        nextToken
-        startedAt
-      }
     }
   }
 `;
@@ -899,36 +769,6 @@ export const listParents = /* GraphQL */ `
         _lastChangedAt
         createdAt
         updatedAt
-        Donations {
-          items {
-            id
-            classroomID
-            parentID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-            Items {
-              items {
-                id
-                summary
-                url
-                classroomID
-                donationID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-              }
-              nextToken
-              startedAt
-            }
-          }
-          nextToken
-          startedAt
-        }
       }
       nextToken
       startedAt
@@ -961,36 +801,6 @@ export const syncParents = /* GraphQL */ `
         _lastChangedAt
         createdAt
         updatedAt
-        Donations {
-          items {
-            id
-            classroomID
-            parentID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-            Items {
-              items {
-                id
-                summary
-                url
-                classroomID
-                donationID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-              }
-              nextToken
-              startedAt
-            }
-          }
-          nextToken
-          startedAt
-        }
       }
       nextToken
       startedAt

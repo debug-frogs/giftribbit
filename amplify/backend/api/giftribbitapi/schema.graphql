@@ -6,11 +6,11 @@ type Item @model @auth(rules: [{allow: public}]) @key(name: "byDonation", fields
   donationID: ID
 }
 
-type Donation @model @auth(rules: [{allow: public}]) @key(name: "byClassroom", fields: ["classroomID"]) @key(name: "byParent", fields: ["parentID"]) {
+type Donation @model @auth(rules: [{allow: public}]) @key(name: "byClassroom", fields: ["classroomID"]) {
   id: ID!
   classroomID: ID
   Items: [Item] @connection(keyName: "byDonation", fields: ["id"])
-  parentID: ID
+  Parent: Parent @connection
 }
 
 type Classroom @model @auth(rules: [{allow: public}]) {
@@ -39,6 +39,5 @@ type Parent @model @auth(rules: [{allow: public}]) @key(name: "byTeacher", field
   child: String
   teacherID: ID
   classroomID: ID
-  Donations: [Donation] @connection(keyName: "byParent", fields: ["id"])
 }
  

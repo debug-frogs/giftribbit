@@ -12,11 +12,11 @@ type DonationMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type ClassroomMetaData = {
+type ParentMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type ParentMetaData = {
+type ClassroomMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -40,11 +40,25 @@ export declare class Donation {
   readonly id: string;
   readonly classroomID?: string;
   readonly Items?: (Item | null)[];
-  readonly parentID?: string;
+  readonly Parent?: Parent;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Donation, DonationMetaData>);
   static copyOf(source: Donation, mutator: (draft: MutableModel<Donation, DonationMetaData>) => MutableModel<Donation, DonationMetaData> | void): Donation;
+}
+
+export declare class Parent {
+  readonly id: string;
+  readonly email?: string;
+  readonly first_name?: string;
+  readonly last_name?: string;
+  readonly child?: string;
+  readonly teacherID?: string;
+  readonly classroomID?: string;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<Parent, ParentMetaData>);
+  static copyOf(source: Parent, mutator: (draft: MutableModel<Parent, ParentMetaData>) => MutableModel<Parent, ParentMetaData> | void): Parent;
 }
 
 export declare class Classroom {
@@ -57,21 +71,6 @@ export declare class Classroom {
   readonly updatedAt?: string;
   constructor(init: ModelInit<Classroom, ClassroomMetaData>);
   static copyOf(source: Classroom, mutator: (draft: MutableModel<Classroom, ClassroomMetaData>) => MutableModel<Classroom, ClassroomMetaData> | void): Classroom;
-}
-
-export declare class Parent {
-  readonly id: string;
-  readonly email?: string;
-  readonly first_name?: string;
-  readonly last_name?: string;
-  readonly child?: string;
-  readonly teacherID?: string;
-  readonly classroomID?: string;
-  readonly Donations?: (Donation | null)[];
-  readonly createdAt?: string;
-  readonly updatedAt?: string;
-  constructor(init: ModelInit<Parent, ParentMetaData>);
-  static copyOf(source: Parent, mutator: (draft: MutableModel<Parent, ParentMetaData>) => MutableModel<Parent, ParentMetaData> | void): Parent;
 }
 
 export declare class Teacher {

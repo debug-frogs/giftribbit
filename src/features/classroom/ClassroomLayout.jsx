@@ -1,4 +1,4 @@
-import {Fragment} from 'react'
+import {Fragment, useContext} from 'react'
 import {Box, Grid, Paper} from "@mui/material";
 import Header from "./Header";
 import HeroImage from "./HeroImage";
@@ -8,8 +8,13 @@ import Subheader from "./Subheader";
 import DonationsContainer from "./donation/DonationsContainer";
 import DonateButton from "./donate/DonateButton";
 import DonationsHeader from "./donation/DonationsHeader";
+import {ClassroomContext} from "../../pages/classroom/[id]";
 
 const ClassroomLayout = () => {
+    const [classroom] = useContext(ClassroomContext)
+    console.log(classroom)
+
+
     return (
         <Fragment>
             {/*desktop view*/}

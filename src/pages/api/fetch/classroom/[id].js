@@ -56,6 +56,7 @@ const fetchClassroom = (API, classroomID) => {
                     Donations: donations,
                     Items: items,
                     Teacher: teacher,
+                    extra: getClassroom
                 })
             }
             /* implied else - classroom not found */

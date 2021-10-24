@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../../features/auth/authSlice";
 import ClassroomLayout from "../../features/classroom/ClassroomLayout";
 import axios from "../../../lib/axios";
+
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
@@ -12,7 +13,6 @@ export const ClassroomContext = createContext({});
 
 const ClassroomPage = ({isUserAuthorized, userSub, classroomData = {}}) => {
     const [classroom, setClassroom] = useState(classroomData);
-    console.log(classroom)
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
