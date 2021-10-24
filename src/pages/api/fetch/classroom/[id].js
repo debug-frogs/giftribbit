@@ -38,16 +38,20 @@ const fetchClassroom = (API, classroomID) => {
                 })
 
                 const donations = Donations.items.map(donation => {
-                    const items = donation.Items.items.map(item => {
-                        return({
-                            id: item.id,
-                            summary: item.summary,
-                            url: item.url,
-                        })
-                    })
                     return({
                         id: donation.id,
-                        items: items
+                        items: donation.Items.items.map(item =>
+                            ({
+                                id: item.id,
+                                summary: item.summary,
+                                url: item.url,
+                            })
+                        ),
+                        Parent: {
+                            first_name: donation.Parent.first_name,
+                            id: donation.Parent.id,
+                            last_name: donation.Parent.last_name,
+                        },
                     })
                 })
 

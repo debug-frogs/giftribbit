@@ -11,12 +11,18 @@ Amplify.configure({ ...config, ssr: true });
 
 export const ClassroomContext = createContext({});
 
-const ClassroomPage = ({isUserAuthorized, userSub, classroomData = {}}) => {
-    const [classroom, setClassroom] = useState(classroomData);
+const ClassroomPage = ({isUserAuthorized, userSub, classroomData, classroomID}) => {
+    const [classroom, setClassroom] = useState({});
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
+
+    /* indicate that this is not a login or signup page */
+    useEffect(async () => {
+        const {data} = await axios.get("/api/fetch/classroom/" + classroomID)
+        setClassroom(data)
+    },[])
 
 
     /* indicate that this is not a login or signup page */
@@ -67,12 +73,13 @@ export async function getServerSideProps(context) {
         else {
             /* fetch classroom data */
             const classroomID = context.params.id
-            const {data} = await axios.get("/api/fetch/classroom/" + classroomID)
+            // const {data} = await axios.get("/api/fetch/classroom/" + classroomID)
             return {
                 props: {
                     isUserAuthorized: !!user,
                     userSub: user.attributes.sub,
-                    classroomData: data
+                    // classroomData: data,
+                    classroomID: classroomID
                 }
             }
         }

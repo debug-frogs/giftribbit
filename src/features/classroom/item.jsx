@@ -1,5 +1,6 @@
 import {ListItem, ListItemIcon, ListItemText, Typography} from "@mui/material";
 import {FaGift} from 'react-icons/fa'
+import Link from "../../../lib/Link";
 
 const Item = ({item}) => {
     return (
@@ -11,8 +12,17 @@ const Item = ({item}) => {
             </ListItemIcon>
             <ListItemText
                 primary={
-                    <Typography>
+                    <Typography
+                        variant='body2'
+                    >
                         {item?.summary}
+                    </Typography>
+                }
+                secondary={
+                    <Typography
+                        variant='caption'
+                    >
+                        {item?.url}
                     </Typography>
                 }
             />

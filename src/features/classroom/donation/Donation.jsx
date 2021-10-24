@@ -8,10 +8,10 @@ const Donation = ({donation}) => {
             <CardHeader
                 avatar={
                     <Avatar>
-                        {donation?.author?.name[0]}
+                        {donation?.Parent?.first_name[0] + donation?.Parent?.last_name[0]}
                     </Avatar>
                 }
-                subheader={`from ${donation?.author?.name}`}
+                subheader={`from ${donation?.Parent?.first_name} ${donation?.Parent?.last_name}`}
             />
             <CardContent>
                 <Grid

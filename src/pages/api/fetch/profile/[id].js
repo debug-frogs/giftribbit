@@ -18,7 +18,7 @@ const fetchProfile = (API, userSub) => {
             const parent = parentData.data.getParent
             if (parent) {
                 /* return Parent ViewModel */
-                const {child, email, first_name, id, last_name, teacherID} = parent
+                const {classroomID, child, email, first_name, id, last_name, teacherID} = parent
 
                 /* Fetch Teacher data */
                 const getTeacherData = teacherID ? await API.graphql({
@@ -36,6 +36,7 @@ const fetchProfile = (API, userSub) => {
                     } : null
 
                 return resolve({
+                    classroomID: classroomID,
                     child: child,
                     email: email,
                     first_name: first_name,

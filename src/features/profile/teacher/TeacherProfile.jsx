@@ -4,6 +4,7 @@ import TeacherInformation from "./TeacherInformation";
 import SignoutButton from "../../auth/SignoutButton";
 import ParentsList from "./ParentsList";
 import AddParent from "./AddParent";
+import Classroom from "./Classroom";
 
 const TeacherProfile = () => {
     return (
@@ -24,11 +25,14 @@ const TeacherProfile = () => {
                 <Divider />
             </Grid>
             <Grid item>
-                <AddParent />
-                <ParentsList />
+                <Classroom />
             </Grid>
             <Grid item>
                 <Divider />
+            </Grid>
+            <Grid item>
+                <AddParent />
+                <ParentsList />
             </Grid>
             <Grid item>
                 <SignoutButton />

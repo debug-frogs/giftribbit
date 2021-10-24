@@ -1,5 +1,5 @@
 import {Fragment, useContext} from 'react'
-import {Box, Grid, Paper} from "@mui/material";
+import {Box, Divider, Grid, Paper} from "@mui/material";
 import Header from "./Header";
 import HeroImage from "./HeroImage";
 import WishlistHeader from "./wishlist/WishlistHeader";
@@ -57,6 +57,22 @@ const ClassroomLayout = () => {
                                                 <Grid item>
                                                     <WishlistHeader />
                                                     <WishlistItems />
+                                                </Grid>
+                                                <Grid item>
+                                                    <Divider />
+                                                </Grid>
+                                                <Grid item>
+                                                    <Grid
+                                                        container
+                                                        justifyContent='center'
+                                                    >
+                                                        <Grid item>
+                                                            <DonateButton/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Divider />
                                                 </Grid>
                                             </Grid>
                                         </Box>
@@ -138,6 +154,9 @@ const ClassroomLayout = () => {
                                 <WishlistItems />
                             </Grid>
                             <Grid item>
+                                <Divider />
+                            </Grid>
+                            <Grid item>
                                 <Grid
                                     container
                                     justifyContent='center'
@@ -146,6 +165,9 @@ const ClassroomLayout = () => {
                                         <DonateButton/>
                                     </Grid>
                                 </Grid>
+                            </Grid>
+                            <Grid item>
+                                <Divider />
                             </Grid>
                             <Grid item>
                                 <DonationsHeader />
