@@ -2,8 +2,9 @@ import {createContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import ProfileLayout from "../features/profile/ProfileLayout";
+import {logger} from "../../lib/logger"
 
-import Amplify, {withSSRContext} from "aws-amplify";
+import Amplify, {Logger, withSSRContext} from "aws-amplify";
 import config from "../aws-exports.js";
 import axios from "../../lib/axios";
 Amplify.configure({ ...config, ssr: true });
@@ -65,7 +66,6 @@ export async function getServerSideProps(context) {
         }
         else {
             const {data} = await axios.get("/api/fetch/profile/" + user.attributes.sub)
-
             return {
                 props: {
                     isUserAuthorized: !!user,
@@ -75,6 +75,7 @@ export async function getServerSideProps(context) {
         }
     }
     catch (error) {
+        logger.error(error)
         console.log(error)
         return {
             props: {},

@@ -17,9 +17,12 @@ import config from '../aws-exports'
 Amplify.configure({...config, ssr: true})
 
 import Layout from "../features/layout/Layout";
+import {logger} from "../../lib/logger";
 
 
 const MyApp = (props) => {
+    logger.warn("TEST")
+
     const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
     const [isLoading, setIsLoading] = React.useState(false);

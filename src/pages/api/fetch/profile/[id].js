@@ -1,7 +1,7 @@
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
-
+import {logger} from "../../../../../lib/logger";
 import * as queries from "../../../../graphql/queries";
 
 
@@ -103,6 +103,7 @@ export default async (req, res) => {
             res.status(200).send(profileVM)
         }
         catch (error) {
+            logger.error(error)
             console.log(error)
             res.status(405).end()
         }
