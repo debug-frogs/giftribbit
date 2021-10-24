@@ -19,10 +19,8 @@ const fetchClassroom = (API, classroomID) => {
 
             if (getClassroom) {
                 /* return Classroom ViewModel */
-                const {id, Donations, Items, Parents, Teacher} = getClassroom
-                const donations = Donations.items
-                const items = Items.items
-                const parents = Parents.items
+                const {id, Donations, Items, Teacher} = getClassroom
+
                 const teacher = {
                     first_name: Teacher.first_name,
                     id: Teacher.id,
@@ -30,11 +28,33 @@ const fetchClassroom = (API, classroomID) => {
                     school: Teacher.school
                 }
 
+                const items = Items?.items?.map( item => {
+                    return({
+                        donationID: item.donationID,
+                        id: item.id,
+                        summary: item.summary,
+                        url: item.url,
+                    })
+                })
+
+                const donations = Donations.items.map(donation => {
+                    const items = donation.Items.items.map(item => {
+                        return({
+                            id: item.id,
+                            summary: item.summary,
+                            url: item.url,
+                        })
+                    })
+                    return({
+                        id: donation.id,
+                        items: items
+                    })
+                })
+
                 return resolve({
                     id: id,
                     Donations: donations,
-                    Items: Items,
-                    Parents: Parents,
+                    Items: items,
                     Teacher: teacher,
                 })
             }
