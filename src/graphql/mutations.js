@@ -66,6 +66,7 @@ export const createDonation = /* GraphQL */ `
     createDonation(input: $input, condition: $condition) {
       id
       classroomID
+      parentID
       _version
       _deleted
       _lastChangedAt
@@ -98,6 +99,7 @@ export const updateDonation = /* GraphQL */ `
     updateDonation(input: $input, condition: $condition) {
       id
       classroomID
+      parentID
       _version
       _deleted
       _lastChangedAt
@@ -130,6 +132,7 @@ export const deleteDonation = /* GraphQL */ `
     deleteDonation(input: $input, condition: $condition) {
       id
       classroomID
+      parentID
       _version
       _deleted
       _lastChangedAt
@@ -186,6 +189,7 @@ export const createClassroom = /* GraphQL */ `
         items {
           id
           classroomID
+          parentID
           _version
           _deleted
           _lastChangedAt
@@ -237,9 +241,48 @@ export const createClassroom = /* GraphQL */ `
             _lastChangedAt
             createdAt
             updatedAt
-            Donation {
+            Donations {
+              items {
+                id
+                classroomID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                Items {
+                  nextToken
+                  startedAt
+                }
+              }
+              nextToken
+              startedAt
+            }
+          }
+          nextToken
+          startedAt
+        }
+      }
+      Parents {
+        items {
+          id
+          email
+          first_name
+          last_name
+          child
+          teacherID
+          classroomID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          Donations {
+            items {
               id
               classroomID
+              parentID
               _version
               _deleted
               _lastChangedAt
@@ -262,49 +305,8 @@ export const createClassroom = /* GraphQL */ `
                 startedAt
               }
             }
-          }
-          nextToken
-          startedAt
-        }
-      }
-      Parents {
-        items {
-          id
-          email
-          first_name
-          last_name
-          child
-          teacherID
-          classroomID
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-          Donation {
-            id
-            classroomID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-            Items {
-              items {
-                id
-                summary
-                url
-                classroomID
-                donationID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-              }
-              nextToken
-              startedAt
-            }
+            nextToken
+            startedAt
           }
         }
         nextToken
@@ -345,6 +347,7 @@ export const updateClassroom = /* GraphQL */ `
         items {
           id
           classroomID
+          parentID
           _version
           _deleted
           _lastChangedAt
@@ -396,9 +399,48 @@ export const updateClassroom = /* GraphQL */ `
             _lastChangedAt
             createdAt
             updatedAt
-            Donation {
+            Donations {
+              items {
+                id
+                classroomID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                Items {
+                  nextToken
+                  startedAt
+                }
+              }
+              nextToken
+              startedAt
+            }
+          }
+          nextToken
+          startedAt
+        }
+      }
+      Parents {
+        items {
+          id
+          email
+          first_name
+          last_name
+          child
+          teacherID
+          classroomID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          Donations {
+            items {
               id
               classroomID
+              parentID
               _version
               _deleted
               _lastChangedAt
@@ -421,49 +463,8 @@ export const updateClassroom = /* GraphQL */ `
                 startedAt
               }
             }
-          }
-          nextToken
-          startedAt
-        }
-      }
-      Parents {
-        items {
-          id
-          email
-          first_name
-          last_name
-          child
-          teacherID
-          classroomID
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-          Donation {
-            id
-            classroomID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-            Items {
-              items {
-                id
-                summary
-                url
-                classroomID
-                donationID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-              }
-              nextToken
-              startedAt
-            }
+            nextToken
+            startedAt
           }
         }
         nextToken
@@ -504,6 +505,7 @@ export const deleteClassroom = /* GraphQL */ `
         items {
           id
           classroomID
+          parentID
           _version
           _deleted
           _lastChangedAt
@@ -555,9 +557,48 @@ export const deleteClassroom = /* GraphQL */ `
             _lastChangedAt
             createdAt
             updatedAt
-            Donation {
+            Donations {
+              items {
+                id
+                classroomID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                Items {
+                  nextToken
+                  startedAt
+                }
+              }
+              nextToken
+              startedAt
+            }
+          }
+          nextToken
+          startedAt
+        }
+      }
+      Parents {
+        items {
+          id
+          email
+          first_name
+          last_name
+          child
+          teacherID
+          classroomID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          Donations {
+            items {
               id
               classroomID
+              parentID
               _version
               _deleted
               _lastChangedAt
@@ -580,49 +621,8 @@ export const deleteClassroom = /* GraphQL */ `
                 startedAt
               }
             }
-          }
-          nextToken
-          startedAt
-        }
-      }
-      Parents {
-        items {
-          id
-          email
-          first_name
-          last_name
-          child
-          teacherID
-          classroomID
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-          Donation {
-            id
-            classroomID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-            Items {
-              items {
-                id
-                summary
-                url
-                classroomID
-                donationID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-              }
-              nextToken
-              startedAt
-            }
+            nextToken
+            startedAt
           }
         }
         nextToken
@@ -662,30 +662,35 @@ export const createTeacher = /* GraphQL */ `
           _lastChangedAt
           createdAt
           updatedAt
-          Donation {
-            id
-            classroomID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-            Items {
-              items {
-                id
-                summary
-                url
-                classroomID
-                donationID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
+          Donations {
+            items {
+              id
+              classroomID
+              parentID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Items {
+                items {
+                  id
+                  summary
+                  url
+                  classroomID
+                  donationID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+                startedAt
               }
-              nextToken
-              startedAt
             }
+            nextToken
+            startedAt
           }
         }
         nextToken
@@ -725,30 +730,35 @@ export const updateTeacher = /* GraphQL */ `
           _lastChangedAt
           createdAt
           updatedAt
-          Donation {
-            id
-            classroomID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-            Items {
-              items {
-                id
-                summary
-                url
-                classroomID
-                donationID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
+          Donations {
+            items {
+              id
+              classroomID
+              parentID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Items {
+                items {
+                  id
+                  summary
+                  url
+                  classroomID
+                  donationID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+                startedAt
               }
-              nextToken
-              startedAt
             }
+            nextToken
+            startedAt
           }
         }
         nextToken
@@ -788,30 +798,35 @@ export const deleteTeacher = /* GraphQL */ `
           _lastChangedAt
           createdAt
           updatedAt
-          Donation {
-            id
-            classroomID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
-            Items {
-              items {
-                id
-                summary
-                url
-                classroomID
-                donationID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
+          Donations {
+            items {
+              id
+              classroomID
+              parentID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Items {
+                items {
+                  id
+                  summary
+                  url
+                  classroomID
+                  donationID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+                startedAt
               }
-              nextToken
-              startedAt
             }
+            nextToken
+            startedAt
           }
         }
         nextToken
@@ -838,30 +853,35 @@ export const createParent = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Donation {
-        id
-        classroomID
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-        Items {
-          items {
-            id
-            summary
-            url
-            classroomID
-            donationID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
+      Donations {
+        items {
+          id
+          classroomID
+          parentID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          Items {
+            items {
+              id
+              summary
+              url
+              classroomID
+              donationID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+            }
+            nextToken
+            startedAt
           }
-          nextToken
-          startedAt
         }
+        nextToken
+        startedAt
       }
     }
   }
@@ -884,30 +904,35 @@ export const updateParent = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Donation {
-        id
-        classroomID
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-        Items {
-          items {
-            id
-            summary
-            url
-            classroomID
-            donationID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
+      Donations {
+        items {
+          id
+          classroomID
+          parentID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          Items {
+            items {
+              id
+              summary
+              url
+              classroomID
+              donationID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+            }
+            nextToken
+            startedAt
           }
-          nextToken
-          startedAt
         }
+        nextToken
+        startedAt
       }
     }
   }
@@ -930,30 +955,35 @@ export const deleteParent = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Donation {
-        id
-        classroomID
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-        Items {
-          items {
-            id
-            summary
-            url
-            classroomID
-            donationID
-            _version
-            _deleted
-            _lastChangedAt
-            createdAt
-            updatedAt
+      Donations {
+        items {
+          id
+          classroomID
+          parentID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          Items {
+            items {
+              id
+              summary
+              url
+              classroomID
+              donationID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+            }
+            nextToken
+            startedAt
           }
-          nextToken
-          startedAt
         }
+        nextToken
+        startedAt
       }
     }
   }

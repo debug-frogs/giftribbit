@@ -129,6 +129,13 @@ export const schema = {
                         "associatedWith": "donationID"
                     }
                 },
+                "parentID": {
+                    "name": "parentID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -159,6 +166,15 @@ export const schema = {
                         "name": "byClassroom",
                         "fields": [
                             "classroomID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byParent",
+                        "fields": [
+                            "parentID"
                         ]
                     }
                 },
@@ -339,17 +355,18 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Donation": {
-                    "name": "Donation",
-                    "isArray": false,
+                "Donations": {
+                    "name": "Donations",
+                    "isArray": true,
                     "type": {
                         "model": "Donation"
                     },
                     "isRequired": false,
                     "attributes": [],
+                    "isArrayNullable": true,
                     "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "parentDonationId"
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "parentID"
                     }
                 },
                 "createdAt": {
@@ -516,5 +533,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "4a46d363a3e0148dc559ab2f4c6bc56b"
+    "version": "dea0ede6ce7fadb1d65e487e6a272d95"
 };

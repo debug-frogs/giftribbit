@@ -40,6 +40,7 @@ export declare class Donation {
   readonly id: string;
   readonly classroomID?: string;
   readonly Items?: (Item | null)[];
+  readonly parentID?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Donation, DonationMetaData>);
@@ -66,7 +67,7 @@ export declare class Parent {
   readonly child?: string;
   readonly teacherID?: string;
   readonly classroomID?: string;
-  readonly Donation?: Donation;
+  readonly Donations?: (Donation | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Parent, ParentMetaData>);
