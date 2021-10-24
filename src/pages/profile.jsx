@@ -1,9 +1,9 @@
-import {createContext, memo, useEffect, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import ProfileLayout from "../features/profile/ProfileLayout";
 
-import Amplify, {withSSRContext, API} from "aws-amplify";
+import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../aws-exports.js";
 import axios from "../../lib/axios";
 Amplify.configure({ ...config, ssr: true });
