@@ -7,7 +7,7 @@ import axios from "../../../../lib/axios";
 
 const AddParent = () => {
     const [profile, setProfile] = useContext(ProfileContext)
-    const {id, Parents} = profile
+    const {classroomID, id, Parents} = profile
 
     const [parentID, setParentID] = useState('')
 
@@ -20,6 +20,7 @@ const AddParent = () => {
         e.preventDefault()
 
         axios.post("/api/update/parent/teacherid", {
+            classroomID: classroomID,
             parentID: parentID,
             teacherID: id,
         })

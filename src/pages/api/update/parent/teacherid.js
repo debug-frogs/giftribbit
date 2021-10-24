@@ -9,12 +9,13 @@ const updateParentTeacherID = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
             /* Update Parent data */
-            const {parentID, teacherID} = input
+            const {classroomID, parentID, teacherID} = input
             const updateParentData = await API.graphql({
                 query: mutations.updateParent,
                 variables: {
                     input: {
                         id: parentID,
+                        classroomID: classroomID,
                         teacherID: teacherID
                     }
                 }
