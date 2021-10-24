@@ -25,10 +25,10 @@ const updateParentTeacherID = async (API, input) => {
                 /* Return Parent ViewModel */
                 const {child, first_name, id, last_name} = parent
                 return resolve({
-                    child: parent.child,
-                    first_name: parent.first_name,
-                    id: parent.id,
-                    last_name: parent.last_name,
+                    child: child,
+                    first_name: first_name,
+                    id: id,
+                    last_name: last_name,
                 })
             }
             else {
@@ -49,8 +49,7 @@ export default async (req, res) => {
     else {
         const {API} = withSSRContext({req})
         try {
-            const {parentID, teacherID} = req.body
-            const parentVM = await updateParentTeacherID(API, parentID, teacherID)
+            const parentVM = await updateParentTeacherID(API, req.body)
             res.status(200).send(parentVM)
         }
         catch (error) {
