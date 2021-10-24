@@ -2,22 +2,27 @@ import {createContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import ProfileLayout from "../features/profile/ProfileLayout";
-import {logger} from "../../lib/logger"
-
-import Amplify, {Logger, withSSRContext} from "aws-amplify";
-import config from "../aws-exports.js";
 import axios from "../../lib/axios";
+
+import Amplify, {withSSRContext} from "aws-amplify";
+import config from "../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
 
 export const ProfileContext = createContext({});
 
-const ProfilePage = ({isUserAuthorized, profileData}) => {
-    const [profile, setProfile] = useState(profileData);
+const ProfilePage = ({isUserAuthorized, profileData, userSub}) => {
+    const [profile, setProfile] = useState({});
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
+
+    /* indicate that this is not a login or signup page */
+    useEffect(async () => {
+        const {data} = await axios.get("/api/fetch/profile/" + userSub)
+        setProfile(data)
+    },[])
 
     /* indicate that this is not a login or signup page */
     useEffect(() => {
@@ -65,11 +70,13 @@ export async function getServerSideProps(context) {
             }
         }
         else {
-            const {data} = await axios.get("/api/fetch/profile/" + user.attributes.sub)
+            const userSub = user.attributes.sub
+            // const {data} = await axios.get("/api/fetch/profile/" + userSub)
             return {
                 props: {
                     isUserAuthorized: !!user,
-                    profileData: data
+                    // profileData: data,
+                    userSub: userSub
                 }
             }
         }
