@@ -21,8 +21,6 @@ import {logger} from "../../lib/logger";
 
 
 const MyApp = (props) => {
-    logger.warn("TEST")
-
     const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
     const [isLoading, setIsLoading] = React.useState(false);
