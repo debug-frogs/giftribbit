@@ -66,7 +66,6 @@ export async function getServerSideProps(context) {
         }
         else {
             const {data} = await axios.get("/api/fetch/profile/" + user.attributes.sub)
-            logger.warn(data)
             return {
                 props: {
                     isUserAuthorized: !!user,
@@ -76,7 +75,6 @@ export async function getServerSideProps(context) {
         }
     }
     catch (error) {
-        logger.error(error)
         console.log(error)
         return {
             props: {},
