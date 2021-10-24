@@ -5,10 +5,11 @@ Amplify.configure({ ...config, ssr: true });
 import * as mutations from "../../../../graphql/mutations";
 
 
-const updateParentTeacherID = async (API, parentID, teacherID) => {
+const updateParentTeacherID = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
             /* Update Parent data */
+            const {parentID, teacherID} = input
             const updateParentData = await API.graphql({
                 query: mutations.updateParent,
                 variables: {
@@ -20,7 +21,6 @@ const updateParentTeacherID = async (API, parentID, teacherID) => {
             })
 
             const parent = updateParentData.data.updateParent
-
             if (parent) {
                 /* Return Parent ViewModel */
                 const {child, first_name, id, last_name} = parent
@@ -48,7 +48,6 @@ export default async (req, res) => {
     }
     else {
         const {API} = withSSRContext({req})
-
         try {
             const {parentID, teacherID} = req.body
             const parentVM = await updateParentTeacherID(API, parentID, teacherID)
