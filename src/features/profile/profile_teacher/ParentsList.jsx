@@ -24,9 +24,6 @@ const ParentsList = () => {
                     <Typography>
                         parent of {parent.child}
                     </Typography>
-                    <Typography>
-                        {parent.email}
-                    </Typography>
                 </Grid>
             )}
         </Grid>

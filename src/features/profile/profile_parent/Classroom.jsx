@@ -1,39 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Grid, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
-import {DataStore} from "aws-amplify";
-import {Teacher} from "../../../models";
-
-
-const fetchTeacher = (teacherID = "") => {
-    return new Promise((async (resolve, reject) => {
-        try {
-            const teacher = await DataStore.query(Teacher, teacherID)
-            if (teacher) {
-                return resolve(teacher)
-            } else {
-                return reject(new Error("teacher not found"))
-            }
-        } catch (error) {
-            reject(error)
-        }
-    }))
-}
 
 
 const Classroom = () => {
     const [profile] = useContext(ProfileContext)
-    const {teacherID} = profile
-    const [teacher, setTeacher] = useState({})
-
-    useEffect(async () => {
-        fetchTeacher(teacherID)
-            .then( teacher => {
-                setTeacher(teacher)
-            })
-            .catch(error => {})
-
-    },[])
+    const {Teacher} = profile
 
     return (
         <Grid
@@ -48,7 +20,7 @@ const Classroom = () => {
             </Grid>
             <Grid item>
                 <Typography>
-                    {teacher?.first_name}&nbsp;{teacher?.last_name}
+                    {Teacher?.first_name}&nbsp;{Teacher?.last_name}
                 </Typography>
             </Grid>
         </Grid>

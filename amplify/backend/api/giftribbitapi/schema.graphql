@@ -17,22 +17,21 @@ type Classroom @model @auth(rules: [{allow: public}]) {
   Parents: [Parent] @connection(keyName: "byClassroom", fields: ["id"])
   Donations: [Donation] @connection(keyName: "byClassroom", fields: ["id"])
   Items: [Item] @connection(keyName: "byClassroom", fields: ["id"])
+  Teacher: Teacher @connection
 }
 
 type Teacher @model @auth(rules: [{allow: public}]) {
   id: ID!
-  sub: ID!
   email: AWSEmail
   first_name: String
   Parents: [Parent] @connection(keyName: "byTeacher", fields: ["id"])
   last_name: String
   school: String
-  Classroom: Classroom @connection
+  classroomID: String
 }
 
 type Parent @model @auth(rules: [{allow: public}]) @key(name: "byTeacher", fields: ["teacherID"]) @key(name: "byClassroom", fields: ["classroomID"]) {
   id: ID!
-  sub: ID
   email: AWSEmail
   first_name: String
   last_name: String

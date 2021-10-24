@@ -5,6 +5,7 @@ import TeacherProfile from "./profile_teacher/TeacherProfile";
 
 const Profile = () => {
     const [profile] = useContext(ProfileContext)
+
     const {type} = profile
 
     switch (type){

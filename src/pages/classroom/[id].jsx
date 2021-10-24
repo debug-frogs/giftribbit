@@ -1,22 +1,23 @@
-import {createContext, memo, useEffect, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
-import ProfileLayout from "../features/profile/ProfileLayout";
-
-import Amplify, {withSSRContext, API} from "aws-amplify";
-import config from "../aws-exports.js";
-import axios from "../../lib/axios";
+import {selectIsAuthorized, selectIsAuthPage} from "../../features/auth/authSlice";
+import ClassroomLayout from "../../features/classroom/ClassroomLayout";
+import axios from "../../../lib/axios";
+import Amplify, {withSSRContext} from "aws-amplify";
+import config from "../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
 
-export const ProfileContext = createContext({});
+export const ClassroomContext = createContext({});
 
-const ProfilePage = ({isUserAuthorized, profileData}) => {
-    const [profile, setProfile] = useState(profileData);
+const ClassroomPage = ({isUserAuthorized, userSub, classroomData = {}}) => {
+    const [classroom, setClassroom] = useState(classroomData);
+    console.log(classroom)
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
+
 
     /* indicate that this is not a login or signup page */
     useEffect(() => {
@@ -32,20 +33,20 @@ const ProfilePage = ({isUserAuthorized, profileData}) => {
         }
     },[])
 
-    if (!isUserAuthorized || !Object.keys(profile).length) {
+    if (!isUserAuthorized || !Object.keys(classroom).length){
         return null
     }
     else {
         return (
-            <ProfileContext.Provider value={[profile, setProfile]}>
-                <ProfileLayout />
-            </ProfileContext.Provider>
+            <ClassroomContext.Provider value={[classroom, setClassroom]}>
+                <ClassroomLayout />
+            </ClassroomContext.Provider>
         )
     }
+
 }
 
-export default ProfilePage
-
+export default ClassroomPage
 
 export async function getServerSideProps(context) {
     try {
@@ -64,12 +65,14 @@ export async function getServerSideProps(context) {
             }
         }
         else {
-            const {data} = await axios.get("/api/fetch/profile/" + user.attributes.sub)
-
+            /* fetch classroom data */
+            const classroomID = context.params.id
+            const {data} = await axios.get("/api/fetch/classroom/" + classroomID)
             return {
                 props: {
                     isUserAuthorized: !!user,
-                    profileData: data
+                    userSub: user.attributes.sub,
+                    classroomData: data
                 }
             }
         }

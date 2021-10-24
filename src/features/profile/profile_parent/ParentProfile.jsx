@@ -1,6 +1,6 @@
 import React from 'react';
 import {Divider, Grid, Typography} from "@mui/material";
-import ButtonSignOut from "../../auth/ButtonSignOut";
+import SignoutButton from "../../auth/SignoutButton";
 import ParentInfo from "./ParentInformation";
 import Classroom from './Classroom'
 
@@ -29,7 +29,7 @@ const ParentProfile = () => {
                 <Divider />
             </Grid>
             <Grid item>
-                <ButtonSignOut />
+                <SignoutButton />
             </Grid>
         </Grid>
     );

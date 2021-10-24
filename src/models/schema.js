@@ -232,6 +232,19 @@ export const schema = {
                         "associatedWith": "classroomID"
                     }
                 },
+                "Teacher": {
+                    "name": "Teacher",
+                    "isArray": false,
+                    "type": {
+                        "model": "Teacher"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "classroomTeacherId"
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -282,13 +295,6 @@ export const schema = {
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
-                    "attributes": []
-                },
-                "sub": {
-                    "name": "sub",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
                     "attributes": []
                 },
                 "email": {
@@ -416,13 +422,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "sub": {
-                    "name": "sub",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "email": {
                     "name": "email",
                     "isArray": false,
@@ -465,18 +464,12 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Classroom": {
-                    "name": "Classroom",
+                "classroomID": {
+                    "name": "classroomID",
                     "isArray": false,
-                    "type": {
-                        "model": "Classroom"
-                    },
+                    "type": "String",
                     "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "teacherClassroomId"
-                    }
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -523,5 +516,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "088466fc2eac1edfa367bc8370f137d3"
+    "version": "4a46d363a3e0148dc559ab2f4c6bc56b"
 };

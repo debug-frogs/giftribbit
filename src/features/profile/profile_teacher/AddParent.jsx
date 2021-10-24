@@ -2,51 +2,14 @@ import React, {useContext, useState} from 'react';
 import {Box, Button, Container, Grid, IconButton, Modal, Paper, TextField, Typography} from "@mui/material";
 import {FaUserPlus} from "react-icons/fa";
 import {ProfileContext} from "../../../pages/profile";
-import {DataStore} from "aws-amplify";
-import {Parent} from "../../../models";
-
-
-const updateParentTeacherID = async (teacherID, parentEmail) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const [parent] = await DataStore.query(Parent, c => c.email("eq", parentEmail))
-
-            if (!parent){
-                return reject(new Error("parent not found"))
-            }
-
-            if (parent.teacherID){
-                return reject(new Error("teacherID already exists"))
-            }
-
-            /* update Parent teacherID */
-            await DataStore.save(
-                Parent.copyOf(parent, updated => {
-                    updated.teacherID = teacherID;
-                })
-            )
-
-            return resolve({
-                child: parent.child,
-                email: parent.email,
-                first_name: parent.first_name,
-                id: parent.id,
-                last_name: parent.last_name,
-                sub: parent.sub,
-            })
-        }
-        catch (error){
-            reject(error)
-        }
-    })
-}
+import axios from "../../../../lib/axios";
 
 
 const AddParent = () => {
     const [profile, setProfile] = useContext(ProfileContext)
     const {id, Parents} = profile
 
-    const [parentEmail, setParentEmail] = useState('')
+    const [parentID, setParentID] = useState('')
 
     /* modal controls */
     const [open, setOpen] = React.useState(false);
@@ -56,17 +19,21 @@ const AddParent = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        updateParentTeacherID(id, parentEmail)
-            .then( (newParent) => {
-                const newProfile = {...profile}
-                const newParents = Parents
-                newParents.push(newParent)
-                newProfile.Parents = newParents
-                setProfile(newProfile)
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        axios.post("/api/update/parent/teacherid", {
+            parentID: parentID,
+            teacherID: id,
+        })
+        .then( (res) => {
+            const {data} = res
+            const newProfile = {...profile}
+            const newParents = Parents
+            newParents.push(data)
+            newProfile.Parents = newParents
+            setProfile(newProfile)
+        })
+        .catch(error => {
+            console.log(error)
+        })
 
         handleClose()
     }
@@ -122,11 +89,11 @@ const AddParent = () => {
                                                     <TextField
                                                         required
                                                         fullWidth
-                                                        label={'Enter a parents email'}
-                                                        value={parentEmail}
+                                                        label={'Enter a parents ID'}
+                                                        value={parentID}
                                                         onChange={
                                                             (event) => {
-                                                                setParentEmail(event.target.value)
+                                                                setParentID(event.target.value)
                                                             }}
                                                     />
                                                 </Grid>

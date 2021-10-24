@@ -51,6 +51,7 @@ export declare class Classroom {
   readonly Parents?: (Parent | null)[];
   readonly Donations?: (Donation | null)[];
   readonly Items?: (Item | null)[];
+  readonly Teacher?: Teacher;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Classroom, ClassroomMetaData>);
@@ -59,7 +60,6 @@ export declare class Classroom {
 
 export declare class Parent {
   readonly id: string;
-  readonly sub?: string;
   readonly email?: string;
   readonly first_name?: string;
   readonly last_name?: string;
@@ -75,13 +75,12 @@ export declare class Parent {
 
 export declare class Teacher {
   readonly id: string;
-  readonly sub: string;
   readonly email?: string;
   readonly first_name?: string;
   readonly Parents?: (Parent | null)[];
   readonly last_name?: string;
   readonly school?: string;
-  readonly Classroom?: Classroom;
+  readonly classroomID?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Teacher, TeacherMetaData>);
