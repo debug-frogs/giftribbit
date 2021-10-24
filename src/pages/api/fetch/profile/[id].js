@@ -2,14 +2,12 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import {logger} from "../../../../../lib/logger";
 import * as queries from "../../../../graphql/queries";
 
 
 const fetchProfile = (API, userSub) => {
     return new Promise(async (resolve, reject) => {
         try {
-            logger.warn("1")
             /* fetch parent profile info */
             const parentData = await API.graphql({
                 query: queries.getParent, variables:
@@ -17,9 +15,7 @@ const fetchProfile = (API, userSub) => {
                         id: userSub
                     }
             });
-            logger.warn("2")
             const parent = parentData.data.getParent
-            logger.warn("3")
             if (parent) {
                 /* return Parent ViewModel */
                 const {child, email, first_name, id, last_name, teacherID} = parent
@@ -29,7 +25,6 @@ const fetchProfile = (API, userSub) => {
                     query: queries.getTeacher,
                     variables: { id: teacherID }
                 }) : {}
-                logger.warn("4")
 
                 const teacher = getTeacherData?.data?.getTeacher
 
@@ -39,7 +34,6 @@ const fetchProfile = (API, userSub) => {
                         first_name: teacher.first_name,
                         last_name: teacher.last_name
                     } : null
-                logger.warn("5")
 
                 return resolve({
                     child: child,
@@ -97,7 +91,6 @@ const fetchProfile = (API, userSub) => {
 }
 
 export default async (req, res) => {
-    logger.warn("Called fetch profile")
     if (req.method !== 'GET'){
         res.status(405).end()
     }
@@ -106,13 +99,10 @@ export default async (req, res) => {
         const {API} = withSSRContext({req});
 
         try {
-            logger.warn("id", id)
             const profileVM = await fetchProfile(API, id)
-            logger.warn("6")
             res.status(200).send(profileVM)
         }
         catch (error) {
-            logger.error(error)
             console.log(error)
             res.status(405).end()
         }
