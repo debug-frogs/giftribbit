@@ -2,7 +2,28 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import * as mutations from "../../../graphql/mutations";
+// import * as mutations from "../../../graphql/mutations";
+
+
+export const createItem = /* GraphQL */ `
+  mutation CreateItem(
+    $input: CreateItemInput!
+    $condition: ModelItemConditionInput
+  ) {
+    createItem(input: $input, condition: $condition) {
+      id
+      summary
+      url
+      classroomID
+      donationID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 
 const addItem = async (API, input) => {
@@ -12,7 +33,7 @@ const addItem = async (API, input) => {
 
             /* Update Parent data */
             const createItemData = await API.graphql({
-                query: mutations.createItem,
+                query: createItem,
                 variables: {
                     input: {
                         "classroomID": classroomID,
