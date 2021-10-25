@@ -3,7 +3,6 @@ import {FaEdit} from 'react-icons/fa';
 import {Box, IconButton, Menu, MenuItem, Modal} from "@mui/material";
 import {useState} from "react";
 import AddItemMenu from "./AddItemMenu"
-import AddItemContainer from "./AddItemContainer";
 
 const ItemMenuButton = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -79,7 +78,7 @@ const ItemMenuButton = () => {
                 style={{overflow: 'scroll',}}
             >
                 <Box style={modalContentStyle}>
-                    <AddItemContainer handleModalClose={handleModalClose}/>
+                    <AddItemMenu handleModalClose={handleModalClose}/>
                 </Box>
             </Modal>
         </Fragment>

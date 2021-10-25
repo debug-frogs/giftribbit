@@ -2,29 +2,7 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-// import * as mutations from "../../../graphql/mutations";
-
-
-export const createItem = /* GraphQL */ `
-  mutation CreateItem(
-    $input: CreateItemInput!
-    $condition: ModelItemConditionInput
-  ) {
-    createItem(input: $input, condition: $condition) {
-      id
-      summary
-      url
-      classroomID
-      donationID
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
+import * as mutations from "../../../graphql/mutations";
 
 const addItem = async (API, input) => {
     return new Promise(async (resolve, reject) => {
@@ -33,7 +11,7 @@ const addItem = async (API, input) => {
 
             /* Update Parent data */
             const createItemData = await API.graphql({
-                query: createItem,
+                query: mutations.createItem,
                 variables: {
                     input: {
                         "classroomID": classroomID,

@@ -1,26 +1,84 @@
-import {useRef, useState} from 'react';
+import {useContext, useRef, useState} from 'react';
 import {Box, Button, FormControl, Grid, Input, InputLabel, Paper} from "@mui/material";
-import cuid from 'cuid'
+import axios from "../../../../lib/axios";
+import {ClassroomContext} from "../../../pages/classroom/[id]";
+import * as mutations from "../../../graphql/mutations";
+import {API} from "aws-amplify";
 
 
-const AddItemMenu = ({items = [], setItems = () => {}}) => {
+const addItem = (input) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const {classroomID, summary, url} = input
+
+            /* Update Parent data */
+            const createItemData = await API.graphql({
+                query: mutations.createItem,
+                variables: {
+                    input: {
+                        "classroomID": classroomID,
+                        "summary": summary,
+                        "url": url,
+                    }
+                }
+            });
+
+            const item = createItemData.data.createItem
+
+            if (item) {
+                /* Return Parent ID */
+                const {id} = item
+                return resolve(id)
+            }
+            else {
+                return reject(new Error("item not found"))
+            }
+        }
+        catch (error){
+            reject(error)
+        }
+    })
+}
+
+
+const AddItemMenu = ({handleModalClose}) => {
+    const [classroom, setClassroom] = useContext(ClassroomContext)
+    const {id} = classroom
+
     const itemNameInput = useRef(null);
     const [itemName, setItemName] = useState('')
 
     const itemUrlInput = useRef(null);
     const [itemUrl, setItemUrl] = useState('')
 
-    const handleAddItem = (e) => {
+    const handleAddItem = async (e) => {
         e.preventDefault()
 
         const newItem = {
-            key: cuid(),
             summary: itemNameInput.current.value,
             url: itemUrlInput.current.value
         }
-        setItems([...items, newItem])
-        setItemName('')
-        setItemUrl('')
+
+        const newItemId = await addItem({
+            "classroomID": id,
+            "summary": newItem.summary,
+            "url": newItem.url,
+        })
+
+        // const {data} = await axios.post('./api/create/item', {
+        //     classroomID: id,
+        //     item: newItem
+        // })
+        // newItem.id = data
+
+        newItem.id = newItemId
+
+        const newItems = [...classroom.Items, newItem]
+        const newClassroom = {...classroom}
+        newClassroom.Items = newItems
+        setClassroom(newClassroom)
+
+        handleModalClose()
     }
 
     return (
