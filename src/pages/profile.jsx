@@ -12,17 +12,16 @@ Amplify.configure({ ...config, ssr: true });
 export const ProfileContext = createContext({});
 
 const ProfilePage = ({isUserAuthorized, profileData, userSub}) => {
-    const [profile, setProfile] = useState({});
+    const [profile, setProfile] = useState({profileData});
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
 
-    /* indicate that this is not a login or signup page */
-    useEffect(async () => {
-        const {data} = await axios.get("/api/fetch/profile/" + userSub)
-        setProfile(data)
-    },[])
+    // useEffect(async () => {
+    //     const {data} = await axios.get("/api/fetch/profile/" + userSub)
+    //     setProfile(data)
+    // },[])
 
     /* indicate that this is not a login or signup page */
     useEffect(() => {
@@ -71,11 +70,11 @@ export async function getServerSideProps(context) {
         }
         else {
             const userSub = user.attributes.sub
-            // const {data} = await axios.get("/api/fetch/profile/" + userSub)
+            const {data} = await axios.get("/api/fetch/profile/" + userSub)
             return {
                 props: {
                     isUserAuthorized: !!user,
-                    // profileData: data,
+                    profileData: data,
                     userSub: userSub
                 }
             }
