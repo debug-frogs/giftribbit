@@ -4,7 +4,6 @@ Amplify.configure({ ...config, ssr: true });
 
 import * as queries from "../../../../graphql/queries";
 
-
 export const fetchClassroom = (API, classroomID) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -55,6 +54,7 @@ export const fetchClassroom = (API, classroomID) => {
                     })
                 })
 
+                /* return classroom View Model */
                 return resolve({
                     id: id,
                     Donations: donations,
@@ -63,7 +63,7 @@ export const fetchClassroom = (API, classroomID) => {
                     extra: getClassroom
                 })
             }
-            /* implied else - classroom not found */
+            /* classroom not found */
             return reject(new Error("Classroom not found"))
         }
         catch (error){
