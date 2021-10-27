@@ -1,6 +1,6 @@
 {
-  "name": "ribbit",
-  "version": "0.1.0",
+  "name": "giftribbit",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -18,8 +18,7 @@
     "@mui/material": "^5.0.0",
     "@mui/styles": "^5.0.0",
     "@reduxjs/toolkit": "^1.6.1",
-    "amplify": "^0.0.11",
-    "aws-amplify": "^4.3.3",
+    "aws-amplify": "4.3.3",
     "axios": "^0.21.4",
     "clsx": "^1.1.1",
     "cuid": "^2.1.8",
