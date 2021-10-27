@@ -2,43 +2,6 @@ import {useContext, useRef, useState} from 'react';
 import {Box, Button, FormControl, Grid, Input, InputLabel, Paper} from "@mui/material";
 import axios from "../../../../lib/axios";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
-import * as mutations from "../../../graphql/mutations";
-import {API} from "aws-amplify";
-
-
-const addItem = (input) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const {classroomID, summary, url} = input
-
-            /* Update Parent data */
-            const createItemData = await API.graphql({
-                query: mutations.createItem,
-                variables: {
-                    input: {
-                        "classroomID": classroomID,
-                        "summary": summary,
-                        "url": url,
-                    }
-                }
-            });
-
-            const item = createItemData.data.createItem
-
-            if (item) {
-                /* Return Parent ID */
-                const {id} = item
-                return resolve(id)
-            }
-            else {
-                return reject(new Error("item not found"))
-            }
-        }
-        catch (error){
-            reject(error)
-        }
-    })
-}
 
 
 const AddItemMenu = ({handleModalClose}) => {
@@ -58,20 +21,12 @@ const AddItemMenu = ({handleModalClose}) => {
             summary: itemNameInput.current.value,
             url: itemUrlInput.current.value
         }
-
-        const newItemId = await addItem({
-            "classroomID": id,
-            "summary": newItem.summary,
-            "url": newItem.url,
+        const {data} = await axios.post('./api/create/item', {
+            classroomID: id,
+            summary: newItem.summary,
+            url: newItem.url
         })
-
-        // const {data} = await axios.post('./api/create/item', {
-        //     classroomID: id,
-        //     item: newItem
-        // })
-        // newItem.id = data
-
-        newItem.id = newItemId
+        newItem.id = data
 
         const newItems = [...classroom.Items, newItem]
         const newClassroom = {...classroom}
