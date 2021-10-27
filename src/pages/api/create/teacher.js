@@ -45,14 +45,8 @@ const createTeacher = async (API, input) => {
                 }
             })
 
-            if (teacher) {
-                /* Return Teacher ID */
-                const {id} = teacher
-                return resolve(id)
-            }
-            else {
-                return reject(new Error("parent not found"))
-            }
+            /* Return Teacher ID */
+            return resolve(teacher.id)
         }
         catch (error){
             reject(error)
