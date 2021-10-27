@@ -5,7 +5,7 @@ Amplify.configure({ ...config, ssr: true });
 import * as queries from "../../../../graphql/queries";
 
 
-const fetchProfile = (API, userSub) => {
+export const fetchProfile = (API, userSub) => {
     return new Promise(async (resolve, reject) => {
         try {
             /* fetch parent profile info */

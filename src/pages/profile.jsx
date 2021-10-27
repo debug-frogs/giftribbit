@@ -6,22 +6,18 @@ import axios from "../../lib/axios";
 
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../aws-exports.js";
+import {fetchProfile} from "./api/fetch/profile/[id]";
 Amplify.configure({ ...config, ssr: true });
 
 
 export const ProfileContext = createContext({});
 
-const ProfilePage = ({isUserAuthorized, profileData, userSub}) => {
+const ProfilePage = ({isUserAuthorized, profileData}) => {
     const [profile, setProfile] = useState(profileData);
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
-
-    // useEffect(async () => {
-    //     const {data} = await axios.get("/api/fetch/profile/" + userSub)
-    //     setProfile(data)
-    // },[])
 
     /* indicate that this is not a login or signup page */
     useEffect(() => {
@@ -54,7 +50,7 @@ export default ProfilePage
 
 export async function getServerSideProps(context) {
     try {
-        const {Auth} = withSSRContext(context)
+        const {Auth, API} = withSSRContext(context)
 
         /* get the current user from Auth */
         const user = await Auth.currentAuthenticatedUser().catch(() => null)
@@ -70,12 +66,12 @@ export async function getServerSideProps(context) {
         }
         else {
             const userSub = user.attributes.sub
-            const {data} = await axios.get("/api/fetch/profile/" + userSub)
-            console.log(data)
+            const profile = await fetchProfile(API, userSub)
+
             return {
                 props: {
                     isUserAuthorized: !!user,
-                    profileData: data,
+                    profileData: profile,
                     userSub: userSub
                 }
             }

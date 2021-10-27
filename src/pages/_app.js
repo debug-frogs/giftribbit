@@ -17,7 +17,6 @@ import config from '../aws-exports'
 Amplify.configure({...config, ssr: true})
 
 import Layout from "../features/layout/Layout";
-import {logger} from "../../lib/logger";
 
 
 const MyApp = (props) => {
