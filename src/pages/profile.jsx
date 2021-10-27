@@ -12,7 +12,7 @@ Amplify.configure({ ...config, ssr: true });
 export const ProfileContext = createContext({});
 
 const ProfilePage = ({isUserAuthorized, profileData, userSub}) => {
-    const [profile, setProfile] = useState({profileData});
+    const [profile, setProfile] = useState(profileData);
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
@@ -71,6 +71,7 @@ export async function getServerSideProps(context) {
         else {
             const userSub = user.attributes.sub
             const {data} = await axios.get("/api/fetch/profile/" + userSub)
+            console.log(data)
             return {
                 props: {
                     isUserAuthorized: !!user,
