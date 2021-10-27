@@ -2,7 +2,6 @@ import {createContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import ProfileLayout from "../features/profile/ProfileLayout";
-import axios from "../../lib/axios";
 
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../aws-exports.js";
@@ -66,12 +65,12 @@ export async function getServerSideProps(context) {
         }
         else {
             const userSub = user.attributes.sub
-            const profile = await fetchProfile(API, userSub)
+            const profileData = await fetchProfile(API, userSub)
 
             return {
                 props: {
                     isUserAuthorized: !!user,
-                    profileData: profile,
+                    profileData: profileData,
                     userSub: userSub
                 }
             }

@@ -5,7 +5,7 @@ Amplify.configure({ ...config, ssr: true });
 import * as queries from "../../../../graphql/queries";
 
 
-const fetchClassroom = (API, classroomID) => {
+export const fetchClassroom = (API, classroomID) => {
     return new Promise(async (resolve, reject) => {
         try {
             const classroomData = await API.graphql({

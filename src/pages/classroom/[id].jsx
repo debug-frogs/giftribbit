@@ -6,24 +6,18 @@ import axios from "../../../lib/axios";
 
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../aws-exports.js";
+import {fetchClassroom} from "../api/fetch/classroom/[id]";
 Amplify.configure({ ...config, ssr: true });
 
 
 export const ClassroomContext = createContext({});
 
-const ClassroomPage = ({isUserAuthorized, userSub, classroomData, classroomID}) => {
-    const [classroom, setClassroom] = useState({});
+const ClassroomPage = ({isUserAuthorized, classroomData}) => {
+    const [classroom, setClassroom] = useState(classroomData);
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
-
-    /* indicate that this is not a login or signup page */
-    useEffect(async () => {
-        const {data} = await axios.get("/api/fetch/classroom/" + classroomID)
-        setClassroom(data)
-    },[])
-
 
     /* indicate that this is not a login or signup page */
     useEffect(() => {
@@ -56,7 +50,7 @@ export default ClassroomPage
 
 export async function getServerSideProps(context) {
     try {
-        const {Auth} = withSSRContext(context)
+        const {Auth, API} = withSSRContext(context)
 
         /* get the current user from Auth */
         const user = await Auth.currentAuthenticatedUser().catch(() => null)
@@ -73,12 +67,13 @@ export async function getServerSideProps(context) {
         else {
             /* fetch classroom data */
             const classroomID = context.params.id
-            // const {data} = await axios.get("/api/fetch/classroom/" + classroomID)
+            const classroomData = await fetchClassroom(API, classroomID)
+
             return {
                 props: {
                     isUserAuthorized: !!user,
                     userSub: user.attributes.sub,
-                    // classroomData: data,
+                    classroomData: classroomData,
                     classroomID: classroomID
                 }
             }
