@@ -4,7 +4,6 @@ Amplify.configure({ ...config, ssr: true });
 
 import * as mutations from "../../../graphql/mutations";
 
-
 const createTeacher = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
