@@ -4,11 +4,11 @@ Amplify.configure({ ...config, ssr: true });
 
 import * as mutations from "../../../graphql/mutations";
 
-const addItem = async (API, input) => {
+
+export const addItem = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
             const {classroomID, summary, url} = input
-
             /* Update Parent data */
             const createItemData = await API.graphql({
                 query: mutations.createItem,
@@ -20,17 +20,9 @@ const addItem = async (API, input) => {
                     }
                 }
             });
-
-            const item = createItemData.data.createItem
-
-            if (item) {
-                /* Return Parent ID */
-                const {id} = item
-                return resolve(id)
-            }
-            else {
-                return reject(new Error("item not found"))
-            }
+            /* Return Parent ID */
+            const {id} = createItemData.data.createItem
+            return resolve(id)
         }
         catch (error){
             reject(error)
@@ -45,17 +37,8 @@ export default async (req, res) => {
     }
     else {
         const {API} = withSSRContext({req})
-
-        const {classroomID, item} = req.body
-        const {summary, url} = item
-
         try {
-            const newItemID = await addItem(API,
-                {
-                    classroomID: classroomID,
-                    summary: summary,
-                    url: url
-                })
+            const newItemID = await addItem(API, req.body)
             res.status(200).send(newItemID)
         }
         catch (error) {
