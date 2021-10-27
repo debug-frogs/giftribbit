@@ -9,7 +9,6 @@ const createParent = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
             const {email, first_name, id, last_name, child} = input
-
             /* Update Parent data */
             const createParentData = await API.graphql({
                 query: mutations.createParent,
@@ -23,17 +22,8 @@ const createParent = async (API, input) => {
                     }
                 }
             });
-
-            const parent = createParentData.data.createParent
-
-            if (parent) {
-                /* Return Parent ID */
-                const {id} = parent
-                return resolve(id)
-            }
-            else {
-                return reject(new Error("parent not found"))
-            }
+            /* return parent ID */
+            return resolve(createParentData.data.createParent.id)
         }
         catch (error){
             reject(error)
