@@ -67,7 +67,6 @@ export const fetchClassroom = (API, classroomID) => {
                     Donations: donations,
                     Items: items,
                     Teacher: teacher,
-                    extra: getClassroom
                 })
             }
             /* classroom not found */

@@ -1,6 +1,6 @@
 import {Fragment, useContext} from 'react'
 import {FaEdit, FaTimes} from 'react-icons/fa';
-import {Box, IconButton, Menu, MenuItem, Modal} from "@mui/material";
+import {Box, IconButton, Menu, MenuItem, Modal, Typography} from "@mui/material";
 import {useState} from "react";
 import AddItem from "./AddItem"
 import {WishlistContext} from "./Wishlist";
@@ -11,6 +11,9 @@ const WishlistMenu = () => {
 
     const [profile] = useContext(ClassroomContext).profile
     const {type} = profile
+
+    const [classroom] = useContext(ClassroomContext).classroom
+    const {Items} = classroom
 
     const [editable, setEditable] = wishlistContext.editable
     const [removable, setRemovable] = wishlistContext.removable
@@ -67,6 +70,7 @@ const WishlistMenu = () => {
                     aria-haspopup="true"
                     aria-expanded={menuOpen ? 'true' : undefined}
                     onClick={handleMenuClick}
+                    color='secondary'
                     size='small'
                 >
                     {editable || removable ? <FaTimes/> : <FaEdit/>}
@@ -89,17 +93,31 @@ const WishlistMenu = () => {
                     <MenuItem
                         onClick={handleModalOpen}
                     >
-                        Add Item
+                        <Typography
+                            variant='body2'
+                        >
+                            Add Item
+                        </Typography>
                     </MenuItem>
                     <MenuItem
-                        onClick={handleEditItem}
+                        disabled={!Items.length}
+                        onClick={Items.length ? handleEditItem : null}
                     >
-                        Edit Item
+                        <Typography
+                            variant='body2'
+                        >
+                            Edit Item
+                        </Typography>
                     </MenuItem>
                     <MenuItem
-                        onClick={handleRemoveItem}
+                        disabled={!Items.length}
+                        onClick={Items.length ? handleEditItem : null}
                     >
-                        Remove Item
+                        <Typography
+                            variant='body2'
+                        >
+                            Remove Item
+                        </Typography>
                     </MenuItem>
                 </Menu>
                 <Modal

@@ -1,10 +1,11 @@
 import {Fragment, useState} from 'react'
-import {Box, IconButton, ListItem, ListItemIcon, ListItemText, Modal, Typography} from "@mui/material";
+import {Box, Icon, IconButton, ListItem, ListItemIcon, ListItemText, Modal, Typography} from "@mui/material";
 import {FaGift, FaBackspace, FaRegEdit} from 'react-icons/fa'
 import EditItem from "./wishlist/EditItem";
 import RemoveItem from "./wishlist/RemoveItem";
+import Link from "../../../lib/Link";
 
-const Item = ({item = {}, editable = false, removable = false}) => {
+const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleModalOpen = () => {
@@ -53,21 +54,34 @@ const Item = ({item = {}, editable = false, removable = false}) => {
                 <ListItemIcon
                     style={{minWidth: '32px'}}
                 >
-                    <FaGift/>
+                    <Icon
+                        fontSize='small'
+                        color={disabled ? 'disabled' : 'primary'}
+                    >
+                        <FaGift/>
+                    </Icon>
                 </ListItemIcon>
                 <ListItemText
                     primary={
-                        <Typography
-                            variant='body2'
+                        <Link
+                            noLinkStyle
+                            href={item.url}
+                            style={{ textDecoration: 'none' }}
                         >
-                            {item?.summary}
-                        </Typography>
+                            <Typography
+                                color={disabled ? 'textSecondary' : 'secondary'}
+                                variant='body1'
+                            >
+                                {item?.summary}
+                            </Typography>
+                        </Link>
                     }
                     secondary={
                         <Typography
+                            color={disabled ? 'textSecondary' : 'textPrimary'}
                             variant='caption'
                         >
-                            {item?.url}
+                            {item?.summary}
                         </Typography>
                     }
                 />

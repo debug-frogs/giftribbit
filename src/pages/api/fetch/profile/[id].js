@@ -32,7 +32,8 @@ export const fetchProfile = (API, userSub) => {
                 const teacherVM = teacher ?
                     {
                         first_name: teacher.first_name,
-                        last_name: teacher.last_name
+                        last_name: teacher.last_name,
+                        school: teacher.school
                     } : null
 
                 return resolve({

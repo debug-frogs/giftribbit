@@ -16,10 +16,10 @@ const Header = () => {
             <Typography
                 display='inline'
                 variant='h5'
-                color='secondary'
+                color='primary'
                 noWrap
             >
-                {Teacher.first_name} {Teacher.last_name}s&nbsp;
+                {Teacher.first_name} {Teacher.last_name}'s&nbsp;
             </Typography>
             <Typography
                 display='inline'

@@ -5,6 +5,7 @@ import {FaUserCircle} from "react-icons/fa";
 const ProfileButton = () => {
     return (
         <IconButton
+            color='secondary'
             component={NextLinkComposed}
             to={{pathname: '/profile',}}
         >

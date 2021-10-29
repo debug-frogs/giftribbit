@@ -1,5 +1,5 @@
 import React from 'react';
-import {Divider, Grid, Typography} from "@mui/material";
+import {Box, Divider, Grid, Paper, Typography} from "@mui/material";
 import TeacherInformation from "./TeacherInformation";
 import SignoutButton from "../../auth/SignoutButton";
 import ParentsList from "./ParentsList";

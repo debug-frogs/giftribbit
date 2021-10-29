@@ -5,16 +5,43 @@ import {ClassroomContext} from "../../../pages/classroom/[id]";
 import axios from "../../../../lib/axios";
 
 const ContributeItem = ({handleClose}) => {
-    const [classroom] = useContext(ClassroomContext).classroom
+    const [classroom, setClassroom] = useContext(ClassroomContext).classroom
     const [profile] = useContext(ClassroomContext).profile
 
     const {Items} = classroom
+    const filteredItems = Items.filter(item => !item.donationID)
 
     const [checkedItems, setCheckedItems] = useState([])
     const [disabled, setDisabled] = useState(false)
 
     const handleDonate = async () => {
         setDisabled(true)
+
+        const parentID = profile.id
+        const donationID = classroom.Donations.find(donation => donation.Parent.id === parentID).id
+        const checkedIDs = checkedItems.map(c => c.id)
+        const updatedItems = []
+        for (const item of checkedItems) {
+            const {data} = await axios.patch('./api/update/item', {
+                            donationID: donationID,
+                            id: item.id,
+                            summary: item.summary,
+                            url: item.url,
+                            _version: item._version
+                        })
+            updatedItems.push(data)
+        }
+
+        const newClassroom = {...classroom}
+        newClassroom.Items.forEach(c => {
+            if (checkedIDs.includes(c.id)){
+                c.donationID = donationID
+            }
+        })
+        const donation = newClassroom.Donations.find(c => c.id === donationID)
+        donation.items = [...donation.items, ...updatedItems]
+
+        setClassroom(newClassroom)
         handleClose()
     }
 
@@ -37,7 +64,7 @@ const ContributeItem = ({handleClose}) => {
                         </Grid>
                         <Grid item>
                             <List dense>
-                                {Items?.map((item) =>
+                                {filteredItems?.map((item) =>
                                     <ListItem
                                         key={hash({...item})}
                                         disablePadding
@@ -46,11 +73,12 @@ const ContributeItem = ({handleClose}) => {
                                         <ListItemIcon>
                                             <Checkbox
                                                 onClick={(event) => {
+                                                    const newCheckedItems = [...checkedItems].filter(c => c.id !== item.id)
                                                     if (event.target.checked) {
-                                                        setCheckedItems(item.id)
+                                                        newCheckedItems.push(item)
+                                                        setCheckedItems(newCheckedItems)
                                                     }
                                                     else {
-                                                        const newCheckedItems = [...checkedItems].filter(id => id !== item.id)
                                                         setCheckedItems(newCheckedItems)
                                                     }
                                                 }}

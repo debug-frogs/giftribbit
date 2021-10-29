@@ -1,7 +1,8 @@
 import React, {useContext} from 'react';
 import {ProfileContext} from "../../../pages/profile";
-import {Grid, Typography} from "@mui/material";
+import {Grid, List, ListItem, ListItemIcon, ListItemText, Typography} from "@mui/material";
 import hash from 'object-hash'
+import {RiParentLine} from 'react-icons/ri'
 
 
 const ParentsList = () => {
@@ -9,24 +10,23 @@ const ParentsList = () => {
     const {Parents} = profile
 
     return (
-        <Grid
-            container
-            direction='column'
-        >
+        <List>
             {Parents.map( (parent) =>
-                <Grid
-                    item
+                <ListItem
+                    dense
                     key={hash(parent)}
                 >
-                    <Typography>
-                        {parent.first_name}&nbsp;{parent.last_name}
-                    </Typography>
-                    <Typography>
-                        parent of {parent.child}
-                    </Typography>
-                </Grid>
+                    <ListItemText
+                        primary={
+                            `${parent.first_name} ${parent.last_name}`
+                        }
+                        secondary={
+                            `parent of ${parent.child}`
+                        }
+                    />
+                </ListItem>
             )}
-        </Grid>
+        </List>
     )
 };
 

@@ -43,7 +43,7 @@ const AddParent = () => {
         <Grid
             container
             alignItems='center'
-            spacing={3}
+            spacing={5}
         >
             <Grid item>
                 <Typography style={{ fontWeight: 600 }}>

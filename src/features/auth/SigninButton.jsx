@@ -6,7 +6,7 @@ const SigninButton = () => {
     return (
         <Button
             variant='contained'
-            color='primary'
+            color='secondary'
             size='small'
             component={NextLinkComposed}
             to={{pathname: '/signin',}}

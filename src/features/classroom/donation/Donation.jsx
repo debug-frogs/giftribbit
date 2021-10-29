@@ -1,7 +1,8 @@
 import Item from "../Item";
 import hash from 'object-hash'
-import {Avatar, Card, CardContent, CardHeader, Grid, List} from "@mui/material";
-import {createContext, useState} from "react";
+import {Avatar, Card, CardContent, CardHeader, Grid, List, Typography} from "@mui/material";
+import {createContext, Fragment, useState} from "react";
+import theme from "../../../theme";
 
 export const DonationContext = createContext({})
 
@@ -15,11 +16,26 @@ const Donation = ({donation}) => {
             <Card elevation={1}>
                 <CardHeader
                     avatar={
-                        <Avatar>
+                        <Avatar
+                            sx={{ bgcolor: theme.palette.primary.main }}
+                        >
                             {donation?.Parent?.first_name[0] + donation?.Parent?.last_name[0]}
                         </Avatar>
                     }
-                    subheader={`from ${donation?.Parent?.first_name} ${donation?.Parent?.last_name}`}
+                    subheader={
+                        <Fragment>
+                            <Typography
+                                variant='caption'
+                            >
+                                Donations from
+                            </Typography>
+                            <Typography
+                                variant='subtitle2'
+                            >
+                                {donation?.Parent?.first_name} {donation?.Parent?.last_name}
+                            </Typography>
+                        </Fragment>
+                    }
                 />
                 <CardContent>
                     <Grid

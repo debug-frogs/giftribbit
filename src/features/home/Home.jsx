@@ -9,7 +9,7 @@ const Home = () => {
         <Grid
             container
             direction='column'
-            spacing={4}
+            spacing={3}
             alignItems='center'
         >
             <Grid item>
@@ -39,15 +39,14 @@ const Home = () => {
                 sx={{ display: { sm: 'block', xs: 'none' } }}
             >
                 <Container
-                    maxWidth='sm'
+                    maxWidth='xs'
                 >
                     <Typography
                         align='center'
                         variant='body2'
                     >
-                        GiftRibbit provides elementary school teachers an interface to request
-                        classroom supplies and donations for student success! Are you a teacher
-                        who is in need of additional classroom supplies? Sign up today!
+                        Providing elementary school teachers an interface to request
+                        classroom supplies and donations for student success!
                     </Typography>
                 </Container>
             </Grid>

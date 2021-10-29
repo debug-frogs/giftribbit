@@ -16,11 +16,12 @@ const WishlistItems = () => {
 
     return (
         <List dense>
-            { Items?.map((item) =>
+            {Items?.map((item) =>
                 <Item
                     item={item}
                     editable={editable}
                     removable={removable}
+                    disabled={!!item.donationID}
                     key={hash({...item})}
                 />
             )}

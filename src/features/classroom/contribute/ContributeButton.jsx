@@ -7,6 +7,10 @@ const ContributeButton = () => {
     const [profile] = useContext(ClassroomContext).profile
     const {type} = profile
 
+    const [classroom] = useContext(ClassroomContext).classroom
+    const {Items} = classroom
+    const filteredItems = Items.filter(item => !item.donationID)
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -21,10 +25,10 @@ const ContributeButton = () => {
     return (
         <Fragment>
             <Button
-                disabled={type === 'Teacher'}
+                disabled={type === 'Teacher' || filteredItems.length === 0}
                 variant='contained'
                 size='large'
-                color='primary'
+                color='secondary'
                 onClick={handleOpen}
             >
                 Contribute a donation

@@ -40,7 +40,7 @@ const AddItem = ({handleModalClose}) => {
                         <Grid
                             container
                             direction='column'
-                            spacing={2}
+                            spacing={3}
                         >
                             <Grid item>
                                 <Typography style={{ fontWeight: 600 }}>
@@ -87,6 +87,7 @@ const AddItem = ({handleModalClose}) => {
                                     fullWidth
                                     type='submit'
                                     variant='outlined'
+                                    color='secondary'
                                 >
                                     Add Item
                                 </Button>

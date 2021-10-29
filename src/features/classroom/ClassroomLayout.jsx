@@ -10,9 +10,6 @@ import Wishlist from "./wishlist/Wishlist";
 import {ClassroomContext} from "../../pages/classroom/[id]";
 
 const ClassroomLayout = () => {
-    const classroomContext = useContext(ClassroomContext)
-    console.log(classroomContext)
-
     return (
         <Fragment>
             {/*desktop view*/}
@@ -47,7 +44,7 @@ const ClassroomLayout = () => {
                                             <Grid
                                                 container
                                                 direction='column'
-                                                spacing={3}
+                                                spacing={5}
                                             >
                                                 <Grid item>
                                                     <Subheader/>

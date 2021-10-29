@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Button, Grid, Icon, IconButton, Typography} from "@mui/material";
+import React, {useContext} from 'react';
+import {Grid, IconButton, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
 import {NextLinkComposed} from "../../../../lib/Link";
 import {FaExternalLinkAlt} from "react-icons/fa";
@@ -16,30 +16,30 @@ const Classroom = () => {
             spacing={2}
         >
             <Grid item>
-                <Button
-                    component={NextLinkComposed}
-                    to={{pathname: '/classroom/' + classroomID}}
+                <Grid
+                    container
+                    wrap='nowrap'
+                    spacing={2}
+                    alignItems='center'
                 >
-                    <Grid
-                        container
-                        wrap='nowrap'
-                        spacing={1}
-                        alignItems='center'
-                    >
-                        <Grid item>
-                            <Typography
-                                style={{ fontWeight: 600 }}
-                            >
-                                Classroom
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Icon fontSize='sm'>
-                                <FaExternalLinkAlt />
-                            </Icon>
-                        </Grid>
+                    <Grid item>
+                        <Typography
+                            style={{ fontWeight: 600 }}
+                        >
+                            Classroom
+                        </Typography>
                     </Grid>
-                </Button>
+                    <Grid item>
+                        <IconButton
+                            size='small'
+                            color='secondary'
+                            component={NextLinkComposed}
+                            to={{pathname: '/classroom/' + classroomID}}
+                        >
+                            <FaExternalLinkAlt />
+                        </IconButton>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     );

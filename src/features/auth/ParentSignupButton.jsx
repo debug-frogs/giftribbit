@@ -5,8 +5,8 @@ import {RiParentLine} from "react-icons/ri"
 const ParentSignupButton = () => {
     return (
         <Button
-            variant='contained'
-            color='primary'
+            variant='outlined'
+            color='secondary'
             size='small'
             component={NextLinkComposed}
             to={{pathname: '/signup-parent',}}
@@ -20,7 +20,7 @@ const ParentSignupButton = () => {
                 >
                     <Grid item>
                         <RiParentLine
-                            style={{marginTop: "4px"}}
+                            style={{marginTop: "3px"}}
                             fontSize='large'
                         />
                     </Grid>

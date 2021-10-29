@@ -11,8 +11,8 @@ const Subheader = () => {
             <Typography variant='body1' display='inline' color='textPrimary'>
                 Help support&nbsp;
             </Typography>
-            <Typography variant='body1' display='inline' color='secondary'>
-                {Teacher.first_name} {Teacher.last_name}s&nbsp;
+            <Typography variant='body1' display='inline' color='primary'>
+                {Teacher.first_name} {Teacher.last_name}'s&nbsp;
             </Typography>
             <Typography variant='body1' display='inline' color='textPrimary'>
                 classroom by donating items on their wishlist!
