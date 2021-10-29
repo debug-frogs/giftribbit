@@ -1,9 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, TextField, Typography} from "@mui/material";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
-import {addItem} from "../../../pages/api/create/item";
-import {API} from "aws-amplify";
-// import axios from "../../../../lib/axios";
+// import {addItem} from "../../../pages/api/create/item";
+// import {API} from "aws-amplify";
+import axios from "../../../../lib/axios";
 
 
 const AddItem = ({handleModalClose}) => {
@@ -21,27 +21,27 @@ const AddItem = ({handleModalClose}) => {
 
         setDisabled(true)
 
-        // const {data} = await axios.post('./api/create/item', {
-        //     classroomID: id,
-        //     description: newItemDescription,
-        //     summary: newItemSummary,
-        //     url: newItemUrl
-        // })
+        const {data} = await axios.post('./api/create/item', {
+            classroomID: id,
+            description: newItemDescription,
+            summary: newItemSummary,
+            url: newItemUrl
+        })
         /* FIX THIS */
-        const newItem = await addItem(API, {
-                classroomID: id,
-                description: newItemDescription,
-                summary: newItemSummary,
-                url: newItemUrl
-            })
-        const data = {
-            description: newItem.description,
-            donationID: newItem.donationID,
-            id: newItem.id,
-            summary: newItem.summary,
-            url: newItem.url,
-            _version: newItem._version
-        }
+        // const newItem = await addItem(API, {
+        //         classroomID: id,
+        //         description: newItemDescription,
+        //         summary: newItemSummary,
+        //         url: newItemUrl
+        //     })
+        // const data = {
+        //     description: newItem.description,
+        //     donationID: newItem.donationID,
+        //     id: newItem.id,
+        //     summary: newItem.summary,
+        //     url: newItem.url,
+        //     _version: newItem._version
+        // }
         /* */
 
         const newClassroom = {...classroom}
