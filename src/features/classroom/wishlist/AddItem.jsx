@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Box, Button, FormControl, Grid, Input, InputLabel, Paper, Typography} from "@mui/material";
 import axios from "../../../../lib/axios";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
@@ -8,23 +8,30 @@ const AddItem = ({handleModalClose}) => {
     const [classroom, setClassroom] = useContext(ClassroomContext).classroom
     const {id} = classroom
 
-    const itemNameInput = useRef(null);
-    const [itemName, setItemName] = useState('')
+    const [disabled, setDisabled] = useState(false)
 
-    const itemUrlInput = useRef(null);
-    const [itemUrl, setItemUrl] = useState('')
+    const [newItemSummary, setNewItemSummary] = useState('')
+    const [newItemUrl, setNewItemUrl] = useState('')
+    const [newItemDescription, setNewItemDescription] = useState('')
 
     const handleAddItem = async (e) => {
         e.preventDefault()
 
+        setDisabled(true)
+
         const {data} = await axios.post('./api/create/item', {
             classroomID: id,
-            summary: itemNameInput.current.value,
-            url: itemUrlInput.current.value
+            description: newItemDescription,
+            summary: newItemSummary,
+            url: newItemUrl
         })
         const newClassroom = {...classroom}
         newClassroom.Items = [...newClassroom.Items, data]
         setClassroom(newClassroom)
+
+        setNewItemSummary('')
+        setNewItemUrl('')
+        setNewItemDescription('')
 
         handleModalClose()
     }
@@ -55,10 +62,9 @@ const AddItem = ({handleModalClose}) => {
                                         Item name
                                     </InputLabel>
                                     <Input
-                                        id="item-name-input"
-                                        inputRef={itemNameInput}
-                                        value={itemName}
-                                        onChange={event => setItemName(event.target.value)}
+                                        id="add-item-name-input"
+                                        value={newItemSummary}
+                                        onChange={event => setNewItemSummary(event.target.value)}
                                         autoComplete='off'
                                         inputProps={{ maxLength: 20 }}
                                     />
@@ -72,18 +78,37 @@ const AddItem = ({handleModalClose}) => {
                                         Item url
                                     </InputLabel>
                                     <Input
-                                        id="item-url-input"
-                                        inputRef={itemUrlInput}
-                                        value={itemUrl}
-                                        onChange={event => setItemUrl(event.target.value)}
+                                        id="add-item-url-input"
+                                        value={newItemUrl}
+                                        onChange={event => setNewItemUrl(event.target.value)}
                                         autoComplete='off'
-                                        inputProps={{ maxLength: 20 }}
+                                        inputProps={{ maxLength: 62 }}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item>
+                                <FormControl
+                                    fullWidth
+                                >
+                                    <InputLabel htmlFor="item-name-input">
+                                        Item description
+                                    </InputLabel>
+                                    <Input
+                                        id="add-item-description-input"
+                                        value={newItemDescription}
+                                        onChange={event => setNewItemDescription(event.target.value)}
+                                        autoComplete='off'
+                                        inputProps={{ maxLength: 128 }}
+                                        multiline
+                                        minRows={3}
+                                        maxRows={5}
                                     />
                                 </FormControl>
                             </Grid>
                             <Grid item>
                                 <Button
                                     fullWidth
+                                    disabled={disabled}
                                     type='submit'
                                     variant='outlined'
                                     color='secondary'

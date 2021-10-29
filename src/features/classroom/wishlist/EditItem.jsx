@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Box, Button, FormControl, Grid, Input, InputLabel, Paper, Typography} from "@mui/material";
 import axios from "../../../../lib/axios";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
@@ -6,24 +6,22 @@ import {WishlistContext} from "./Wishlist";
 
 
 const EditItem = ({item = {}}) => {
-    const {donationID, id, summary, url, _version} = item
+    const {description, donationID, id, summary, url, _version} = item
     const [classroom, setClassroom] = useContext(ClassroomContext).classroom
 
     const [editable, setEditable] = useContext(WishlistContext).editable
-
     const [disabled, setDisabled] = useState(false)
 
-    const itemSummaryInput = useRef(null);
     const [newItemSummary, setNewItemSummary] = useState(summary)
-
-    const itemUrlInput = useRef(null);
     const [newItemUrl, setNewItemUrl] = useState(url)
+    const [newItemDescription, setNewItemDescription] = useState(description)
 
     const handleEditItem = async (event) => {
         event.preventDefault()
         setDisabled(true)
 
         const updatedItem = {
+            description: newItemDescription,
             donationID: donationID,
             id: id,
             summary: newItemSummary,
@@ -45,6 +43,11 @@ const EditItem = ({item = {}}) => {
         })
 
         setClassroom(newClassroom)
+
+        setNewItemSummary('')
+        setNewItemUrl('')
+        setNewItemDescription('')
+
         setEditable(false)
     }
 
@@ -75,7 +78,6 @@ const EditItem = ({item = {}}) => {
                                     </InputLabel>
                                     <Input
                                         id="item-name-input"
-                                        inputRef={itemSummaryInput}
                                         value={newItemSummary}
                                         onChange={event => setNewItemSummary(event.target.value)}
                                         autoComplete='off'
@@ -92,11 +94,29 @@ const EditItem = ({item = {}}) => {
                                     </InputLabel>
                                     <Input
                                         id="item-url-input"
-                                        inputRef={itemUrlInput}
                                         value={newItemUrl}
                                         onChange={event => setNewItemUrl(event.target.value)}
                                         autoComplete='off'
                                         inputProps={{ maxLength: 20 }}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item>
+                                <FormControl
+                                    fullWidth
+                                >
+                                    <InputLabel htmlFor="item-name-input">
+                                        Item description
+                                    </InputLabel>
+                                    <Input
+                                        id="item-url-input"
+                                        value={newItemDescription}
+                                        onChange={event => setNewItemDescription(event.target.value)}
+                                        autoComplete='off'
+                                        inputProps={{ maxLength: 128 }}
+                                        multiline
+                                        minRows={3}
+                                        maxRows={5}
                                     />
                                 </FormControl>
                             </Grid>
