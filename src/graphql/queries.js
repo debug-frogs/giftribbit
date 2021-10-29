@@ -5,6 +5,7 @@ export const getItem = /* GraphQL */ `
   query GetItem($id: ID!) {
     getItem(id: $id) {
       id
+      description
       summary
       url
       classroomID
@@ -26,6 +27,7 @@ export const listItems = /* GraphQL */ `
     listItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        description
         summary
         url
         classroomID
@@ -56,6 +58,7 @@ export const syncItems = /* GraphQL */ `
     ) {
       items {
         id
+        description
         summary
         url
         classroomID
@@ -84,6 +87,7 @@ export const getDonation = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -132,6 +136,7 @@ export const listDonations = /* GraphQL */ `
         Items {
           items {
             id
+            description
             summary
             url
             classroomID
@@ -189,6 +194,7 @@ export const syncDonations = /* GraphQL */ `
         Items {
           items {
             id
+            description
             summary
             url
             classroomID
@@ -234,6 +240,7 @@ export const getClassroom = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -259,6 +266,7 @@ export const getClassroom = /* GraphQL */ `
           Items {
             items {
               id
+              description
               summary
               url
               classroomID
@@ -359,6 +367,7 @@ export const listClassrooms = /* GraphQL */ `
         Items {
           items {
             id
+            description
             summary
             url
             classroomID
@@ -384,6 +393,7 @@ export const listClassrooms = /* GraphQL */ `
             Items {
               items {
                 id
+                description
                 summary
                 url
                 classroomID
@@ -493,6 +503,7 @@ export const syncClassrooms = /* GraphQL */ `
         Items {
           items {
             id
+            description
             summary
             url
             classroomID
@@ -518,6 +529,7 @@ export const syncClassrooms = /* GraphQL */ `
             Items {
               items {
                 id
+                description
                 summary
                 url
                 classroomID

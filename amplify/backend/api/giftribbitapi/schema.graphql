@@ -1,5 +1,6 @@
 type Item @model @auth(rules: [{allow: public}]) @key(name: "byDonation", fields: ["donationID"]) @key(name: "byClassroom", fields: ["classroomID"]) {
   id: ID!
+  description: String
   summary: String
   url: String
   classroomID: ID

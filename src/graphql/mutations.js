@@ -8,6 +8,7 @@ export const createItem = /* GraphQL */ `
   ) {
     createItem(input: $input, condition: $condition) {
       id
+      description
       summary
       url
       classroomID
@@ -27,6 +28,7 @@ export const updateItem = /* GraphQL */ `
   ) {
     updateItem(input: $input, condition: $condition) {
       id
+      description
       summary
       url
       classroomID
@@ -46,6 +48,7 @@ export const deleteItem = /* GraphQL */ `
   ) {
     deleteItem(input: $input, condition: $condition) {
       id
+      description
       summary
       url
       classroomID
@@ -74,6 +77,7 @@ export const createDonation = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -120,6 +124,7 @@ export const updateDonation = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -166,6 +171,7 @@ export const deleteDonation = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -211,6 +217,7 @@ export const createClassroom = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -236,6 +243,7 @@ export const createClassroom = /* GraphQL */ `
           Items {
             items {
               id
+              description
               summary
               url
               classroomID
@@ -334,6 +342,7 @@ export const updateClassroom = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -359,6 +368,7 @@ export const updateClassroom = /* GraphQL */ `
           Items {
             items {
               id
+              description
               summary
               url
               classroomID
@@ -457,6 +467,7 @@ export const deleteClassroom = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -482,6 +493,7 @@ export const deleteClassroom = /* GraphQL */ `
           Items {
             items {
               id
+              description
               summary
               url
               classroomID

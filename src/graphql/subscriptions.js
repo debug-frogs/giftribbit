@@ -5,6 +5,7 @@ export const onCreateItem = /* GraphQL */ `
   subscription OnCreateItem {
     onCreateItem {
       id
+      description
       summary
       url
       classroomID
@@ -21,6 +22,7 @@ export const onUpdateItem = /* GraphQL */ `
   subscription OnUpdateItem {
     onUpdateItem {
       id
+      description
       summary
       url
       classroomID
@@ -37,6 +39,7 @@ export const onDeleteItem = /* GraphQL */ `
   subscription OnDeleteItem {
     onDeleteItem {
       id
+      description
       summary
       url
       classroomID
@@ -62,6 +65,7 @@ export const onCreateDonation = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -105,6 +109,7 @@ export const onUpdateDonation = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -148,6 +153,7 @@ export const onDeleteDonation = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -190,6 +196,7 @@ export const onCreateClassroom = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -215,6 +222,7 @@ export const onCreateClassroom = /* GraphQL */ `
           Items {
             items {
               id
+              description
               summary
               url
               classroomID
@@ -310,6 +318,7 @@ export const onUpdateClassroom = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -335,6 +344,7 @@ export const onUpdateClassroom = /* GraphQL */ `
           Items {
             items {
               id
+              description
               summary
               url
               classroomID
@@ -430,6 +440,7 @@ export const onDeleteClassroom = /* GraphQL */ `
       Items {
         items {
           id
+          description
           summary
           url
           classroomID
@@ -455,6 +466,7 @@ export const onDeleteClassroom = /* GraphQL */ `
           Items {
             items {
               id
+              description
               summary
               url
               classroomID

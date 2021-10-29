@@ -26,6 +26,7 @@ type TeacherMetaData = {
 
 export declare class Item {
   readonly id: string;
+  readonly description?: string;
   readonly summary?: string;
   readonly url?: string;
   readonly classroomID?: string;
