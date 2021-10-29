@@ -70,7 +70,7 @@ const WishlistMenu = () => {
                     aria-haspopup="true"
                     aria-expanded={menuOpen ? 'true' : undefined}
                     onClick={handleMenuClick}
-                    color='secondary'
+                    color={editable || removable ? 'default' : 'secondary'}
                     size='small'
                 >
                     {editable || removable ? <FaTimes/> : <FaEdit/>}
@@ -111,7 +111,7 @@ const WishlistMenu = () => {
                     </MenuItem>
                     <MenuItem
                         disabled={!Items.length}
-                        onClick={Items.length ? handleEditItem : null}
+                        onClick={Items.length ? handleRemoveItem : null}
                     >
                         <Typography
                             variant='body2'
