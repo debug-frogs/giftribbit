@@ -58,7 +58,7 @@ const EditItem = ({item = {}}) => {
                         <Grid
                             container
                             direction='column'
-                            spacing={5}
+                            spacing={3}
                         >
                             <Grid item>
                                 <Typography style={{ fontWeight: 600 }}>
@@ -105,6 +105,7 @@ const EditItem = ({item = {}}) => {
                                     fullWidth
                                     disabled={disabled}
                                     type='submit'
+                                    color='secondary'
                                     variant='outlined'
                                 >
                                     Save Changes
