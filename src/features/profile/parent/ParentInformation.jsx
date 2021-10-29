@@ -22,13 +22,17 @@ const TeacherInfo = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
+                            color='textSecondary'
+                            style={{ fontWeight: 600 }}
                         >
-                            First name:
+                            First Name:
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
                         >
                             {first_name}
                         </Typography>
@@ -44,13 +48,17 @@ const TeacherInfo = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
+                            color='textSecondary'
+                            style={{ fontWeight: 600 }}
                         >
-                            Last name:
+                            Last Name:
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
                         >
                             {last_name}
                         </Typography>
@@ -66,6 +74,9 @@ const TeacherInfo = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
+                            color='textSecondary'
+                            style={{ fontWeight: 600 }}
                         >
                             Email:
                         </Typography>
@@ -73,6 +84,7 @@ const TeacherInfo = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
                         >
                             {email}
                         </Typography>
@@ -88,6 +100,9 @@ const TeacherInfo = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
+                            color='textSecondary'
+                            style={{ fontWeight: 600 }}
                         >
                             Parent of:
                         </Typography>
@@ -95,6 +110,7 @@ const TeacherInfo = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
                         >
                             {child}
                         </Typography>
