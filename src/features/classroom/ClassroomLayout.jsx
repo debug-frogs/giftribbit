@@ -1,4 +1,4 @@
-import {Fragment, useContext} from 'react'
+import {Fragment} from 'react'
 import {Box, Divider, Grid, Paper} from "@mui/material";
 import Header from "./Header";
 import HeroImage from "./HeroImage";
@@ -7,7 +7,7 @@ import DonationList from "./donation/DonationList";
 import ContributeButton from "./contribute/ContributeButton";
 import DonationsHeader from "./donation/DonationsHeader";
 import Wishlist from "./wishlist/Wishlist";
-import {ClassroomContext} from "../../pages/classroom/[id]";
+
 
 const ClassroomLayout = () => {
     return (

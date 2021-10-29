@@ -1,8 +1,10 @@
 import React, {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, TextField, Typography} from "@mui/material";
-import axios from "../../../../lib/axios";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 import {WishlistContext} from "./Wishlist";
+import {updateItem} from "../../../pages/api/update/item";
+import {API} from "aws-amplify";
+// import axios from "../../../../lib/axios";
 
 
 const EditItem = ({item = {}}) => {
@@ -29,7 +31,18 @@ const EditItem = ({item = {}}) => {
             _version: _version
         }
 
-        const {data} = await axios.patch('./api/update/item', updatedItem)
+        // const {data} = await axios.patch('./api/update/item', updatedItem)
+        /* FIX THIS */
+        const updateItem = await updateItem(API, updatedItem)
+        const data = {
+            description: updateItem.description,
+            donationID: updateItem.donationID,
+            id: updateItem.id,
+            summary: updateItem.summary,
+            url: updateItem.url,
+            _version: updateItem._version
+        }
+        /* */
 
         const newClassroom = {...classroom}
         newClassroom.Items = newClassroom.Items

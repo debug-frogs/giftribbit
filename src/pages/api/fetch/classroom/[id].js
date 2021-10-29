@@ -81,7 +81,7 @@ export const fetchClassroom = (API, classroomID) => {
 }
 
 
-export default async (req, res) => {
+const api =  async (req, res) => {
     if (req.method !== 'GET'){
         res.status(405).end()
     }
@@ -100,3 +100,5 @@ export default async (req, res) => {
         finally {}
     }
 }
+
+export default api

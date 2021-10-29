@@ -1,8 +1,10 @@
 import React, {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, Typography} from "@mui/material";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
-import axios from "../../../../lib/axios";
 import {WishlistContext} from "./Wishlist";
+import {API} from "aws-amplify";
+import {deleteItem} from "../../../pages/api/delete/item";
+// import axios from "../../../../lib/axios";
 
 
 const RemoveItem = ({item}) => {
@@ -14,12 +16,18 @@ const RemoveItem = ({item}) => {
     const handleRemoveItem = async () => {
         setDisabled(true)
 
-        const removedItem = await axios.delete('/api/delete/item', {
-            data: {
-                id: item.id,
-                _version: item._version
-            }
+        // const removedItem = await axios.delete('/api/delete/item', {
+        //     data: {
+        //         id: item.id,
+        //         _version: item._version
+        //     }
+        // })
+        /* FIX THIS */
+        const removedItem = await deleteItem(API, {
+            id: item.id,
+            _version: item._version
         })
+        /* */
 
         const newClassroom = {...classroom}
         newClassroom.Items = newClassroom.Items?.filter(c => c.id !== item.id)
@@ -43,7 +51,7 @@ const RemoveItem = ({item}) => {
                     >
                         <Grid item>
                             <Typography
-                                Typography style={{ fontWeight: 600 }}
+                                style={{ fontWeight: 600 }}
                                 display='inline'
                             >
                                 Remove {item.summary}?

@@ -2,7 +2,10 @@ import {useContext, useState} from 'react'
 import {Box, Button, Checkbox, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Typography} from "@mui/material";
 import hash from "object-hash";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
-import axios from "../../../../lib/axios";
+import {updateItem} from "../../../pages/api/update/item";
+import {API} from "aws-amplify";
+// import axios from "../../../../lib/axios";
+
 
 const ContributeItem = ({handleClose}) => {
     const [classroom, setClassroom] = useContext(ClassroomContext).classroom
@@ -22,14 +25,32 @@ const ContributeItem = ({handleClose}) => {
         const checkedIDs = checkedItems.map(c => c.id)
         const updatedItems = []
         for (const item of checkedItems) {
-            const {data} = await axios.patch('./api/update/item', {
-                            donationID: donationID,
-                            id: item.id,
-                            summary: item.summary,
-                            url: item.url,
-                            _version: item._version
-                        })
-            updatedItems.push(data)
+            // const {data} = await axios.patch('./api/update/item', {
+            //                 donationID: donationID,
+            //                 id: item.id,
+            //                 summary: item.summary,
+            //                 url: item.url,
+            //                 _version: item._version
+            //             })
+            // updatedItems.push(data)
+            /* FIX THIS */
+            const updatedItem = await updateItem(API,
+                {
+                    donationID: donationID,
+                    id: item.id,
+                    summary: item.summary,
+                    url: item.url,
+                    _version: item._version
+                })
+            updatedItems.push({
+                description: updatedItem.description,
+                donationID: updatedItem.donationID,
+                id: updatedItem.id,
+                summary: updatedItem.summary,
+                url: updatedItem.url,
+                _version: updatedItem._version
+            })
+            /* */
         }
 
         const newClassroom = {...classroom}

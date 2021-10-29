@@ -2,7 +2,9 @@ import React, {useContext, useState} from 'react';
 import {Box, Button, Container, Grid, IconButton, Modal, Paper, TextField, Typography} from "@mui/material";
 import {FaUserPlus} from "react-icons/fa";
 import {ProfileContext} from "../../../pages/profile";
-import axios from "../../../../lib/axios";
+import {updateParentTeacherID} from "../../../pages/api/update/parent/teacherid";
+import {API} from "aws-amplify";
+// import axios from "../../../../lib/axios";
 
 
 const AddParent = () => {
@@ -19,11 +21,18 @@ const AddParent = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        axios.post("/api/update/parent/teacherid", {
-            classroomID: classroomID,
-            parentID: parentID,
-            teacherID: id,
+        // axios.post("/api/update/parent/teacherid", {
+        //     classroomID: classroomID,
+        //     parentID: parentID,
+        //     teacherID: id,
+        // })
+        /* FIX THIS */
+        updateParentTeacherID(API, {
+                classroomID: classroomID,
+                parentID: parentID,
+                teacherID: id,
         })
+        /* */
         .then( (res) => {
             const {data} = res
             const newProfile = {...profile}

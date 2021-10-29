@@ -54,7 +54,7 @@ const createTeacher = async (API, input) => {
 }
 
 
-export default async (req, res) => {
+const api = async (req, res) => {
     if (req.method !== 'POST'){
         res.status(405).end()
     }
@@ -72,3 +72,5 @@ export default async (req, res) => {
         finally {}
     }
 }
+
+export default api
