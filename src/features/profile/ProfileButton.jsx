@@ -1,6 +1,6 @@
 import {NextLinkComposed} from "../../../lib/Link";
 import {IconButton} from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {FaUserCircle} from "react-icons/fa";
 
 const ProfileButton = () => {
     return (
@@ -9,7 +9,7 @@ const ProfileButton = () => {
             component={NextLinkComposed}
             to={{pathname: '/profile',}}
         >
-            <AccountCircleIcon/>
+            <FaUserCircle/>
         </IconButton>
     );
 };

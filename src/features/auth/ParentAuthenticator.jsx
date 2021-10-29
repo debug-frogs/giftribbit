@@ -1,8 +1,6 @@
 import {AmplifyAuthContainer, AmplifyAuthenticator, AmplifyConfirmSignIn, AmplifyForgotPassword, AmplifyRequireNewPassword, AmplifySignIn, AmplifySignUp} from "@aws-amplify/ui-react";
 import {useRouter} from "next/router";
 import axios from "../../../lib/axios";
-import {DataStore} from "aws-amplify";
-import {Parent} from "../../models";
 
 
 const handleParentSignUp = async (formData) => {
@@ -15,27 +13,27 @@ const handleParentSignUp = async (formData) => {
         const child = formData.attributes.child
 
         /* Create a new user with Auth */
-        const {data} = await axios.post('/api/user-signup',
+        const userData = await axios.post('/api/auth/user-signup',
             {
                 password: password,
                 username: username,
                 email: email,
             })
 
-        const userSub = data.userSub
+        const userSub = userData.data.userSub
 
-        /* Create new parent data with DataStore */
-        const parent = await DataStore.save(
-            new Parent({
-                "sub": userSub,
+        /* Create new Parent data */
+        const parent = await axios.post('/api/create/parent',
+            {
                 "email": email,
                 "first_name": firstName,
+                "id": userSub,
                 "last_name": lastName,
-                "child": child,
+                "child": child
             })
-        )
 
-        return data
+
+        return userData.data
     }
     catch (error) {
         console.log(error)
@@ -50,7 +48,6 @@ const ParentAuthenticator = ({initialAuthState="signup"}) => {
     const handleAuthStateChange = (async (nextAuthState, authData) => {
         if (nextAuthState === 'signedin' && authData) {
             /* Clear offline data */
-            await DataStore.clear()
             router.reload()
         }
     })

@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-export const profileSlice = createSlice({
+export const authSlice = createSlice({
     name: 'auth',
     initialState: {
         isAuthorized: false,
@@ -16,10 +16,10 @@ export const profileSlice = createSlice({
     },
 })
 
-export const {setIsAuthorized, setIsAuthPage} = profileSlice.actions
+export const {setIsAuthorized, setIsAuthPage} = authSlice.actions
 
 export const selectIsAuthorized = (state) => state.authorized.isAuthorized
 
 export const selectIsAuthPage = (state) => state.authorized.isAuthPage
 
-export default profileSlice.reducer
+export default authSlice.reducer

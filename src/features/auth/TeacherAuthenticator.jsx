@@ -1,8 +1,6 @@
 import {AmplifyAuthContainer, AmplifyAuthenticator, AmplifyConfirmSignIn, AmplifyForgotPassword, AmplifyRequireNewPassword, AmplifySignIn, AmplifySignUp} from "@aws-amplify/ui-react";
 import {useRouter} from "next/router";
 import axios from "../../../lib/axios";
-import {DataStore} from "aws-amplify";
-import {Teacher} from "../../models";
 
 
 const handleTeacherSignUp = async (formData) => {
@@ -15,7 +13,7 @@ const handleTeacherSignUp = async (formData) => {
         const schoolName = formData.attributes.school_name
 
         /* Create a new user with Auth */
-        const {data} = await axios.post('/api/user-signup',
+        const {data} = await axios.post('/api/auth/user-signup',
             {
                 password: password,
                 username: username,
@@ -24,16 +22,13 @@ const handleTeacherSignUp = async (formData) => {
 
         const userSub = data.userSub
 
-        /* Create new parent data with DataStore */
-        const teacher = await DataStore.save(
-            new Teacher({
-                "sub": userSub,
-                "email": email,
-                "first_name": firstName,
-                "last_name": lastName,
-                "school": schoolName
-            })
-        )
+        const teacher = await axios.post("/api/create/teacher", {
+            "email": email,
+            "first_name": firstName,
+            "id": userSub,
+            "last_name": lastName,
+            "school": schoolName
+        })
 
         return data
     }
@@ -49,8 +44,6 @@ const TeacherAuthenticator = ({initialAuthState="signup"}) => {
 
     const handleAuthStateChange = (async (nextAuthState, authData) => {
         if (nextAuthState === 'signedin' && authData) {
-            /* Clear offline data */
-            await DataStore.clear()
             router.reload()
         }
     })

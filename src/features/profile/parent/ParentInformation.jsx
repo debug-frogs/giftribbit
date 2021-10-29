@@ -2,9 +2,9 @@ import React, {useContext} from 'react';
 import {Grid, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
 
-const TeacherInformation = () => {
+const TeacherInfo = () => {
     const [profile] = useContext(ProfileContext)
-    const {first_name, last_name, email, school} = profile
+    const {first_name, last_name, email, child} = profile
 
     return (
         <Grid
@@ -22,13 +22,17 @@ const TeacherInformation = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
+                            color='textSecondary'
+                            style={{ fontWeight: 600 }}
                         >
-                            First name:
+                            First Name:
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
                         >
                             {first_name}
                         </Typography>
@@ -44,13 +48,17 @@ const TeacherInformation = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
+                            color='textSecondary'
+                            style={{ fontWeight: 600 }}
                         >
-                            Last name:
+                            Last Name:
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
                         >
                             {last_name}
                         </Typography>
@@ -66,6 +74,9 @@ const TeacherInformation = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
+                            color='textSecondary'
+                            style={{ fontWeight: 600 }}
                         >
                             Email:
                         </Typography>
@@ -73,6 +84,7 @@ const TeacherInformation = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
                         >
                             {email}
                         </Typography>
@@ -88,15 +100,19 @@ const TeacherInformation = () => {
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
+                            color='textSecondary'
+                            style={{ fontWeight: 600 }}
                         >
-                            School:
+                            Parent of:
                         </Typography>
                     </Grid>
                     <Grid item>
                         <Typography
                             display='inline'
+                            variant='body2'
                         >
-                            {school}
+                            {child}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -105,4 +121,4 @@ const TeacherInformation = () => {
     );
 };
 
-export default TeacherInformation;
+export default TeacherInfo;

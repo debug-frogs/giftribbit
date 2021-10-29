@@ -1,5 +1,5 @@
 import Amplify, {withSSRContext} from "aws-amplify";
-import config from "../../aws-exports.js";
+import config from "../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
 
@@ -11,7 +11,6 @@ export default async (req, res) => {
         const {Auth} = withSSRContext({req});
         try {
             const {email, password, username} = req.body
-
             /* Signup new user with Amplify Auth */
             const user = await Auth.signUp({
                 attributes: {
@@ -20,7 +19,6 @@ export default async (req, res) => {
                 password: password,
                 username: username
             })
-
             res.status(200).send(user)
         }
         catch (error) {

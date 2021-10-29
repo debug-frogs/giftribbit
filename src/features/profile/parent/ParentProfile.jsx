@@ -1,11 +1,10 @@
 import React from 'react';
 import {Divider, Grid, Typography} from "@mui/material";
-import TeacherInformation from "./TeacherInformation";
-import ButtonSignOut from "../../auth/ButtonSignOut";
-import ParentsList from "./ParentsList";
-import AddParent from "./AddParent";
+import SignoutButton from "../../auth/SignoutButton";
+import ParentInfo from "./ParentInformation";
+import Classroom from './Classroom'
 
-const TeacherProfile = () => {
+const ParentProfile = () => {
     return (
         <Grid
             container
@@ -14,27 +13,26 @@ const TeacherProfile = () => {
         >
             <Grid item>
                 <Typography style={{ fontWeight: 600 }}>
-                    Teacher Profile
+                    Parent Profile
                 </Typography>
             </Grid>
             <Grid item>
-                <TeacherInformation/>
+                <ParentInfo/>
             </Grid>
             <Grid item>
                 <Divider />
             </Grid>
             <Grid item>
-                <AddParent />
-                <ParentsList />
+                <Classroom />
             </Grid>
             <Grid item>
                 <Divider />
             </Grid>
             <Grid item>
-                <ButtonSignOut />
+                <SignoutButton />
             </Grid>
         </Grid>
-    )
+    );
 };
 
-export default TeacherProfile
+export default ParentProfile;

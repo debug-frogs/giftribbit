@@ -1,104 +1,22 @@
 import {createContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
-import {Parent, Teacher} from "../models";
 import ProfileLayout from "../features/profile/ProfileLayout";
 
-import Amplify, {withSSRContext, DataStore, Hub} from "aws-amplify";
+import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../aws-exports.js";
+import {fetchProfile} from "./api/fetch/profile/[id]";
 Amplify.configure({ ...config, ssr: true });
-
-const fetchProfile = (userSub) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const [parent] = await DataStore.query(Parent, c => c.sub("eq", userSub))
-            if (parent) {
-                /* return Parent ViewModel */
-                return resolve({
-                    child: parent.child,
-                    email: parent.email,
-                    first_name: parent.first_name,
-                    id: parent.id,
-                    last_name: parent.last_name,
-                    sub: parent.sub,
-                    teacherID: parent.teacherID,
-                    type: "Parent"
-                })
-            }
-
-            const [teacher] = await DataStore.query(Teacher, c => c.sub("eq", userSub))
-            if (teacher) {
-                /* return Teacher ViewModel */
-                return resolve({
-                    email: teacher.email,
-                    first_name: teacher.first_name,
-                    id: teacher.id,
-                    last_name: teacher.last_name,
-                    Parents: (await DataStore.query(Parent))
-                        .filter(c => c.teacherID === teacher.id)
-                        .map(c => {
-                            return {
-                                child: c.child,
-                                email: c.email,
-                                first_name: c.first_name,
-                                id: c.id,
-                                last_name: c.last_name,
-                                sub: c.sub,
-                            }
-                        }),
-                    school: teacher.school,
-                    sub: teacher.sub,
-                    type: "Teacher"
-                })
-            }
-            /* implied else - user not found */
-            return reject(new Error("User not found"))
-        }
-        catch (error){
-            reject(error)
-        }
-
-    })
-}
 
 
 export const ProfileContext = createContext({});
 
-const ProfilePage = ({isUserAuthorized, userSub}) => {
-    const [profile, setProfile] = useState({});
-    const [dataStoreIsReady, setDataStoreIsReady] = useState(false)
+const ProfilePage = ({isUserAuthorized, profileData}) => {
+    const [profile, setProfile] = useState(profileData);
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
-
-    /* confirm that DataStore is ready */
-    useEffect(async () => {
-        const datastoreListener = Hub.listen("datastore", (capsule) => {
-            const {payload: {event}} = capsule;
-
-            if (event === "ready") {
-                setDataStoreIsReady(true)
-                Hub.remove("datastore", datastoreListener)
-            }
-        });
-        await DataStore.start()
-        return () => {
-            Hub.remove("datastore", datastoreListener)
-        };
-    }, []);
-
-
-    /* fetch user profile information */
-    useEffect(async () => {
-        if (dataStoreIsReady){
-            await fetchProfile(userSub)
-                .then(profile => {
-                    setProfile(profile)
-                })
-                .catch(error => {})
-        }
-    },[dataStoreIsReady])
 
     /* indicate that this is not a login or signup page */
     useEffect(() => {
@@ -114,7 +32,7 @@ const ProfilePage = ({isUserAuthorized, userSub}) => {
         }
     },[])
 
-    if (!isUserAuthorized || !Object.keys(profile).length || !dataStoreIsReady) {
+    if (!isUserAuthorized || !Object.keys(profile).length) {
         return null
     }
     else {
@@ -131,7 +49,7 @@ export default ProfilePage
 
 export async function getServerSideProps(context) {
     try {
-        const {Auth} = withSSRContext(context)
+        const {Auth, API} = withSSRContext(context)
 
         /* get the current user from Auth */
         const user = await Auth.currentAuthenticatedUser().catch(() => null)
@@ -146,10 +64,14 @@ export async function getServerSideProps(context) {
             }
         }
         else {
+            const userSub = user.attributes.sub
+            const profileData = await fetchProfile(API, userSub)
+
             return {
                 props: {
                     isUserAuthorized: !!user,
-                    userSub: user.attributes.sub
+                    profileData: profileData,
+                    userSub: userSub
                 }
             }
         }

@@ -6,8 +6,8 @@ import {FaChalkboardTeacher} from "react-icons/fa";
 const TeacherSignupButton = () => {
     return (
         <Button
-            variant='contained'
-            color='primary'
+            variant='outlined'
+            color='secondary'
             size='small'
             component={NextLinkComposed}
             to={{pathname: '/signup-teacher',}}
@@ -21,7 +21,7 @@ const TeacherSignupButton = () => {
                 >
                     <Grid item>
                         <FaChalkboardTeacher
-                            style={{marginTop: "4px"}}
+                            style={{marginTop: "3px"}}
                             fontSize='large'
                         />
                     </Grid>
