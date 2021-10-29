@@ -1,19 +1,42 @@
 import {Fragment, useState} from 'react'
-import {Box, Icon, IconButton, ListItem, ListItemIcon, ListItemText, Modal, Typography} from "@mui/material";
+import {
+    Box,
+    Collapse,
+    Divider,
+    Icon,
+    IconButton,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Modal,
+    Typography
+} from "@mui/material";
 import {FaGift, FaBackspace, FaRegEdit} from 'react-icons/fa'
 import EditItem from "./wishlist/EditItem";
 import RemoveItem from "./wishlist/RemoveItem";
+import {ExpandLess, ExpandMore, StarBorder} from "@mui/icons-material";
 import Link from "../../../lib/Link";
 
 const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
-    const [modalOpen, setModalOpen] = useState(false);
+    const [open, setOpen] = useState(false);
+    const handleClick = () => {
+        setOpen(!open);
+    };
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
+    const [modalOpen, setModalOpen] = useState(false);
     const handleModalOpen = () => {
         if ((!editable && removable) || (editable && !removable)) {
             setModalOpen(true)
         }
     }
-
     const handleModalClose = () => {
         setModalOpen(false)
     }
@@ -34,6 +57,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
                             <IconButton
                                 edge="end"
                                 size='small'
+                                color='secondary'
                                 onClick={handleModalOpen}
                             >
                                 <FaRegEdit/>
@@ -43,6 +67,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
                             <IconButton
                                 edge="end"
                                 size='small'
+                                color='secondary'
                                 onClick={handleModalOpen}
                             >
                                 <FaBackspace/>
@@ -51,41 +76,72 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
                     </Fragment>
                 }
             >
-                <ListItemIcon
-                    style={{minWidth: '32px'}}
+            <ListItemIcon
+                style={{minWidth: '32px'}}
+            >
+                <Icon
+                    fontSize='small'
+                    color={disabled ? 'disabled' : 'primary'}
                 >
-                    <Icon
-                        fontSize='small'
-                        color={disabled ? 'disabled' : 'primary'}
+                    <FaGift/>
+                </Icon>
+            </ListItemIcon>
+            <ListItemText
+                primary={
+                    <Typography
+                        color={disabled ? 'textSecondary' : 'textPrimary'}
+                        variant='body1'
                     >
-                        <FaGift/>
-                    </Icon>
-                </ListItemIcon>
-                <ListItemText
-                    primary={
+                        {item.summary}
+                    </Typography>
+                }
+                secondary={
+                    item.url &&
                         <Link
                             noLinkStyle
                             href={item.url}
-                            style={{ textDecoration: 'none' }}
+                            style={{textDecoration: "none"}}
                         >
                             <Typography
                                 color={disabled ? 'textSecondary' : 'secondary'}
-                                variant='body1'
+                                variant='caption'
                             >
-                                {item?.summary}
+                                {item.url}
                             </Typography>
                         </Link>
-                    }
-                    secondary={
-                        <Typography
-                            color={disabled ? 'textSecondary' : 'textPrimary'}
-                            variant='caption'
-                        >
-                            {item?.summary}
-                        </Typography>
-                    }
-                />
+                }
+            />
+            {open && item.description &&
+                <IconButton
+                    color='secondary'
+                    onClick={handleClose}
+                >
+                    <ExpandLess />
+                </IconButton>
+            }
+            {!open && item.description &&
+                <IconButton
+                    color='secondary'
+                    onClick={handleOpen}
+                >
+                    <ExpandMore/>
+                </IconButton>
+            }
             </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+                <List disablePadding>
+                    <ListItem sx={{ pl: 6 }}>
+                        <ListItemText primary={
+                            <Typography
+                                variant='body2'
+                            >
+                                {item.description}
+                            </Typography>
+                        } />
+                    </ListItem>
+                    <Divider />
+                </List>
+            </Collapse>
             <Modal
                 open={modalOpen}
                 onClose={handleModalClose}
