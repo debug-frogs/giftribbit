@@ -1,5 +1,5 @@
 import {Grid, Typography} from "@mui/material";
-import ItemMenuButton from "./ItemMenuButton"
+import WishlistMenu from "./WishlistMenu"
 
 const WishlistHeader = () => {
     return (
@@ -14,10 +14,9 @@ const WishlistHeader = () => {
                 </Typography>
             </Grid>
             <Grid item>
-                <ItemMenuButton />
+                <WishlistMenu />
             </Grid>
         </Grid>
-
     );
 };
 

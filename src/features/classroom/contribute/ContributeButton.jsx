@@ -1,8 +1,12 @@
-import {Fragment, useState} from 'react'
+import {Fragment, useContext, useState} from 'react'
 import {Box, Button, Modal} from "@mui/material";
-import DonateContainer from "./DonateContainer";
+import ContributeItem from "./ContributeItem";
+import {ClassroomContext} from "../../../pages/classroom/[id]";
 
-const DonateButton = () => {
+const ContributeButton = () => {
+    const [profile] = useContext(ClassroomContext).profile
+    const {type} = profile
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -17,6 +21,7 @@ const DonateButton = () => {
     return (
         <Fragment>
             <Button
+                disabled={type === 'Teacher'}
                 variant='contained'
                 size='large'
                 color='primary'
@@ -32,11 +37,11 @@ const DonateButton = () => {
                 <Box
                     style={modalContentStyle}
                 >
-                    <DonateContainer/>
+                    <ContributeItem handleClose={handleClose}/>
                 </Box>
             </Modal>
         </Fragment>
     );
 };
 
-export default DonateButton;
+export default ContributeButton;

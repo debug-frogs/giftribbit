@@ -27,25 +27,32 @@ export const fetchClassroom = (API, classroomID) => {
                     school: Teacher.school
                 }
 
-                const items = Items?.items?.map( item => {
-                    return({
+                const items = Items?.items
+                    ?.filter(item => !item._deleted)
+                    ?.map( item =>
+                    ({
                         donationID: item.donationID,
                         id: item.id,
                         summary: item.summary,
                         url: item.url,
+                        _version: item._version
                     })
-                })
+                )
 
                 const donations = Donations.items.map(donation => {
                     return({
                         id: donation.id,
-                        items: donation.Items.items.map(item =>
-                            ({
-                                id: item.id,
-                                summary: item.summary,
-                                url: item.url,
-                            })
-                        ),
+                        items: donation?.Items?.items
+                            ?.filter(item => !item._deleted)
+                            ?.map(item =>
+                                ({
+                                    donationID: item.donationID,
+                                    id: item.id,
+                                    summary: item.summary,
+                                    url: item.url,
+                                    _version: item._version
+                                })
+                            ),
                         Parent: {
                             first_name: donation.Parent.first_name,
                             id: donation.Parent.id,

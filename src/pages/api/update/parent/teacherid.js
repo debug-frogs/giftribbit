@@ -4,8 +4,7 @@ Amplify.configure({ ...config, ssr: true });
 
 import * as mutations from "../../../../graphql/mutations";
 
-
-const updateParentTeacherID = async (API, input) => {
+export const updateParentTeacherID = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
             /* Update Parent data */
@@ -21,20 +20,25 @@ const updateParentTeacherID = async (API, input) => {
                 }
             })
 
-            const parent = updateParentData.data.updateParent
-            if (parent) {
-                /* Return Parent ViewModel */
-                const {child, first_name, id, last_name} = parent
-                return resolve({
-                    child: child,
-                    first_name: first_name,
-                    id: id,
-                    last_name: last_name,
-                })
-            }
-            else {
-                return reject(new Error("parent not found"))
-            }
+            const createDonation = await API.graphql({
+                query: mutations.createDonation,
+                variables: {
+                    input: {
+                        classroomID: classroomID,
+                        donationParentId: parentID,
+                    }
+                }
+            })
+
+            const {child, first_name, id, last_name} = updateParentData.data.updateParent
+
+            /* Return Parent ViewModel */
+            return resolve({
+                child: child,
+                first_name: first_name,
+                id: id,
+                last_name: last_name,
+            })
         }
         catch (error){
             reject(error)

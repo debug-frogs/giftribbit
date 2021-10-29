@@ -2,18 +2,19 @@ import {createContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../../features/auth/authSlice";
 import ClassroomLayout from "../../features/classroom/ClassroomLayout";
-import axios from "../../../lib/axios";
 
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../aws-exports.js";
 import {fetchClassroom} from "../api/fetch/classroom/[id]";
+import {fetchProfile} from "../api/fetch/profile/[id]";
 Amplify.configure({ ...config, ssr: true });
 
 
 export const ClassroomContext = createContext({});
 
-const ClassroomPage = ({isUserAuthorized, classroomData}) => {
-    const [classroom, setClassroom] = useState(classroomData);
+const ClassroomPage = ({isUserAuthorized, classroomData, profileData}) => {
+    const [classroom, setClassroom] = useState(classroomData)
+    const [profile, setProfile] = useState(profileData)
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
@@ -38,7 +39,10 @@ const ClassroomPage = ({isUserAuthorized, classroomData}) => {
     }
     else {
         return (
-            <ClassroomContext.Provider value={[classroom, setClassroom]}>
+            <ClassroomContext.Provider value={{
+                "classroom": [classroom, setClassroom],
+                "profile": [profile, setProfile]
+            }}>
                 <ClassroomLayout />
             </ClassroomContext.Provider>
         )
@@ -69,12 +73,14 @@ export async function getServerSideProps(context) {
             const classroomID = context.params.id
             const classroomData = await fetchClassroom(API, classroomID)
 
+            const userSub = user.attributes.sub
+            const profileData = await fetchProfile(API, userSub)
+
             return {
                 props: {
                     isUserAuthorized: !!user,
-                    userSub: user.attributes.sub,
                     classroomData: classroomData,
-                    classroomID: classroomID
+                    profileData: profileData
                 }
             }
         }

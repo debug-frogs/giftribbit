@@ -3,7 +3,7 @@ import {Typography} from "@mui/material";
 import {ClassroomContext} from "../../pages/classroom/[id]";
 
 const Subheader = () => {
-    const [classroom] = useContext(ClassroomContext)
+    const [classroom] = useContext(ClassroomContext).classroom
     const {Teacher} = classroom
 
     return (

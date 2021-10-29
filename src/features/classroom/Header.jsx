@@ -4,7 +4,7 @@ import {ClassroomContext} from "../../pages/classroom/[id]";
 import {useContext} from "react";
 
 const Header = () => {
-    const [classroom] = useContext(ClassroomContext)
+    const [classroom] = useContext(ClassroomContext).classroom
     const {Teacher} = classroom
 
     return (

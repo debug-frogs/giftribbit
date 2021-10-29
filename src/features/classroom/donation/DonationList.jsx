@@ -4,8 +4,8 @@ import {ClassroomContext} from "../../../pages/classroom/[id]";
 import Donation from "./Donation";
 import hash from "object-hash";
 
-const DonationsContainer = () => {
-    const [classroom] = useContext(ClassroomContext)
+const DonationList = () => {
+    const [classroom] = useContext(ClassroomContext).classroom
     const {Donations} = classroom
 
     return (
@@ -14,19 +14,18 @@ const DonationsContainer = () => {
             direction='column'
             spacing={4}
         >
-            {Donations?.map( (donation, index) =>
+            {Donations?.map( (donation) =>
                 <Grid
                     key={hash(donation)}
                     item
                 >
-                    <Donation
-                        donation={donation}
-                        index={index}
-                    />
+                    {donation.items.length > 0 &&
+                        <Donation donation={donation}/>
+                    }
                 </Grid>
             )}
         </Grid>
     );
 };
 
-export default DonationsContainer;
+export default DonationList;

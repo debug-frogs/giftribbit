@@ -1,11 +1,11 @@
-import {useContext, useRef, useState} from 'react';
-import {Box, Button, FormControl, Grid, Input, InputLabel, Paper} from "@mui/material";
+import React, {useContext, useRef, useState} from 'react';
+import {Box, Button, FormControl, Grid, Input, InputLabel, Paper, Typography} from "@mui/material";
 import axios from "../../../../lib/axios";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 
 
-const AddItemMenu = ({handleModalClose}) => {
-    const [classroom, setClassroom] = useContext(ClassroomContext)
+const AddItem = ({handleModalClose}) => {
+    const [classroom, setClassroom] = useContext(ClassroomContext).classroom
     const {id} = classroom
 
     const itemNameInput = useRef(null);
@@ -17,18 +17,12 @@ const AddItemMenu = ({handleModalClose}) => {
     const handleAddItem = async (e) => {
         e.preventDefault()
 
-        const newItem = {
-            summary: itemNameInput.current.value,
-            url: itemUrlInput.current.value
-        }
         const {data} = await axios.post('./api/create/item', {
             classroomID: id,
-            summary: newItem.summary,
-            url: newItem.url
+            summary: itemNameInput.current.value,
+            url: itemUrlInput.current.value
         })
-        newItem.id = data
-
-        const newItems = [...classroom.Items, newItem]
+        const newItems = [...classroom.Items, data]
         const newClassroom = {...classroom}
         newClassroom.Items = newItems
         setClassroom(newClassroom)
@@ -48,6 +42,11 @@ const AddItemMenu = ({handleModalClose}) => {
                             direction='column'
                             spacing={2}
                         >
+                            <Grid item>
+                                <Typography style={{ fontWeight: 600 }}>
+                                    Add Item
+                                </Typography>
+                            </Grid>
                             <Grid item>
                                 <FormControl
                                     fullWidth
@@ -100,4 +99,4 @@ const AddItemMenu = ({handleModalClose}) => {
     );
 };
 
-export default AddItemMenu;
+export default AddItem;

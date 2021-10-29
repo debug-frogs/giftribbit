@@ -19,9 +19,7 @@ export const addItem = async (API, input) => {
                     }
                 }
             });
-            /* Return Parent ID */
-            const {id} = createItemData.data.createItem
-            return resolve(id)
+            return resolve(createItemData.data.createItem)
         }
         catch (error){
             reject(error)
@@ -37,8 +35,14 @@ export default async (req, res) => {
     else {
         const {API} = withSSRContext({req})
         try {
-            const newItemID = await addItem(API, req.body)
-            res.status(200).send(newItemID)
+            const newItem = await addItem(API, req.body)
+            res.status(200).send({
+                donationID: newItem.donationID,
+                id: newItem.id,
+                summary: newItem.summary,
+                url: newItem.url,
+                _version: newItem._version
+            })
         }
         catch (error) {
             console.log(error)
