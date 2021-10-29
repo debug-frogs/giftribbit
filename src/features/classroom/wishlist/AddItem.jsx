@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Box, Button, FormControl, Grid, Input, InputLabel, Paper, Typography} from "@mui/material";
+import {Box, Button, Grid, Paper, TextField, Typography} from "@mui/material";
 import axios from "../../../../lib/axios";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 
@@ -29,10 +29,6 @@ const AddItem = ({handleModalClose}) => {
         newClassroom.Items = [...newClassroom.Items, data]
         setClassroom(newClassroom)
 
-        setNewItemSummary('')
-        setNewItemUrl('')
-        setNewItemDescription('')
-
         handleModalClose()
     }
 
@@ -54,59 +50,48 @@ const AddItem = ({handleModalClose}) => {
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <FormControl
-                                    fullWidth
+                                <TextField
+                                    label='Item summary'
+                                    variant="standard"
                                     required
-                                >
-                                    <InputLabel htmlFor="item-name-input">
-                                        Item name
-                                    </InputLabel>
-                                    <Input
-                                        id="add-item-name-input"
-                                        value={newItemSummary}
-                                        onChange={event => setNewItemSummary(event.target.value)}
-                                        autoComplete='off'
-                                        inputProps={{ maxLength: 20 }}
-                                    />
-                                </FormControl>
+                                    fullWidth
+                                    id="add-item-name-input"
+                                    value={newItemSummary}
+                                    onChange={event => setNewItemSummary(event.target.value)}
+                                    autoComplete='off'
+                                    inputProps={{ maxLength: 20 }}
+                                />
                             </Grid>
                             <Grid item>
-                                <FormControl
+                                <TextField
                                     fullWidth
-                                >
-                                    <InputLabel htmlFor="item-name-input">
-                                        Item url
-                                    </InputLabel>
-                                    <Input
-                                        id="add-item-url-input"
-                                        value={newItemUrl}
-                                        onChange={event => setNewItemUrl(event.target.value)}
-                                        autoComplete='off'
-                                        inputProps={{ maxLength: 62 }}
-                                    />
-                                </FormControl>
+                                    label='Item url'
+                                    variant="standard"
+                                    id="add-item-url-input"
+                                    value={newItemUrl}
+                                    onChange={event => setNewItemUrl(event.target.value)}
+                                    autoComplete='off'
+                                    inputProps={{ maxLength: 62 }}
+                                />
                             </Grid>
                             <Grid item>
-                                <FormControl
+                                <TextField
                                     fullWidth
-                                >
-                                    <InputLabel htmlFor="item-name-input">
-                                        Item description
-                                    </InputLabel>
-                                    <Input
-                                        id="add-item-description-input"
-                                        value={newItemDescription}
-                                        onChange={event => setNewItemDescription(event.target.value)}
-                                        autoComplete='off'
-                                        inputProps={{ maxLength: 128 }}
-                                        multiline
-                                        minRows={3}
-                                        maxRows={5}
-                                    />
-                                </FormControl>
+                                    variant="outlined"
+                                    id="add-item-description-input"
+                                    label='Item description'
+                                    value={newItemDescription}
+                                    onChange={event => setNewItemDescription(event.target.value)}
+                                    autoComplete='off'
+                                    inputProps={{ maxLength: 128 }}
+                                    multiline
+                                    minRows={2}
+                                    maxRows={5}
+                                />
                             </Grid>
                             <Grid item>
                                 <Button
+                                    id="add-item-submit-button"
                                     fullWidth
                                     disabled={disabled}
                                     type='submit'

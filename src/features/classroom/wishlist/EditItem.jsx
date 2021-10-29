@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Box, Button, FormControl, Grid, Input, InputLabel, Paper, Typography} from "@mui/material";
+import {Box, Button, Grid, Paper, TextField, Typography} from "@mui/material";
 import axios from "../../../../lib/axios";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 import {WishlistContext} from "./Wishlist";
@@ -36,17 +36,15 @@ const EditItem = ({item = {}}) => {
             ?.filter(c => c.id !== item.id)
         newClassroom.Items.push(data)
 
-        newClassroom.Donations = newClassroom.Donations.map(c => {
-            c.items = c.items?.filter(c => c.id !== item.id)
-            c.items.push(data)
-            return c
-        })
+        if (item.donationID) {
+            newClassroom.Donations = newClassroom.Donations.map(c => {
+                c.items = c.items?.filter(c => c.id !== item.id)
+                c.items.push(data)
+                return c
+            })
+        }
 
         setClassroom(newClassroom)
-
-        setNewItemSummary('')
-        setNewItemUrl('')
-        setNewItemDescription('')
 
         setEditable(false)
     }
@@ -69,56 +67,44 @@ const EditItem = ({item = {}}) => {
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <FormControl
+                                <TextField
                                     fullWidth
                                     required
-                                >
-                                    <InputLabel htmlFor="item-name-input">
-                                        Item summary
-                                    </InputLabel>
-                                    <Input
-                                        id="item-name-input"
-                                        value={newItemSummary}
-                                        onChange={event => setNewItemSummary(event.target.value)}
-                                        autoComplete='off'
-                                        inputProps={{ maxLength: 20 }}
-                                    />
-                                </FormControl>
+                                    label='Item summary'
+                                    variant='standard'
+                                    id="item-name-input"
+                                    value={newItemSummary}
+                                    onChange={event => setNewItemSummary(event.target.value)}
+                                    autoComplete='off'
+                                    inputProps={{ maxLength: 20 }}
+                                />
                             </Grid>
                             <Grid item>
-                                <FormControl
+                                <TextField
                                     fullWidth
-                                >
-                                    <InputLabel htmlFor="item-name-input">
-                                        Item url
-                                    </InputLabel>
-                                    <Input
-                                        id="item-url-input"
-                                        value={newItemUrl}
-                                        onChange={event => setNewItemUrl(event.target.value)}
-                                        autoComplete='off'
-                                        inputProps={{ maxLength: 20 }}
-                                    />
-                                </FormControl>
+                                    variant='standard'
+                                    label='Item url'
+                                    id="item-url-input"
+                                    value={newItemUrl}
+                                    onChange={event => setNewItemUrl(event.target.value)}
+                                    autoComplete='off'
+                                    inputProps={{ maxLength: 64 }}
+                                />
                             </Grid>
                             <Grid item>
-                                <FormControl
+                                <TextField
                                     fullWidth
-                                >
-                                    <InputLabel htmlFor="item-name-input">
-                                        Item description
-                                    </InputLabel>
-                                    <Input
-                                        id="item-url-input"
-                                        value={newItemDescription}
-                                        onChange={event => setNewItemDescription(event.target.value)}
-                                        autoComplete='off'
-                                        inputProps={{ maxLength: 128 }}
-                                        multiline
-                                        minRows={3}
-                                        maxRows={5}
-                                    />
-                                </FormControl>
+                                    varisnt='outlined'
+                                    label='Item description'
+                                    id="item-url-input"
+                                    value={newItemDescription}
+                                    onChange={event => setNewItemDescription(event.target.value)}
+                                    autoComplete='off'
+                                    inputProps={{ maxLength: 128 }}
+                                    multiline
+                                    minRows={3}
+                                    maxRows={5}
+                                />
                             </Grid>
                             <Grid item>
                                 <Button

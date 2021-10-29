@@ -39,35 +39,22 @@ const RemoveItem = ({item}) => {
                     <Grid
                         container
                         direction='column'
-                        spacing={2}
+                        spacing={3}
                     >
                         <Grid item>
-                            <Typography style={{ fontWeight: 600 }}>
-                                Remove Item
+                            <Typography
+                                Typography style={{ fontWeight: 600 }}
+                                display='inline'
+                            >
+                                Remove {item.summary}?
                             </Typography>
                         </Grid>
                         <Grid item>
                             <Typography
-                                display='inline'
-                            >
-                                Are you sure you would like to remove
-                            </Typography>
-                            <Typography
-                                display='inline'
-                            >
-                                &nbsp;{item.summary}
-                            </Typography>
-                            <Typography
-                                display='inline'
-                            >
-                                ?
-                            </Typography>
-                            <hr />
-                            <Typography
                                 variant='caption'
                             >
                                 You will also remove this item from all Gift Donations.
-                                This action cannot be undone.
+                                This action cannot be undone!
                             </Typography>
                         </Grid>
                         <Grid item>

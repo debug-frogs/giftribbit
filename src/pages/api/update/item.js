@@ -8,12 +8,13 @@ export const updateItem = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
             /* Update Item data */
-            const {donationID, id, summary, url, _version} = input
+            const {description, donationID, id, summary, url, _version} = input
 
             const updateItemData = await API.graphql({
                 query: mutations.updateItem,
                 variables: {
                     input: {
+                        description: description,
                         donationID: donationID,
                         id: id,
                         summary: summary,
@@ -40,6 +41,7 @@ export default async (req, res) => {
         try {
             const updatedItem = await updateItem(API, req.body)
             res.status(200).send({
+                description: updatedItem.description,
                 donationID: updatedItem.donationID,
                 id: updatedItem.id,
                 summary: updatedItem.summary,

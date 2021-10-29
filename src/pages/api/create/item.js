@@ -7,13 +7,14 @@ import * as mutations from "../../../graphql/mutations";
 export const addItem = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const {classroomID, summary, url} = input
+            const {classroomID, description, summary, url} = input
             /* Update Parent data */
             const createItemData = await API.graphql({
                 query: mutations.createItem,
                 variables: {
                     input: {
                         "classroomID": classroomID,
+                        "description": description,
                         "summary": summary,
                         "url": url,
                     }
@@ -37,6 +38,7 @@ export default async (req, res) => {
         try {
             const newItem = await addItem(API, req.body)
             res.status(200).send({
+                description: newItem.description,
                 donationID: newItem.donationID,
                 id: newItem.id,
                 summary: newItem.summary,
