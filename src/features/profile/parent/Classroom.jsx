@@ -20,7 +20,7 @@ const Classroom = () => {
                     <Grid
                         container
                         wrap='nowrap'
-                        spacing={1}
+                        spacing={2}
                         alignItems='center'
                     >
                         <Grid item>
@@ -43,14 +43,56 @@ const Classroom = () => {
                     </Grid>
                 </Grid>
                 <Grid item>
-                    <Typography>
-                        Teacher: {Teacher.first_name}&nbsp;{Teacher.last_name}
-                    </Typography>
+                    <Grid
+                        container
+                        spacing={1}
+                        alignItems='center'
+                    >
+                        <Grid item>
+                            <Typography
+                                display='inline'
+                                variant='body2'
+                                color='textSecondary'
+                                style={{ fontWeight: 600 }}
+                            >
+                                Teacher:
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography
+                                display='inline'
+                                variant='body2'
+                            >
+                                {Teacher.first_name}&nbsp;{Teacher.last_name}
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid item>
-                    <Typography>
-                        School: {Teacher.school}
-                    </Typography>
+                    <Grid
+                        container
+                        spacing={1}
+                        alignItems='center'
+                    >
+                        <Grid item>
+                            <Typography
+                                display='inline'
+                                variant='body2'
+                                color='textSecondary'
+                                style={{ fontWeight: 600 }}
+                            >
+                                School:
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography
+                                display='inline'
+                                variant='body2'
+                            >
+                                {Teacher.school}
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         )
