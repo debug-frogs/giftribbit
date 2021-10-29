@@ -110,6 +110,7 @@ const AddParent = () => {
                                                 <Grid item>
                                                     <Button
                                                         variant='contained'
+                                                        color='secondary'
                                                         type='submit'
                                                     >
                                                         Add parent
