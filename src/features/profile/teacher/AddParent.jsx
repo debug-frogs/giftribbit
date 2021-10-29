@@ -33,8 +33,8 @@ const AddParent = () => {
                 teacherID: id,
         })
         /* */
-        .then( (res) => {
-            const {data} = res
+        .then( (data) => {
+            // const {data} = res
             const newProfile = {...profile}
             const newParents = Parents
             newParents.push(data)
