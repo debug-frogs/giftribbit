@@ -33,14 +33,14 @@ const EditItem = ({item = {}}) => {
 
         // const {data} = await axios.patch('./api/update/item', updatedItem)
         /* FIX THIS */
-        const updateItem = await updateItem(API, updatedItem)
+        const updateItemData = await updateItem(API, updatedItem)
         const data = {
-            description: updateItem.description,
-            donationID: updateItem.donationID,
-            id: updateItem.id,
-            summary: updateItem.summary,
-            url: updateItem.url,
-            _version: updateItem._version
+            description: updateItemData.description,
+            donationID: updateItemData.donationID,
+            id: updateItemData.id,
+            summary: updateItemData.summary,
+            url: updateItemData.url,
+            _version: updateItemData._version
         }
         /* */
 
