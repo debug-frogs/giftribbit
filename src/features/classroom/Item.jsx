@@ -96,22 +96,33 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
                     </Typography>
                 }
                 secondary={
-                    item.url &&
-                        <Link
-                            noLinkStyle
-                            href={item.url}
-                            style={{textDecoration: "none"}}
-                        >
+                    <Fragment>
+                        {!disabled && item.url &&
+                            <Link
+                                noLinkStyle
+                                href={item.url}
+                                style={{textDecoration: "none"}}
+                            >
+                                <Typography
+                                    color={disabled ? 'textSecondary' : 'secondary'}
+                                    variant='caption'
+                                >
+                                    {item.url}
+                                </Typography>
+                            </Link>
+                        }
+                        {disabled && item.url &&
                             <Typography
                                 color={disabled ? 'textSecondary' : 'secondary'}
                                 variant='caption'
                             >
                                 {item.url}
                             </Typography>
-                        </Link>
+                        }
+                    </Fragment>
                 }
             />
-            {open && item.description &&
+            {open && !disabled && item.description &&
                 <IconButton
                     color='secondary'
                     onClick={handleClose}
@@ -119,7 +130,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
                     <ExpandLess />
                 </IconButton>
             }
-            {!open && item.description &&
+            {!open && !disabled && item.description &&
                 <IconButton
                     color='secondary'
                     onClick={handleOpen}
@@ -128,7 +139,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
                 </IconButton>
             }
             </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
+            <Collapse in={open && !disabled} timeout="auto" unmountOnExit>
                 <List disablePadding>
                     <ListItem sx={{ pl: 6 }}>
                         <ListItemText primary={
