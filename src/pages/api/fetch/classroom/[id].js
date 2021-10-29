@@ -4,6 +4,8 @@ Amplify.configure({ ...config, ssr: true });
 
 import * as queries from "../../../../graphql/queries";
 
+const ipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+
 export const fetchClassroom = (API, classroomID) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -32,6 +34,7 @@ export const fetchClassroom = (API, classroomID) => {
                     ?.map( item =>
                     ({
                         donationID: item.donationID,
+                        description: ipsum,
                         id: item.id,
                         summary: item.summary,
                         url: item.url,
@@ -47,6 +50,7 @@ export const fetchClassroom = (API, classroomID) => {
                             ?.map(item =>
                                 ({
                                     donationID: item.donationID,
+                                    description: ipsum,
                                     id: item.id,
                                     summary: item.summary,
                                     url: item.url,

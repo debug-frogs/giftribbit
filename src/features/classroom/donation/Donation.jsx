@@ -8,6 +8,7 @@ export const DonationContext = createContext({})
 
 const Donation = ({donation}) => {
     const [removable, setRemovable] = useState(false)
+    const sortedItems = donation?.items?.sort((a, b) => a.summary.localeCompare(b.summary))
 
     return (
         <DonationContext.Provider value={{
@@ -31,6 +32,7 @@ const Donation = ({donation}) => {
                             </Typography>
                             <Typography
                                 variant='subtitle2'
+                                color='primary'
                             >
                                 {donation?.Parent?.first_name} {donation?.Parent?.last_name}
                             </Typography>
@@ -44,7 +46,7 @@ const Donation = ({donation}) => {
                     >
                         <Grid item>
                             <List dense>
-                                {donation?.items?.map(item =>
+                                {sortedItems?.map(item =>
                                     <Item
                                         key={hash(item)}
                                         item={item}

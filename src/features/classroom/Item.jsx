@@ -1,29 +1,13 @@
 import {Fragment, useState} from 'react'
-import {
-    Box,
-    Collapse,
-    Divider,
-    Icon,
-    IconButton,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Modal,
-    Typography
-} from "@mui/material";
+import {Box, Collapse, Divider, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Modal, Typography} from "@mui/material";
 import {FaGift, FaBackspace, FaRegEdit} from 'react-icons/fa'
 import EditItem from "./wishlist/EditItem";
 import RemoveItem from "./wishlist/RemoveItem";
-import {ExpandLess, ExpandMore, StarBorder} from "@mui/icons-material";
+import {ExpandLess, ExpandMore} from "@mui/icons-material";
 import Link from "../../../lib/Link";
 
-const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
+const Item = ({item={}, editable=false, removable=false, disabled=false, dropdown=false}) => {
     const [open, setOpen] = useState(false);
-    const handleClick = () => {
-        setOpen(!open);
-    };
     const handleOpen = () => {
         setOpen(true);
     };
@@ -40,7 +24,6 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
     const handleModalClose = () => {
         setModalOpen(false)
     }
-
     const modalContentStyle = {
         position: 'absolute',
         top: '50%',
@@ -122,7 +105,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
                     </Fragment>
                 }
             />
-            {open && !disabled && item.description &&
+            {open && !disabled && item.description && dropdown &&
                 <IconButton
                     color='secondary'
                     onClick={handleClose}
@@ -130,7 +113,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
                     <ExpandLess />
                 </IconButton>
             }
-            {!open && !disabled && item.description &&
+            {!open && !disabled && item.description && dropdown &&
                 <IconButton
                     color='secondary'
                     onClick={handleOpen}
@@ -139,19 +122,26 @@ const Item = ({item={}, editable=false, removable=false, disabled=false}) => {
                 </IconButton>
             }
             </ListItem>
-            <Collapse in={open && !disabled} timeout="auto" unmountOnExit>
-                <List disablePadding>
-                    <ListItem sx={{ pl: 6 }}>
-                        <ListItemText primary={
-                            <Typography
-                                variant='body2'
-                            >
-                                {item.description}
-                            </Typography>
-                        } />
-                    </ListItem>
-                    <Divider />
-                </List>
+            <Collapse
+                in={open && !disabled && item.description && dropdown}
+                timeout="auto" unmountOnExit
+            >
+                <Box maxWidth={360}>
+                    <List disablePadding>
+                        <ListItem
+                            sx={{ pl: 6, pb: 5 }}
+                        >
+                            <ListItemText primary={
+                                <Typography
+                                    variant='body2'
+                                >
+                                    {item.description}
+                                </Typography>
+                            } />
+                        </ListItem>
+                        <Divider />
+                    </List>
+                </Box>
             </Collapse>
             <Modal
                 open={modalOpen}

@@ -22,9 +22,8 @@ const AddItem = ({handleModalClose}) => {
             summary: itemNameInput.current.value,
             url: itemUrlInput.current.value
         })
-        const newItems = [...classroom.Items, data]
         const newClassroom = {...classroom}
-        newClassroom.Items = newItems
+        newClassroom.Items = [...newClassroom.Items, data]
         setClassroom(newClassroom)
 
         handleModalClose()
