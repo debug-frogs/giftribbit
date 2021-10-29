@@ -35,7 +35,7 @@ const RemoveItem = ({item}) => {
     return (
         <Paper>
             <Box width='320px'>
-                <Box p={3}>
+                <Box p={5}>
                     <Grid
                         container
                         direction='column'
@@ -54,7 +54,6 @@ const RemoveItem = ({item}) => {
                             </Typography>
                             <Typography
                                 display='inline'
-                                color='secondary'
                             >
                                 &nbsp;{item.summary}
                             </Typography>
@@ -63,6 +62,13 @@ const RemoveItem = ({item}) => {
                             >
                                 ?
                             </Typography>
+                            <hr />
+                            <Typography
+                                variant='caption'
+                            >
+                                You will also remove this item from all Gift Donations.
+                                This action cannot be undone.
+                            </Typography>
                         </Grid>
                         <Grid item>
                             <Button
@@ -70,7 +76,7 @@ const RemoveItem = ({item}) => {
                                 disabled={disabled}
                                 type='submit'
                                 variant='contained'
-                                color='warning'
+                                color='secondary'
                                 onClick={handleRemoveItem}
                             >
                                 Remove Item
