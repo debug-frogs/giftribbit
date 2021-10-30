@@ -1,8 +1,7 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {ProfileContext} from "../../../pages/profile";
-import {Grid, List, ListItem, ListItemIcon, ListItemText, Typography} from "@mui/material";
+import {List, ListItem, ListItemText} from "@mui/material";
 import hash from 'object-hash'
-import {RiParentLine} from 'react-icons/ri'
 
 
 const ParentsList = () => {
