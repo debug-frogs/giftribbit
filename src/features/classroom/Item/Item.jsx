@@ -4,9 +4,10 @@ import {FaGift, FaBackspace, FaRegEdit} from 'react-icons/fa'
 import EditItem from "../wishlist/EditItem";
 import RemoveItem from "../wishlist/RemoveItem";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
-import Url from "./Url";
-import Summary from "./Summary";
-import Description from "./Description";
+import ItemUrl from "./ItemUrl";
+import ItemSummary from "./ItemSummary";
+import ItemDescription from "./ItemDescription";
+
 
 const Item = ({item={}, editable=false, removable=false, disabled=false, dropdown=false}) => {
     const [open, setOpen] = useState(false);
@@ -74,10 +75,10 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
             <ListItemText
                 disableTypography
                 primary={
-                    <Summary disabled={disabled} summary={item.summary} />
+                    <ItemSummary disabled={disabled} summary={item.summary} />
                 }
                 secondary={
-                    <Url disabled={disabled} href={item.url} />
+                    <ItemUrl disabled={disabled} href={item.url} />
                 }
             />
             {open && !disabled && item.description && dropdown &&
@@ -109,7 +110,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                             <ListItemText
                                 disableTypography
                                 primary={
-                                    <Description description={item.description} />
+                                    <ItemDescription description={item.description} />
                                 }
                             />
                         </ListItem>
