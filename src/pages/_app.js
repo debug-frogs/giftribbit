@@ -2,7 +2,7 @@ import './app.css'
 import {Provider} from 'react-redux'
 import {store} from '../store'
 
-import React from "react";
+import {useEffect, useState} from "react";
 import Head from "next/head";
 import Router from "next/router";
 
@@ -22,9 +22,9 @@ import Layout from "../features/layout/Layout";
 const MyApp = (props) => {
     const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const start = () => setIsLoading(true);
         const end = () => setIsLoading(false);
         Router.events.on("routeChangeStart", start);
