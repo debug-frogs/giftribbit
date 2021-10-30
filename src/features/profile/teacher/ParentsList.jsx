@@ -11,10 +11,10 @@ const ParentsList = () => {
 
     return (
         <List>
-            {Parents.map( (parent) =>
+            {Parents.map( (parent, i) =>
                 <ListItem
                     dense
-                    key={hash(parent)}
+                    key={hash(parent)+`${i}`}
                 >
                     <ListItemText
                         primary={
