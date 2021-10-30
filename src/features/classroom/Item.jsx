@@ -1,5 +1,18 @@
 import {Fragment, useState} from 'react'
-import {Box, Collapse, Divider, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Modal, Typography} from "@mui/material";
+import {
+    Box,
+    Collapse,
+    Container,
+    Divider,
+    Icon,
+    IconButton,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Modal,
+    Typography
+} from "@mui/material";
 import {FaGift, FaBackspace, FaRegEdit} from 'react-icons/fa'
 import EditItem from "./wishlist/EditItem";
 import RemoveItem from "./wishlist/RemoveItem";
@@ -90,7 +103,14 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                                     color={disabled ? 'textSecondary' : 'secondary'}
                                     variant='caption'
                                 >
-                                    {item.url}
+                                    <div style={{
+                                        maxWidth: '24ch',
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis"
+                                    }}>
+                                        {item.url}
+                                    </div>
                                 </Typography>
                             </Link>
                         }
@@ -99,7 +119,14 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                                 color={disabled ? 'textSecondary' : 'secondary'}
                                 variant='caption'
                             >
-                                {item.url}
+                                <div style={{
+                                    maxWidth: '24ch',
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis"
+                                }}>
+                                    {item.url}
+                                </div>
                             </Typography>
                         }
                     </Fragment>
