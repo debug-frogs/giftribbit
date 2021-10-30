@@ -44,9 +44,7 @@ const AddParent = () => {
                 setProfile(newProfile)
             })
             .catch(error => {})
-            .finally(() => {
-                handleClose()
-            })
+            .finally(() => handleClose())
     }
 
     return (
