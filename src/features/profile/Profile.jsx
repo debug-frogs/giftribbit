@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {ProfileContext} from "../../pages/profile";
 import ParentProfile from "./parent/ParentProfile";
 import TeacherProfile from "./teacher/TeacherProfile";
