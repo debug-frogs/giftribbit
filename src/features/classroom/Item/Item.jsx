@@ -1,23 +1,13 @@
 import {Fragment, useState} from 'react'
-import {
-    Box,
-    Collapse,
-    Container,
-    Divider,
-    Icon,
-    IconButton,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Modal,
-    Typography
-} from "@mui/material";
+import {Box, Collapse, Divider, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Modal, Typography} from "@mui/material";
 import {FaGift, FaBackspace, FaRegEdit} from 'react-icons/fa'
-import EditItem from "./wishlist/EditItem";
-import RemoveItem from "./wishlist/RemoveItem";
+import EditItem from "../wishlist/EditItem";
+import RemoveItem from "../wishlist/RemoveItem";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
-import Link from "../../../lib/Link";
+import Link from "../../../../lib/Link";
+import Url from "./Url";
+import Summary from "./Summary";
+import Description from "./Description";
 
 const Item = ({item={}, editable=false, removable=false, disabled=false, dropdown=false}) => {
     const [open, setOpen] = useState(false);
@@ -83,53 +73,12 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                 </Icon>
             </ListItemIcon>
             <ListItemText
+                disableTypography
                 primary={
-                    <Typography
-                        color={disabled ? 'textSecondary' : 'textPrimary'}
-                        variant='body1'
-                    >
-                        {item.summary}
-                    </Typography>
+                    <Summary disabled={disabled} summary={item.summary} />
                 }
                 secondary={
-                    <Fragment>
-                        {!disabled && item.url &&
-                            <Link
-                                noLinkStyle
-                                href={item.url}
-                                style={{textDecoration: "none"}}
-                            >
-                                <Typography
-                                    color={disabled ? 'textSecondary' : 'secondary'}
-                                    variant='caption'
-                                >
-                                    <div style={{
-                                        maxWidth: '24ch',
-                                        whiteSpace: "nowrap",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis"
-                                    }}>
-                                        {item.url}
-                                    </div>
-                                </Typography>
-                            </Link>
-                        }
-                        {disabled && item.url &&
-                            <Typography
-                                color={disabled ? 'textSecondary' : 'secondary'}
-                                variant='caption'
-                            >
-                                <div style={{
-                                    maxWidth: '24ch',
-                                    whiteSpace: "nowrap",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis"
-                                }}>
-                                    {item.url}
-                                </div>
-                            </Typography>
-                        }
-                    </Fragment>
+                    <Url disabled={disabled} href={item.url} />
                 }
             />
             {open && !disabled && item.description && dropdown &&
@@ -153,22 +102,21 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                 in={open && !disabled && item.description && dropdown}
                 timeout="auto" unmountOnExit
             >
-                <Box maxWidth={360}>
+                <Box maxWidth={300}>
                     <List disablePadding>
                         <ListItem
                             sx={{ pl: 6, pb: 5 }}
                         >
-                            <ListItemText primary={
-                                <Typography
-                                    variant='body2'
-                                >
-                                    {item.description}
-                                </Typography>
-                            } />
+                            <ListItemText
+                                disableTypography
+                                primary={
+                                    <Description description={item.description} />
+                                }
+                            />
                         </ListItem>
-                        <Divider />
                     </List>
                 </Box>
+                <Divider />
             </Collapse>
             <Modal
                 open={modalOpen}

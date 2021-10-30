@@ -60,7 +60,7 @@ const AddItem = ({handleModalClose}) => {
                                     value={newItemSummary}
                                     onChange={event => setNewItemSummary(event.target.value)}
                                     autoComplete='off'
-                                    inputProps={{ maxLength: 20 }}
+                                    inputProps={{ maxLength: 30 }}
                                 />
                             </Grid>
                             <Grid item>

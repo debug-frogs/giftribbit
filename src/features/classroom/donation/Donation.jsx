@@ -1,4 +1,4 @@
-import Item from "../Item";
+import Item from "../Item/Item";
 import hash from 'object-hash'
 import {Avatar, Card, CardContent, CardHeader, Grid, List, Typography} from "@mui/material";
 import {createContext, Fragment, useState} from "react";

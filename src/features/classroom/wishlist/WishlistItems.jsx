@@ -1,5 +1,5 @@
 import {List} from "@mui/material";
-import Item from "../Item";
+import Item from "../Item/Item";
 import {useContext} from "react";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 import hash from "object-hash";
