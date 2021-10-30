@@ -72,7 +72,7 @@ const AddItem = ({handleModalClose}) => {
                                     value={newItemUrl}
                                     onChange={event => setNewItemUrl(event.target.value)}
                                     autoComplete='off'
-                                    inputProps={{ maxLength: 62 }}
+                                    inputProps={{ maxLength: 2048 }}
                                 />
                             </Grid>
                             <Grid item>
@@ -84,7 +84,7 @@ const AddItem = ({handleModalClose}) => {
                                     value={newItemDescription}
                                     onChange={event => setNewItemDescription(event.target.value)}
                                     autoComplete='off'
-                                    inputProps={{ maxLength: 128 }}
+                                    inputProps={{ maxLength: 256 }}
                                     multiline
                                     minRows={2}
                                     maxRows={5}
