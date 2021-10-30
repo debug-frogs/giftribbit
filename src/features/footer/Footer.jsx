@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, Grid, IconButton, Typography} from "@mui/material";
 import {FaGithub} from 'react-icons/fa';
 import {NextLinkComposed} from "../../../lib/Link";
