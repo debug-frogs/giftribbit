@@ -1,5 +1,4 @@
-import Link from "../../../../lib/Link";
-import {Box, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 
 
 const Summary = ({disabled, summary}) => {
