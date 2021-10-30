@@ -4,7 +4,6 @@ import {FaGift, FaBackspace, FaRegEdit} from 'react-icons/fa'
 import EditItem from "../wishlist/EditItem";
 import RemoveItem from "../wishlist/RemoveItem";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
-import Link from "../../../../lib/Link";
 import Url from "./Url";
 import Summary from "./Summary";
 import Description from "./Description";
