@@ -10,7 +10,7 @@ const isValidUrl = (href) => {
     }
 }
 
-const Url = ({disabled, href}) => {
+const ItemUrl = ({disabled, href}) => {
 
     if (disabled || !isValidUrl(href)) {
         return (
@@ -61,4 +61,4 @@ const Url = ({disabled, href}) => {
     }
 };
 
-export default Url;
+export default ItemUrl;
