@@ -15,7 +15,7 @@ const AddParent = () => {
     const [disabled, setDisabled] = useState(false)
 
     /* modal controls */
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true)
         setDisabled(false)
