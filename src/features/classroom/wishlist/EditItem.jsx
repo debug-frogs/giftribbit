@@ -75,7 +75,7 @@ const EditItem = ({item = {}}) => {
                                     value={newItemSummary}
                                     onChange={event => setNewItemSummary(event.target.value)}
                                     autoComplete='off'
-                                    inputProps={{ maxLength: 20 }}
+                                    inputProps={{ maxLength: 2048 }}
                                 />
                             </Grid>
                             <Grid item>
@@ -87,7 +87,7 @@ const EditItem = ({item = {}}) => {
                                     value={newItemUrl}
                                     onChange={event => setNewItemUrl(event.target.value)}
                                     autoComplete='off'
-                                    inputProps={{ maxLength: 64 }}
+                                    inputProps={{ maxLength: 256 }}
                                 />
                             </Grid>
                             <Grid item>
