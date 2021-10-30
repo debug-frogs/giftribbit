@@ -2,8 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Box, Button, Container, Grid, IconButton, Modal, Paper, TextField, Typography} from "@mui/material";
 import {FaUserPlus} from "react-icons/fa";
 import {ProfileContext} from "../../../pages/profile";
-// import {updateParentTeacherID} from "../../../pages/api/update/parent/teacherid";
-// import {API} from "aws-amplify";
+import {API} from "aws-amplify";
 import axios from "../../../../lib/axios";
 
 
@@ -11,41 +10,43 @@ const AddParent = () => {
     const [profile, setProfile] = useContext(ProfileContext)
     const {classroomID, id, Parents} = profile
 
-    const [parentID, setParentID] = useState('')
+    const [parentEmail, setParentEmail] = useState('')
+
+    const [disabled, setDisabled] = useState(false)
 
     /* modal controls */
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = () => {
+        setOpen(true)
+        setDisabled(false)
+    }
+    const handleClose = () => setOpen(false)
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        setDisabled(true)
 
-        axios.post("/api/update/parent/teacherid", {
-            classroomID: classroomID,
-            parentID: parentID,
-            teacherID: id,
-        })
-        /* FIX THIS */
-        // updateParentTeacherID(API, {
-        //         classroomID: classroomID,
-        //         parentID: parentID,
-        //         teacherID: id,
-        // })
-        /* */
-        .then( (res) => {
-            const {data} = res
-            const newProfile = {...profile}
-            const newParents = Parents
-            newParents.push(data)
-            newProfile.Parents = newParents
-            setProfile(newProfile)
-        })
-        .catch(error => {
-            console.log(error)
-        })
-
-        handleClose()
+        await API.post('fetchusersubapi', '/fetchusersub', {body: {email: parentEmail}})
+            .then( async parentID =>
+                !!Parents.find(c => c.id === parentID) ? null :
+                await axios.post("/api/update/parent/teacherid", {
+                    classroomID: classroomID,
+                    parentID: parentID,
+                    teacherID: id
+                })
+            )
+            .then( res => {
+                const {data} = res
+                const newProfile = {...profile}
+                const newParents = Parents
+                newParents.push(data)
+                newProfile.Parents = newParents
+                setProfile(newProfile)
+            })
+            .catch(error => {})
+            .finally(() => {
+                handleClose()
+            })
     }
 
     return (
@@ -88,28 +89,38 @@ const AddParent = () => {
                                 }}
                             >
                                 <Paper>
-                                    <Box p={3}>
+                                    <Box p={5}>
                                         <form onSubmit={handleSubmit}>
                                             <Grid
                                                 container
                                                 direction='column'
-                                                spacing={3}
+                                                spacing={4}
                                             >
+                                                <Grid item>
+                                                    <Typography
+                                                        style={{ fontWeight: 600 }}
+                                                        display='inline'
+                                                    >
+                                                        Invite parent to classroom
+                                                    </Typography>
+                                                </Grid>
                                                 <Grid item>
                                                     <TextField
                                                         required
                                                         fullWidth
-                                                        label={'Enter a parents ID'}
-                                                        value={parentID}
+                                                        label={'Enter a parents email'}
+                                                        value={parentEmail}
                                                         onChange={
                                                             (event) => {
-                                                                setParentID(event.target.value)
+                                                                setParentEmail(event.target.value)
                                                             }}
                                                     />
                                                 </Grid>
                                                 <Grid item>
                                                     <Button
-                                                        variant='contained'
+                                                        disabled={disabled}
+                                                        fullWidth
+                                                        variant='outlined'
                                                         color='secondary'
                                                         type='submit'
                                                     >
