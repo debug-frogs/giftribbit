@@ -1,5 +1,5 @@
 import Image from 'next/image';
-// import styles from './ImageContainer.module.css';
+import styles from './ImageContainer.module.css';
 import {useEffect, useRef, useState} from "react";
 
 

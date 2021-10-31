@@ -1,29 +1,25 @@
 import {useContext} from 'react';
 import ImageContainer from "../ImageContainer/ImageContainer";
 import ImageUpload from "../ImageUpload/ImageUpload";
-import {useRouter} from "next/router";
-import {useSelector} from "react-redux";
+import {ClassroomContext} from "../../pages/classroom/[id]";
 
 const HeroImage = () => {
-    const {asPath} = useRouter();
-    const registryUid = asPath.substr(3)
+    const [profile] = useContext(ClassroomContext).profile
+    const [classroom] = useContext(ClassroomContext).classroom
 
-    const loggedIn = true
-    const image_src = useSelector(selectRegistry)?.event?.image_src
-
-   if (loggedIn) {
+   if (classroom.Teacher.id === profile.id) {
         return (
             <ImageUpload
-                source={image_src}
+                source={classroom.imageHref}
                 url={'/api/pond'}
-                processUrl={'/process/' + registryUid}
-                revertUrl={'/revert/' + registryUid}
+                processUrl={'/process/'+classroom.id}
+                revertUrl={'/revert/'+classroom.id}
             />
         )
     } else {
         return (
             <ImageContainer
-                src={image_src}
+                src={classroom.imageHref}
                 layout='fill'
                 priority
             />

@@ -4,6 +4,15 @@ Amplify.configure({ ...config, ssr: true });
 
 import * as queries from "../../../../graphql/queries";
 
+const getSignedUrl = async (key) => {
+    // const params = {
+    //     Bucket: process.env.AWS_BUCKET_NAME,
+    //     Key: key,
+    // };
+    // return s3.getSignedUrl('getObject', params)
+    return null
+};
+
 export const fetchClassroom = (API, classroomID) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -18,7 +27,7 @@ export const fetchClassroom = (API, classroomID) => {
 
             if (getClassroom) {
                 /* return Classroom ViewModel */
-                const {id, Donations, Items, Teacher} = getClassroom
+                const {id, imageID, Donations, Items, Teacher} = getClassroom
 
                 const teacher = {
                     first_name: Teacher.first_name,
@@ -63,9 +72,12 @@ export const fetchClassroom = (API, classroomID) => {
                     })
                 })
 
+                const imageHref = imageID ? await getSignedUrl(id+'/'+imageID) : null
+
                 /* return classroom View Model */
                 return resolve({
                     id: id,
+                    imageHref: imageHref,
                     Donations: donations,
                     Items: items,
                     Teacher: teacher,
