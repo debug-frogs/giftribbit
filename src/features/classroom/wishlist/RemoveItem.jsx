@@ -23,7 +23,7 @@ const RemoveItem = ({item}) => {
         //         _version: item._version
         //     }
         // })
-        const deleteItem = await deleteItem(API, {
+        const deletedItem = await deleteItem(API, {
             id: item.id,
             _version: item._version
         })
