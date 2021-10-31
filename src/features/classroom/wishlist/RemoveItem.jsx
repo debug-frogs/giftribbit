@@ -3,6 +3,8 @@ import {Box, Button, Grid, Paper, Typography} from "@mui/material";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 import {WishlistContext} from "./Wishlist";
 import axios from "../../../../lib/axios";
+import {deleteItem} from "../../../pages/api/delete/item";
+import {API} from "aws-amplify";
 
 
 const RemoveItem = ({item}) => {
@@ -14,11 +16,16 @@ const RemoveItem = ({item}) => {
     const handleRemoveItem = async () => {
         setDisabled(true)
 
-        const removedItem = await axios.delete('/api/delete/item', {
-            data: {
-                id: item.id,
-                _version: item._version
-            }
+        // const removedItem = await axios.delete('/api/delete/item', {
+        //     data: {
+        //         id: item.id,
+        //         _version: item._version
+        //     }
+        // })
+
+        const removeItem = await deleteItem(API, {
+            id: item.id,
+            _version: item._version
         })
 
         const newClassroom = {...classroom}
