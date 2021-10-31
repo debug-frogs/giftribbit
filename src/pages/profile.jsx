@@ -65,7 +65,9 @@ export async function getServerSideProps(context) {
         }
         else {
             const userSub = user.attributes.sub
+            const userEmail = user.attributes.email
             const profileData = await fetchProfile(API, userSub)
+            profileData.email = userEmail
 
             return {
                 props: {
