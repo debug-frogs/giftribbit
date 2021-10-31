@@ -19,9 +19,6 @@ const ParentProfile = () => {
                 <ParentInfo/>
             </Grid>
             <Grid item>
-                <Divider />
-            </Grid>
-            <Grid item>
                 <Classroom />
             </Grid>
             <Grid item>
