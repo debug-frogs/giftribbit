@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, Typography} from "@mui/material";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 import {WishlistContext} from "./Wishlist";
-import axios from "../../../../lib/axios";
+// import axios from "../../../../lib/axios";
 import {deleteItem} from "../../../pages/api/delete/item";
 import {API} from "aws-amplify";
 
@@ -23,7 +23,7 @@ const RemoveItem = ({item}) => {
         //     }
         // })
 
-        const removeItem = await deleteItem(API, {
+        const deleteItem = await deleteItem(API, {
             id: item.id,
             _version: item._version
         })
