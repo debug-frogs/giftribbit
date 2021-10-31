@@ -55,7 +55,6 @@ const ImageUpload = ({source, url, processUrl, revertUrl}) => {
                     url: revertUrl,
                 },
                 remove: (source, load, error) => {
-                    console.log('Remove')
                     fetch(url + revertUrl, {method: 'DELETE'})
                         .then(() => {
                             setImage([])
