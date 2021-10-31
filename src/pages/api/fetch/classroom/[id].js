@@ -11,7 +11,8 @@ const getSignedUrl = async (key) => {
     // };
     // return s3.getSignedUrl('getObject', params)
     return null
-};
+}
+
 
 export const fetchClassroom = (API, classroomID) => {
     return new Promise(async (resolve, reject) => {
