@@ -1,6 +1,6 @@
 import Amplify, {withSSRContext} from "aws-amplify";
-import config from "../../../../aws-exports.js";
-Amplify.configure({ ...config, ssr: true });
+import awsConfig from "../../../../aws-exports.js";
+Amplify.configure({ ...awsConfig, ssr: true });
 
 import formidable from 'formidable';
 import fs from 'fs'
@@ -60,8 +60,7 @@ const api = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(405).end();
-    } finally {
-    }
+    } finally {}
 }
 
 export default api
