@@ -4,17 +4,8 @@ Amplify.configure({ ...config, ssr: true });
 
 import * as queries from "../../../../graphql/queries";
 
-const getSignedUrl = async (key) => {
-    // const params = {
-    //     Bucket: process.env.AWS_BUCKET_NAME,
-    //     Key: key,
-    // };
-    // return s3.getSignedUrl('getObject', params)
-    return null
-}
 
-
-export const fetchClassroom = (API, classroomID) => {
+export const fetchClassroom = (API, Storage, classroomID) => {
     return new Promise(async (resolve, reject) => {
         try {
             const classroomData = await API.graphql({
@@ -73,12 +64,12 @@ export const fetchClassroom = (API, classroomID) => {
                     })
                 })
 
-                const imageHref = imageID ? await getSignedUrl(id+'/'+imageID) : null
+                const image = imageID ? await Storage.get(id+'/'+imageID) : null
 
                 /* return classroom View Model */
                 return resolve({
                     id: id,
-                    imageHref: imageHref,
+                    image: image,
                     Donations: donations,
                     Items: items,
                     Teacher: teacher,
@@ -100,10 +91,10 @@ const api = async (req, res) => {
     }
     else {
         const {id} = req.query
-        const {API} = withSSRContext({req});
+        const {API, Storage} = withSSRContext({req});
 
         try {
-            const classroomVM = await fetchClassroom(API, id)
+            const classroomVM = await fetchClassroom(API, Storage, id)
             res.status(200).send(classroomVM)
         }
         catch (error) {

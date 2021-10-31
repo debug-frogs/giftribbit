@@ -1,57 +1,29 @@
+import {updateClassroomImageID} from "../../update/classroom/imageid";
+import {withSSRContext} from "aws-amplify";
 
 
 /**
  * @return an empty response
  */
-export default withApiAuthRequired(async function revert(req, res) {
-    const {user} = getSession(req, res)
-    const prisma = new PrismaClient()
-    const registryUid = req.query.id
+const api = async (req, res) => {
+    const {API, Storage} = withSSRContext({req});
+    const classroomID = req.query.id
     const key = req.body
 
-    const listObjects = (prefix) => {
-        const params = {
-            Bucket: bucket,
-            Prefix: prefix,
-            StartAfter: prefix,
-        }
-        return new Promise((resolve, reject) => {
-            s3.listObjectsV2(params, (err, data) => {
-                err ? reject(err) : resolve(data)
-            })
-        })
-    }
-
-    const deleteObjects = (objects) => {
-        const params = {
-            Bucket: bucket,
-            Delete: {
-                Objects: objects,
-            }
-        }
-        return new Promise((resolve, reject) => {
-            s3.deleteObjects(params, (err, data) => {
-                err ? reject(err) : resolve(data)
-            })
-        })
-    }
+    const listObjects = (path) => Storage.list(path, {StartAfter: path})
+    const deleteObject = (key) => Storage.remove(key)
 
     try {
-        const objectList = await listObjects(registryUid + '/')
+        const objectList = await listObjects(classroomID + '/')
 
-        let removedObjects;
         if (objectList.KeyCount)
-            removedObjects = await deleteObjects(objectList.Contents.map(content => ({Key: content.Key})))
+            for (const content of objectList.Contents) {
+                await deleteObject(content.Key)
+            }
 
-        const image = await prisma.registry.update({
-            where: { uid: registryUid },
-            data: {
-                event:{
-                    update: {
-                        image_key: null
-                    },
-                },
-            },
+        const updateClassroom = await updateClassroomImageID(API, {
+            classroomID: classroomID,
+            imageID: null
         })
 
         res.status(200).end()
@@ -60,10 +32,10 @@ export default withApiAuthRequired(async function revert(req, res) {
         console.log(error)
         res.status(405).end()
     }
-    finally {
-        await prisma.$disconnect();
-    }
-})
+    finally {}
+}
+
+export default api
 
 export const config = {
     api: {

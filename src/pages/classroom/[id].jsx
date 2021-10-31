@@ -3,10 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../../features/auth/authSlice";
 import ClassroomLayout from "../../features/classroom/ClassroomLayout";
 
-import Amplify, {withSSRContext} from "aws-amplify";
-import config from "../../aws-exports.js";
 import {fetchClassroom} from "../api/fetch/classroom/[id]";
 import {fetchProfile} from "../api/fetch/profile/[id]";
+
+import Amplify, {withSSRContext} from "aws-amplify";
+import config from "../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
 
@@ -54,7 +55,7 @@ export default ClassroomPage
 
 export async function getServerSideProps(context) {
     try {
-        const {Auth, API} = withSSRContext(context)
+        const {Auth, API, Storage} = withSSRContext(context)
 
         /* get the current user from Auth */
         const user = await Auth.currentAuthenticatedUser().catch(() => null)
@@ -71,7 +72,7 @@ export async function getServerSideProps(context) {
         else {
             /* fetch classroom data */
             const classroomID = context.params.id
-            const classroomData = await fetchClassroom(API, classroomID)
+            const classroomData = await fetchClassroom(API, Storage, classroomID)
 
             const userSub = user.attributes.sub
             const profileData = await fetchProfile(API, userSub)

@@ -10,7 +10,7 @@ const HeroImage = () => {
    if (classroom.Teacher.id === profile.id) {
         return (
             <ImageUpload
-                source={classroom.imageHref}
+                source={classroom.image}
                 url={'/api/pond'}
                 processUrl={'/process/'+classroom.id}
                 revertUrl={'/revert/'+classroom.id}
@@ -19,7 +19,7 @@ const HeroImage = () => {
     } else {
         return (
             <ImageContainer
-                src={classroom.imageHref}
+                src={classroom.image}
                 layout='fill'
                 priority
             />
