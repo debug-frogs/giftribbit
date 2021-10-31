@@ -18,7 +18,7 @@ export const fetchProfile = (API, userSub) => {
             const parent = parentData.data.getParent
             if (parent) {
                 /* return Parent ViewModel */
-                const {classroomID, child, email, first_name, id, last_name, teacherID} = parent
+                const {classroomID, child, first_name, id, last_name, teacherID} = parent
 
                 /* Fetch Teacher data */
                 const getTeacherData = teacherID ? await API.graphql({
@@ -39,7 +39,6 @@ export const fetchProfile = (API, userSub) => {
                 return resolve({
                     classroomID: classroomID,
                     child: child,
-                    email: email,
                     first_name: first_name,
                     id: id,
                     last_name: last_name,
@@ -59,7 +58,7 @@ export const fetchProfile = (API, userSub) => {
             const teacher = teacherData.data.getTeacher
             if (teacher) {
                 /* return Teacher ViewModel */
-                const {classroomID, email, first_name, id, last_name, Parents, school} = teacher
+                const {classroomID, first_name, id, last_name, Parents, school} = teacher
                 const parents = Parents ? Parents.items.map( parent => {
                     return ({
                         child: parent.child,
@@ -72,7 +71,6 @@ export const fetchProfile = (API, userSub) => {
 
                 return resolve({
                     classroomID: classroomID,
-                    email: email,
                     first_name: first_name,
                     id: id,
                     last_name: last_name,
