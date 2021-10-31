@@ -1,7 +1,17 @@
 import Image from 'next/image';
-import styles from './ImageContainer.module.css';
 import {useEffect, useRef, useState} from "react";
 
+
+// .imageContainer > div {
+//     position: unset !important;
+// }
+//
+// .image {
+//     object-fit: contain;
+//     width: 100% !important;
+//     position: relative !important;
+//     height: unset !important;
+// }
 
 const ImageContainer = ({width, maxWidth, src, ...props}) => {
     const ref = useRef(null)
