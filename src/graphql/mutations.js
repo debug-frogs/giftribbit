@@ -93,7 +93,6 @@ export const createDonation = /* GraphQL */ `
       }
       Parent {
         id
-        email
         first_name
         last_name
         child
@@ -140,7 +139,6 @@ export const updateDonation = /* GraphQL */ `
       }
       Parent {
         id
-        email
         first_name
         last_name
         child
@@ -187,7 +185,6 @@ export const deleteDonation = /* GraphQL */ `
       }
       Parent {
         id
-        email
         first_name
         last_name
         child
@@ -209,6 +206,7 @@ export const createClassroom = /* GraphQL */ `
   ) {
     createClassroom(input: $input, condition: $condition) {
       id
+      imageID
       _version
       _deleted
       _lastChangedAt
@@ -259,7 +257,6 @@ export const createClassroom = /* GraphQL */ `
           }
           Parent {
             id
-            email
             first_name
             last_name
             child
@@ -277,7 +274,6 @@ export const createClassroom = /* GraphQL */ `
       }
       Teacher {
         id
-        email
         first_name
         last_name
         school
@@ -290,7 +286,6 @@ export const createClassroom = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -309,7 +304,6 @@ export const createClassroom = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -334,6 +328,7 @@ export const updateClassroom = /* GraphQL */ `
   ) {
     updateClassroom(input: $input, condition: $condition) {
       id
+      imageID
       _version
       _deleted
       _lastChangedAt
@@ -384,7 +379,6 @@ export const updateClassroom = /* GraphQL */ `
           }
           Parent {
             id
-            email
             first_name
             last_name
             child
@@ -402,7 +396,6 @@ export const updateClassroom = /* GraphQL */ `
       }
       Teacher {
         id
-        email
         first_name
         last_name
         school
@@ -415,7 +408,6 @@ export const updateClassroom = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -434,7 +426,6 @@ export const updateClassroom = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -459,6 +450,7 @@ export const deleteClassroom = /* GraphQL */ `
   ) {
     deleteClassroom(input: $input, condition: $condition) {
       id
+      imageID
       _version
       _deleted
       _lastChangedAt
@@ -509,7 +501,6 @@ export const deleteClassroom = /* GraphQL */ `
           }
           Parent {
             id
-            email
             first_name
             last_name
             child
@@ -527,7 +518,6 @@ export const deleteClassroom = /* GraphQL */ `
       }
       Teacher {
         id
-        email
         first_name
         last_name
         school
@@ -540,7 +530,6 @@ export const deleteClassroom = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -559,7 +548,6 @@ export const deleteClassroom = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -584,7 +572,6 @@ export const createTeacher = /* GraphQL */ `
   ) {
     createTeacher(input: $input, condition: $condition) {
       id
-      email
       first_name
       last_name
       school
@@ -597,7 +584,6 @@ export const createTeacher = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -622,7 +608,6 @@ export const updateTeacher = /* GraphQL */ `
   ) {
     updateTeacher(input: $input, condition: $condition) {
       id
-      email
       first_name
       last_name
       school
@@ -635,7 +620,6 @@ export const updateTeacher = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -660,7 +644,6 @@ export const deleteTeacher = /* GraphQL */ `
   ) {
     deleteTeacher(input: $input, condition: $condition) {
       id
-      email
       first_name
       last_name
       school
@@ -673,7 +656,6 @@ export const deleteTeacher = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -698,7 +680,6 @@ export const createParent = /* GraphQL */ `
   ) {
     createParent(input: $input, condition: $condition) {
       id
-      email
       first_name
       last_name
       child
@@ -719,7 +700,6 @@ export const updateParent = /* GraphQL */ `
   ) {
     updateParent(input: $input, condition: $condition) {
       id
-      email
       first_name
       last_name
       child
@@ -740,7 +720,6 @@ export const deleteParent = /* GraphQL */ `
   ) {
     deleteParent(input: $input, condition: $condition) {
       id
-      email
       first_name
       last_name
       child

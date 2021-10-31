@@ -25,7 +25,6 @@ const handleParentSignUp = async (formData) => {
         /* Create new Parent data */
         const parent = await axios.post('/api/create/parent',
             {
-                "email": email,
                 "first_name": firstName,
                 "id": userSub,
                 "last_name": lastName,

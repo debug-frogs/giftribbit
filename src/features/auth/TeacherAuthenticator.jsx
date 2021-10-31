@@ -23,7 +23,6 @@ const handleTeacherSignUp = async (formData) => {
         const userSub = data.userSub
 
         const teacher = await axios.post("/api/create/teacher", {
-            "email": email,
             "first_name": firstName,
             "id": userSub,
             "last_name": lastName,

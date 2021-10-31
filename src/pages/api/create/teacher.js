@@ -23,7 +23,6 @@ const createTeacher = async (API, input) => {
                 variables: {
                     input: {
                         "classroomID": classroomID,
-                        "email": email,
                         "first_name": first_name,
                         "id": id,
                         "last_name": last_name,

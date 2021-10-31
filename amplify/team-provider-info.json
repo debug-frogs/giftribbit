@@ -15,16 +15,16 @@
       "auth": {
         "giftribbit": {}
       },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "dvcphyfdliprj",
-          "type": "cicd"
-        }
-      },
       "function": {
         "fetchusersub": {
           "deploymentBucketName": "amplify-giftribbit-feature-32638-deployment",
           "s3Key": "amplify-builds/fetchusersub-4f68657249684a475343-build.zip"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dvcphyfdliprj",
+          "type": "cicd"
         }
       }
     }

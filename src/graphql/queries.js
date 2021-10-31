@@ -103,7 +103,6 @@ export const getDonation = /* GraphQL */ `
       }
       Parent {
         id
-        email
         first_name
         last_name
         child
@@ -152,7 +151,6 @@ export const listDonations = /* GraphQL */ `
         }
         Parent {
           id
-          email
           first_name
           last_name
           child
@@ -210,7 +208,6 @@ export const syncDonations = /* GraphQL */ `
         }
         Parent {
           id
-          email
           first_name
           last_name
           child
@@ -232,6 +229,7 @@ export const getClassroom = /* GraphQL */ `
   query GetClassroom($id: ID!) {
     getClassroom(id: $id) {
       id
+      imageID
       _version
       _deleted
       _lastChangedAt
@@ -282,7 +280,6 @@ export const getClassroom = /* GraphQL */ `
           }
           Parent {
             id
-            email
             first_name
             last_name
             child
@@ -300,7 +297,6 @@ export const getClassroom = /* GraphQL */ `
       }
       Teacher {
         id
-        email
         first_name
         last_name
         school
@@ -313,7 +309,6 @@ export const getClassroom = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -332,7 +327,6 @@ export const getClassroom = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -359,6 +353,7 @@ export const listClassrooms = /* GraphQL */ `
     listClassrooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        imageID
         _version
         _deleted
         _lastChangedAt
@@ -409,7 +404,6 @@ export const listClassrooms = /* GraphQL */ `
             }
             Parent {
               id
-              email
               first_name
               last_name
               child
@@ -427,7 +421,6 @@ export const listClassrooms = /* GraphQL */ `
         }
         Teacher {
           id
-          email
           first_name
           last_name
           school
@@ -440,7 +433,6 @@ export const listClassrooms = /* GraphQL */ `
           Parents {
             items {
               id
-              email
               first_name
               last_name
               child
@@ -459,7 +451,6 @@ export const listClassrooms = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -495,6 +486,7 @@ export const syncClassrooms = /* GraphQL */ `
     ) {
       items {
         id
+        imageID
         _version
         _deleted
         _lastChangedAt
@@ -545,7 +537,6 @@ export const syncClassrooms = /* GraphQL */ `
             }
             Parent {
               id
-              email
               first_name
               last_name
               child
@@ -563,7 +554,6 @@ export const syncClassrooms = /* GraphQL */ `
         }
         Teacher {
           id
-          email
           first_name
           last_name
           school
@@ -576,7 +566,6 @@ export const syncClassrooms = /* GraphQL */ `
           Parents {
             items {
               id
-              email
               first_name
               last_name
               child
@@ -595,7 +584,6 @@ export const syncClassrooms = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -620,7 +608,6 @@ export const getTeacher = /* GraphQL */ `
   query GetTeacher($id: ID!) {
     getTeacher(id: $id) {
       id
-      email
       first_name
       last_name
       school
@@ -633,7 +620,6 @@ export const getTeacher = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -660,7 +646,6 @@ export const listTeachers = /* GraphQL */ `
     listTeachers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        email
         first_name
         last_name
         school
@@ -673,7 +658,6 @@ export const listTeachers = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -709,7 +693,6 @@ export const syncTeachers = /* GraphQL */ `
     ) {
       items {
         id
-        email
         first_name
         last_name
         school
@@ -722,7 +705,6 @@ export const syncTeachers = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -747,7 +729,6 @@ export const getParent = /* GraphQL */ `
   query GetParent($id: ID!) {
     getParent(id: $id) {
       id
-      email
       first_name
       last_name
       child
@@ -770,7 +751,6 @@ export const listParents = /* GraphQL */ `
     listParents(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        email
         first_name
         last_name
         child
@@ -802,7 +782,6 @@ export const syncParents = /* GraphQL */ `
     ) {
       items {
         id
-        email
         first_name
         last_name
         child

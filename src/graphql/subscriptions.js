@@ -81,7 +81,6 @@ export const onCreateDonation = /* GraphQL */ `
       }
       Parent {
         id
-        email
         first_name
         last_name
         child
@@ -125,7 +124,6 @@ export const onUpdateDonation = /* GraphQL */ `
       }
       Parent {
         id
-        email
         first_name
         last_name
         child
@@ -169,7 +167,6 @@ export const onDeleteDonation = /* GraphQL */ `
       }
       Parent {
         id
-        email
         first_name
         last_name
         child
@@ -188,6 +185,7 @@ export const onCreateClassroom = /* GraphQL */ `
   subscription OnCreateClassroom {
     onCreateClassroom {
       id
+      imageID
       _version
       _deleted
       _lastChangedAt
@@ -238,7 +236,6 @@ export const onCreateClassroom = /* GraphQL */ `
           }
           Parent {
             id
-            email
             first_name
             last_name
             child
@@ -256,7 +253,6 @@ export const onCreateClassroom = /* GraphQL */ `
       }
       Teacher {
         id
-        email
         first_name
         last_name
         school
@@ -269,7 +265,6 @@ export const onCreateClassroom = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -288,7 +283,6 @@ export const onCreateClassroom = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -310,6 +304,7 @@ export const onUpdateClassroom = /* GraphQL */ `
   subscription OnUpdateClassroom {
     onUpdateClassroom {
       id
+      imageID
       _version
       _deleted
       _lastChangedAt
@@ -360,7 +355,6 @@ export const onUpdateClassroom = /* GraphQL */ `
           }
           Parent {
             id
-            email
             first_name
             last_name
             child
@@ -378,7 +372,6 @@ export const onUpdateClassroom = /* GraphQL */ `
       }
       Teacher {
         id
-        email
         first_name
         last_name
         school
@@ -391,7 +384,6 @@ export const onUpdateClassroom = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -410,7 +402,6 @@ export const onUpdateClassroom = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -432,6 +423,7 @@ export const onDeleteClassroom = /* GraphQL */ `
   subscription OnDeleteClassroom {
     onDeleteClassroom {
       id
+      imageID
       _version
       _deleted
       _lastChangedAt
@@ -482,7 +474,6 @@ export const onDeleteClassroom = /* GraphQL */ `
           }
           Parent {
             id
-            email
             first_name
             last_name
             child
@@ -500,7 +491,6 @@ export const onDeleteClassroom = /* GraphQL */ `
       }
       Teacher {
         id
-        email
         first_name
         last_name
         school
@@ -513,7 +503,6 @@ export const onDeleteClassroom = /* GraphQL */ `
         Parents {
           items {
             id
-            email
             first_name
             last_name
             child
@@ -532,7 +521,6 @@ export const onDeleteClassroom = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -554,7 +542,6 @@ export const onCreateTeacher = /* GraphQL */ `
   subscription OnCreateTeacher {
     onCreateTeacher {
       id
-      email
       first_name
       last_name
       school
@@ -567,7 +554,6 @@ export const onCreateTeacher = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -589,7 +575,6 @@ export const onUpdateTeacher = /* GraphQL */ `
   subscription OnUpdateTeacher {
     onUpdateTeacher {
       id
-      email
       first_name
       last_name
       school
@@ -602,7 +587,6 @@ export const onUpdateTeacher = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -624,7 +608,6 @@ export const onDeleteTeacher = /* GraphQL */ `
   subscription OnDeleteTeacher {
     onDeleteTeacher {
       id
-      email
       first_name
       last_name
       school
@@ -637,7 +620,6 @@ export const onDeleteTeacher = /* GraphQL */ `
       Parents {
         items {
           id
-          email
           first_name
           last_name
           child
@@ -659,7 +641,6 @@ export const onCreateParent = /* GraphQL */ `
   subscription OnCreateParent {
     onCreateParent {
       id
-      email
       first_name
       last_name
       child
@@ -677,7 +658,6 @@ export const onUpdateParent = /* GraphQL */ `
   subscription OnUpdateParent {
     onUpdateParent {
       id
-      email
       first_name
       last_name
       child
@@ -695,7 +675,6 @@ export const onDeleteParent = /* GraphQL */ `
   subscription OnDeleteParent {
     onDeleteParent {
       id
-      email
       first_name
       last_name
       child

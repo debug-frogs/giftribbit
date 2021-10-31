@@ -13,7 +13,6 @@ const createParent = async (API, input) => {
                 query: mutations.createParent,
                 variables: {
                     input: {
-                        "email": email,
                         "first_name": first_name,
                         "id": id,
                         "last_name": last_name,
