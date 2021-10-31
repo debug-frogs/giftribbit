@@ -58,7 +58,36 @@
           ]
         }
       }
+    },
+    "fetchusersubapi": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "fetchusersub",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   },
-  "function": {}
+  "function": {
+    "fetchusersub": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "giftribbit",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
+    }
+  }
 }

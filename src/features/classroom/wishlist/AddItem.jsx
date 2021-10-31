@@ -1,9 +1,7 @@
-import React, {useContext, useState} from 'react';
+import {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, TextField, Typography} from "@mui/material";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
-import {addItem} from "../../../pages/api/create/item";
-import {API} from "aws-amplify";
-// import axios from "../../../../lib/axios";
+import axios from "../../../../lib/axios";
 
 
 const AddItem = ({handleModalClose}) => {
@@ -21,28 +19,12 @@ const AddItem = ({handleModalClose}) => {
 
         setDisabled(true)
 
-        // const {data} = await axios.post('./api/create/item', {
-        //     classroomID: id,
-        //     description: newItemDescription,
-        //     summary: newItemSummary,
-        //     url: newItemUrl
-        // })
-        /* FIX THIS */
-        const newItem = await addItem(API, {
-                classroomID: id,
-                description: newItemDescription,
-                summary: newItemSummary,
-                url: newItemUrl
-            })
-        const data = {
-            description: newItem.description,
-            donationID: newItem.donationID,
-            id: newItem.id,
-            summary: newItem.summary,
-            url: newItem.url,
-            _version: newItem._version
-        }
-        /* */
+        const {data} = await axios.post('./api/create/item', {
+            classroomID: id,
+            description: newItemDescription,
+            summary: newItemSummary,
+            url: newItemUrl
+        })
 
         const newClassroom = {...classroom}
         newClassroom.Items = [...newClassroom.Items, data]
@@ -78,7 +60,7 @@ const AddItem = ({handleModalClose}) => {
                                     value={newItemSummary}
                                     onChange={event => setNewItemSummary(event.target.value)}
                                     autoComplete='off'
-                                    inputProps={{ maxLength: 20 }}
+                                    inputProps={{ maxLength: 30 }}
                                 />
                             </Grid>
                             <Grid item>
@@ -90,7 +72,7 @@ const AddItem = ({handleModalClose}) => {
                                     value={newItemUrl}
                                     onChange={event => setNewItemUrl(event.target.value)}
                                     autoComplete='off'
-                                    inputProps={{ maxLength: 62 }}
+                                    inputProps={{ maxLength: 2048 }}
                                 />
                             </Grid>
                             <Grid item>
@@ -102,7 +84,7 @@ const AddItem = ({handleModalClose}) => {
                                     value={newItemDescription}
                                     onChange={event => setNewItemDescription(event.target.value)}
                                     autoComplete='off'
-                                    inputProps={{ maxLength: 128 }}
+                                    inputProps={{ maxLength: 256 }}
                                     multiline
                                     minRows={2}
                                     maxRows={5}

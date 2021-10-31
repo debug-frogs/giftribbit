@@ -1,6 +1,5 @@
 import {Box, Button, Grid, Typography} from "@mui/material";
 import {NextLinkComposed} from "../../../lib/Link";
-import React from "react";
 import {FaChalkboardTeacher} from "react-icons/fa";
 
 const TeacherSignupButton = () => {

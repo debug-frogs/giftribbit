@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import {Fragment} from 'react'
 import {Box, Container, Paper} from "@mui/material";
 import Profile from "./Profile";
 
 const ProfileLayout = () => {
     return (
-        <React.Fragment>
+        <Fragment>
             <Container
                 sx={{ display: { sm: 'block', xs: 'none' } }}
                 maxWidth='xs'
@@ -21,7 +21,7 @@ const ProfileLayout = () => {
             >
                 <Profile />
             </Container>
-        </React.Fragment>
+        </Fragment>
     );
 };
 

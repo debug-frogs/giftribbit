@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {Grid, IconButton, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
 import {NextLinkComposed} from "../../../../lib/Link";

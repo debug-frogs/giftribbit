@@ -1,10 +1,13 @@
 import {Fragment, useState} from 'react'
 import {Box, Collapse, Divider, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Modal, Typography} from "@mui/material";
 import {FaGift, FaBackspace, FaRegEdit} from 'react-icons/fa'
-import EditItem from "./wishlist/EditItem";
-import RemoveItem from "./wishlist/RemoveItem";
+import EditItem from "../wishlist/EditItem";
+import RemoveItem from "../wishlist/RemoveItem";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
-import Link from "../../../lib/Link";
+import ItemUrl from "./ItemUrl";
+import ItemSummary from "./ItemSummary";
+import ItemDescription from "./ItemDescription";
+
 
 const Item = ({item={}, editable=false, removable=false, disabled=false, dropdown=false}) => {
     const [open, setOpen] = useState(false);
@@ -70,39 +73,12 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                 </Icon>
             </ListItemIcon>
             <ListItemText
+                disableTypography
                 primary={
-                    <Typography
-                        color={disabled ? 'textSecondary' : 'textPrimary'}
-                        variant='body1'
-                    >
-                        {item.summary}
-                    </Typography>
+                    <ItemSummary disabled={disabled} summary={item.summary} />
                 }
                 secondary={
-                    <Fragment>
-                        {!disabled && item.url &&
-                            <Link
-                                noLinkStyle
-                                href={item.url}
-                                style={{textDecoration: "none"}}
-                            >
-                                <Typography
-                                    color={disabled ? 'textSecondary' : 'secondary'}
-                                    variant='caption'
-                                >
-                                    {item.url}
-                                </Typography>
-                            </Link>
-                        }
-                        {disabled && item.url &&
-                            <Typography
-                                color={disabled ? 'textSecondary' : 'secondary'}
-                                variant='caption'
-                            >
-                                {item.url}
-                            </Typography>
-                        }
-                    </Fragment>
+                    <ItemUrl disabled={disabled} href={item.url} />
                 }
             />
             {open && !disabled && item.description && dropdown &&
@@ -126,22 +102,21 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                 in={open && !disabled && item.description && dropdown}
                 timeout="auto" unmountOnExit
             >
-                <Box maxWidth={360}>
+                <Box maxWidth={300}>
                     <List disablePadding>
                         <ListItem
                             sx={{ pl: 6, pb: 5 }}
                         >
-                            <ListItemText primary={
-                                <Typography
-                                    variant='body2'
-                                >
-                                    {item.description}
-                                </Typography>
-                            } />
+                            <ListItemText
+                                disableTypography
+                                primary={
+                                    <ItemDescription description={item.description} />
+                                }
+                            />
                         </ListItem>
-                        <Divider />
                     </List>
                 </Box>
+                <Divider />
             </Collapse>
             <Modal
                 open={modalOpen}

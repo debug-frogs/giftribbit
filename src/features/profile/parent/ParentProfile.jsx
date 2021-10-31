@@ -1,4 +1,3 @@
-import React from 'react';
 import {Divider, Grid, Typography} from "@mui/material";
 import SignoutButton from "../../auth/SignoutButton";
 import ParentInfo from "./ParentInformation";
@@ -18,9 +17,6 @@ const ParentProfile = () => {
             </Grid>
             <Grid item>
                 <ParentInfo/>
-            </Grid>
-            <Grid item>
-                <Divider />
             </Grid>
             <Grid item>
                 <Classroom />

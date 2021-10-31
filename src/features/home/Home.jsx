@@ -1,8 +1,7 @@
 import {Container, Grid, Typography} from "@mui/material";
-import {GiFrogPrince} from 'react-icons/gi'
-import theme from "../../theme";
 import TeacherSignupButton from "../auth/TeacherSignupButton";
 import ParentSignupButton from "../auth/ParentSignupButton";
+import FrogBoi from "../../assets/FrogBoi";
 
 const Home = () => {
     return (
@@ -19,10 +18,7 @@ const Home = () => {
                     alignItems='center'
                 >
                     <Grid item>
-                        <GiFrogPrince
-                            color={theme.palette.primary.main}
-                            size='8em'
-                        />
+                        <FrogBoi />
                     </Grid>
                     <Grid item>
                         <Typography

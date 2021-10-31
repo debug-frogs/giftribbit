@@ -1,9 +1,8 @@
-import React from 'react';
 import {Box, Container} from "@mui/material";
 import {useSelector} from "react-redux";
 import Navigation from "../navigation/Navigation";
 import Footer from "../footer/Footer";
-import MaterialUiLoadingIcon from "../loading/MaterialUiLoadingIcon";
+import LoadingIcon from "../loading/LoadingIcon";
 import {selectIsAuthPage} from "../auth/authSlice";
 
 const Layout = (props) => {
@@ -11,7 +10,7 @@ const Layout = (props) => {
     const isAuthPage = useSelector(selectIsAuthPage)
 
     if (isAuthPage) {
-        return isLoading ? <MaterialUiLoadingIcon/> : props.children
+        return isLoading ? <LoadingIcon/> : props.children
     }
     else {
         return (
@@ -29,7 +28,7 @@ const Layout = (props) => {
                         m={5}
                         minHeight='60vh'
                     >
-                        {isLoading ? <MaterialUiLoadingIcon/> : props.children}
+                        {isLoading ? <LoadingIcon/> : props.children}
                     </Box>
                     <Footer/>
                 </Box>

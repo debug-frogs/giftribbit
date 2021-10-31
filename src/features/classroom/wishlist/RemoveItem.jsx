@@ -2,8 +2,8 @@ import React, {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, Typography} from "@mui/material";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 import {WishlistContext} from "./Wishlist";
-import {API} from "aws-amplify";
 import {deleteItem} from "../../../pages/api/delete/item";
+import {API} from "aws-amplify";
 // import axios from "../../../../lib/axios";
 
 
@@ -16,18 +16,17 @@ const RemoveItem = ({item}) => {
     const handleRemoveItem = async () => {
         setDisabled(true)
 
+        /* FIX THIS - use instead */
         // const removedItem = await axios.delete('/api/delete/item', {
         //     data: {
         //         id: item.id,
         //         _version: item._version
         //     }
         // })
-        /* FIX THIS */
-        const removedItem = await deleteItem(API, {
+        const deletedItem = await deleteItem(API, {
             id: item.id,
             _version: item._version
         })
-        /* */
 
         const newClassroom = {...classroom}
         newClassroom.Items = newClassroom.Items?.filter(c => c.id !== item.id)
