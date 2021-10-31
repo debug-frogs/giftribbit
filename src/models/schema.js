@@ -210,13 +210,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "email": {
-                    "name": "email",
-                    "isArray": false,
-                    "type": "AWSEmail",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "first_name": {
                     "name": "first_name",
                     "isArray": false,
@@ -377,6 +370,13 @@ export const schema = {
                         "targetName": "classroomTeacherId"
                     }
                 },
+                "imageID": {
+                    "name": "imageID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -427,13 +427,6 @@ export const schema = {
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
-                    "attributes": []
-                },
-                "email": {
-                    "name": "email",
-                    "isArray": false,
-                    "type": "AWSEmail",
-                    "isRequired": false,
                     "attributes": []
                 },
                 "first_name": {
@@ -523,5 +516,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "744508c3bf3eac75efecf7a302ad130c"
+    "version": "9cdb69cf2e76e59184b3e135f9eb1fcb"
 };
