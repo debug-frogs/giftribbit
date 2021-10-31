@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-amplify/core": "^4.3.4",
     "@aws-amplify/ui-react": "^1.2.19",
     "@babel/core": "^7.0.0",
     "@emotion/cache": "^11.4.0",
@@ -19,6 +20,7 @@
     "@mui/styles": "^5.0.0",
     "@reduxjs/toolkit": "^1.6.1",
     "aws-amplify": "4.3.3",
+    "aws-sdk": "^2.1018.0",
     "axios": "^0.21.4",
     "clsx": "^1.1.1",
     "cuid": "^2.1.8",
