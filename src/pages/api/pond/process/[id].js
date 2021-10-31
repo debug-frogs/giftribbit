@@ -1,13 +1,12 @@
+import Amplify, {withSSRContext} from "aws-amplify";
+import config from "../../../../aws-exports.js";
+Amplify.configure({ ...config, ssr: true });
+
 import formidable from 'formidable';
 import fs from 'fs'
 import cuid from "cuid";
 
-import Amplify, {withSSRContext} from "aws-amplify";
-import config from "../../../../aws-exports.js";
-import {updateClassroomImageID} from "../../update/classroom/imageid";
-Amplify.configure({ ...config, ssr: true });
-
-const bucket = process.env.AWS_BUCKET_NAME
+import * as mutations from "../../../../graphql/mutations";
 
 
 /**
@@ -33,27 +32,29 @@ const api = async (req, res) => {
             form.parse(request, (err, fields, files) => err ? reject(err) : resolve(files.image))
         })
     }
-    const listObjects = (path) => Storage.list(path, {StartAfter: path})
-    const deleteObject = (key) => Storage.remove(key)
-    const uploadObject = (key, stream) => Storage.put(key, stream, {ContentType: 'image/jpeg'})
 
     try {
-        const objectList = await listObjects(classroomID+'/')
+        const path = classroomID + '/'
+        const objectList = await Storage.list(path, {StartAfter: path})
+        if (objectList.KeyCount)
+            for (const content of objectList.Contents) {
+                await Storage.remove(content.Key)
+            }
 
         const key = await getMultipartFormImage(req)
             .then(object => fs.createReadStream(object.path))
-            .then(stream => uploadObject(classroomID+'/'+objectName, stream))
+            .then(stream => Storage.put(classroomID + '/' + objectName, stream, {ContentType: 'image/jpeg'}))
             .then(result => result.Key)
 
-        const updateClassroom = await updateClassroomImageID(API, {
-            classroomID: classroomID,
-            imageID: objectName
-        })
-
-        if (objectList.KeyCount)
-            for (const content of objectList.Contents) {
-                await deleteObject(content.Key)
+        const updateClassroomData = await API.graphql({
+            query: mutations.updateClassroom,
+            variables: {
+                input: {
+                    id: classroomID,
+                    imageID: objectName
+                }
             }
+        })
 
         res.status(200).send(objectName)
     } catch (error) {
