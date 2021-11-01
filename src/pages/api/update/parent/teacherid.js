@@ -3,19 +3,31 @@ import config from "../../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
 import * as mutations from "../../../../graphql/mutations";
+import * as queries from "../../../../graphql/queries";
 
 export const updateParentTeacherID = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
             /* Update Parent data */
             const {classroomID, parentID, teacherID} = input
+
+            const parentData = await API.graphql({
+                query: queries.getParent,
+                variables:
+                    {
+                        id: parentID
+                    }
+            });
+            const {_version} = parentData.data.getParent
+
             const updateParentData = await API.graphql({
                 query: mutations.updateParent,
                 variables: {
                     input: {
                         id: parentID,
                         classroomID: classroomID,
-                        teacherID: teacherID
+                        teacherID: teacherID,
+                        _version: _version
                     }
                 }
             })
