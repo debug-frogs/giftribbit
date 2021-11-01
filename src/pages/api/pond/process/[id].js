@@ -9,6 +9,7 @@ import fs from 'fs'
 import cuid from "cuid";
 
 import * as mutations from "../../../../graphql/mutations";
+import * as queries from "../../../../graphql/queries";
 
 
 /**
@@ -98,14 +99,22 @@ const api = async (req, res) => {
             .then(readStream => uploadObject(classroomID + '/' + objectName, readStream))
             .then(result => result.Key )
 
-        console.log(key)
+        const classroomData = await API.graphql({
+            query: queries.getClassroom,
+            variables:
+                {
+                    id: classroomID
+                }
+        });
+        const {_version} = classroomData.data.getClassroom
 
         const updateClassroomData = await API.graphql({
             query: mutations.updateClassroom,
             variables: {
                 input: {
                     id: classroomID,
-                    imageID: objectName
+                    imageID: objectName,
+                    _version: _version
                 }
             }
         })
