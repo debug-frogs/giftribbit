@@ -2,10 +2,11 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import awsConfig from "../../../../aws-exports.js";
 Amplify.configure({ ...awsConfig, ssr: true });
 
-import * as mutations from "../../../../graphql/mutations";
 import awsconfig from "../../../../aws-exports";
 import S3 from "aws-sdk/clients/s3";
 
+import * as mutations from "../../../../graphql/mutations";
+import * as queries from "../../../../graphql/queries";
 
 /**
  * @return an empty response
@@ -58,17 +59,25 @@ const api = async (req, res) => {
         const {KeyCount, Contents} = await listObjects(classroomID + '/')
         const removedObjects = KeyCount ? await deleteObjects(Contents.map(content => ({Key: content.Key}))) : undefined
 
+        const classroomData = await API.graphql({
+            query: queries.getClassroom,
+            variables:
+                {
+                    id: classroomID
+                }
+        });
+        const {_version} = classroomData.data.getClassroom
+
         const updateClassroomData = await API.graphql({
             query: mutations.updateClassroom,
             variables: {
                 input: {
                     id: classroomID,
-                    imageID: null
+                    imageID: null,
+                    _version: _version
                 }
             }
         })
-
-        console.log(updateClassroomData)
 
         res.status(200).end()
     }
