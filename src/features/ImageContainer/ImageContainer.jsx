@@ -20,7 +20,8 @@ const ImageContainer = ({width, maxWidth, src, ...props}) => {
     const style = {
         height: height ? height : '100%',
         width: width ? width : '100%',
-        maxWidth: maxWidth ?  maxWidth : '100%'
+        maxWidth: maxWidth ?  maxWidth : '100%',
+        position: "relative"
     }
 
     if (src) {
