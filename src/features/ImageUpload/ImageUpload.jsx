@@ -71,7 +71,7 @@ const ImageUpload = ({source, url, processUrl, revertUrl}) => {
                 },
             }}
             name="image"
-            labelIdle='Drag & Drop an Image or <span class="filepond--label-action">Browse</span>'
+            labelIdle='<span class="filepond--label-action">Upload an Image for your Classroom</span>'
             credits=''
         />
     )
