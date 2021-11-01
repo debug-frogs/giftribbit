@@ -63,7 +63,7 @@ const api = async (req, res) => {
             variables: {
                 input: {
                     id: classroomID,
-                    imageID: 'test'
+                    imageID: null
                 }
             }
         })
