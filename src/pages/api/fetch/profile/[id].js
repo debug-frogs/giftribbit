@@ -84,7 +84,7 @@ export const fetchProfile = (API, userSub) => {
             return reject(new Error("User not found"))
         }
         catch (error){
-            throw error
+            return reject(error)
         }
 
     })

@@ -5,7 +5,7 @@ Amplify.configure({ ...config, ssr: true });
 import * as queries from "../../../../graphql/queries";
 
 
-export const fetchClassroom = (API, Storage, classroomID) => {
+export const fetchClassroom = (API, classroomID) => {
     return new Promise(async (resolve, reject) => {
         try {
             const classroomData = await API.graphql({
@@ -64,12 +64,10 @@ export const fetchClassroom = (API, Storage, classroomID) => {
                     })
                 })
 
-                const image = imageID ? await Storage.get(id+'/'+imageID) : null
-
                 /* return classroom View Model */
                 return resolve({
                     id: id,
-                    image: image,
+                    imageID: imageID,
                     Donations: donations,
                     Items: items,
                     Teacher: teacher,
@@ -79,7 +77,7 @@ export const fetchClassroom = (API, Storage, classroomID) => {
             return reject(new Error("Classroom not found"))
         }
         catch (error){
-            throw error
+            return reject(error)
         }
     })
 }

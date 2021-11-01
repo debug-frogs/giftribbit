@@ -22,25 +22,18 @@ const api = async (req, res) => {
     const objectName = cuid() + '.jpeg'
 
     try {
-
         const credentials = await Auth.currentCredentials()
-        console.log(credentials)
+        const {accessKeyId, secretAccessKey, sessionToken} = credentials
 
         const bucket = awsconfig.aws_user_files_s3_bucket
-        console.log(bucket)
-
         const region = awsconfig.aws_user_files_s3_bucket_region
-        console.log(region)
 
         const s3 = new S3({
-            apiVersion: '2006-03-01',
-            params: { Bucket: bucket },
-            signatureVersion: 'v4',
+            accessKeyId: accessKeyId,
             region: region,
-            credentials,
+            secretAccessKey: secretAccessKey,
+            sessionToken: sessionToken
         });
-
-        console.log(s3)
 
         const getMultipartFormImage = (request) => {
             return new Promise((resolve, reject) => {
@@ -56,32 +49,32 @@ const api = async (req, res) => {
             })
         }
 
-        // const listObjects = (prefix) => {
-        //     const params = {
-        //         Bucket: bucket,
-        //         Prefix: prefix,
-        //         StartAfter: prefix,
-        //     }
-        //     return new Promise((resolve, reject) => {
-        //         s3.listObjectsV2(params, (err, data) => {
-        //             err ? reject(err) : resolve(data)
-        //         })
-        //     })
-        // }
-        //
-        // const deleteObjects = (objects) => {
-        //     const params = {
-        //         Bucket: bucket,
-        //         Delete: {
-        //             Objects: objects,
-        //         }
-        //     }
-        //     return new Promise((resolve, reject) => {
-        //         s3.deleteObjects(params, (err, data) => {
-        //             err ? reject(err) : resolve(data)
-        //         })
-        //     })
-        // }
+        const listObjects = (prefix) => {
+            const params = {
+                Bucket: bucket,
+                Prefix: prefix,
+                StartAfter: prefix,
+            }
+            return new Promise((resolve, reject) => {
+                s3.listObjectsV2(params, (err, data) => {
+                    err ? reject(err) : resolve(data)
+                })
+            })
+        }
+
+        const deleteObjects = (objects) => {
+            const params = {
+                Bucket: bucket,
+                Delete: {
+                    Objects: objects,
+                }
+            }
+            return new Promise((resolve, reject) => {
+                s3.deleteObjects(params, (err, data) => {
+                    err ? reject(err) : resolve(data)
+                })
+            })
+        }
 
         const uploadObject = (key, stream) => {
             const params = {
@@ -97,14 +90,8 @@ const api = async (req, res) => {
             })
         }
 
-        // const path = classroomID + '/'
-        // const objectList = await Storage.list(path, {StartAfter: path})
-        // console.log(objectList)
-
-        // if (objectList.KeyCount)
-        //     for (const content of objectList.Contents) {
-        //         await Storage.remove(content.Key)
-        //     }
+        const {KeyCount, Contents} = await listObjects(classroomID + '/')
+        const removedObjects = KeyCount ? await deleteObjects(Contents.map(content => ({Key: content.Key}))) : undefined
 
         const key = await getMultipartFormImage(req)
             .then(persistentFile => fs.createReadStream(persistentFile.filepath))
@@ -113,17 +100,16 @@ const api = async (req, res) => {
 
         console.log(key)
 
-        // const updateClassroomData = await API.graphql({
-        //     query: mutations.updateClassroom,
-        //     variables: {
-        //         input: {
-        //             id: classroomID,
-        //             imageID: objectName
-        //         }
-        //     }
-        // })
-        // res.status(200).send(objectName)
-        res.status(200).end()
+        const updateClassroomData = await API.graphql({
+            query: mutations.updateClassroom,
+            variables: {
+                input: {
+                    id: classroomID,
+                    imageID: objectName
+                }
+            }
+        })
+        res.status(200).send(objectName)
     } catch (error) {
         console.log(error);
         res.status(405).end();

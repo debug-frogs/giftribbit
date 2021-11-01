@@ -8,6 +8,7 @@ import {fetchProfile} from "../api/fetch/profile/[id]";
 
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../aws-exports.js";
+import {fetchImage} from "../api/fetch/image/[id]";
 Amplify.configure({ ...config, ssr: true });
 
 
@@ -55,7 +56,7 @@ export default ClassroomPage
 
 export async function getServerSideProps(context) {
     try {
-        const {Auth, API, Storage} = withSSRContext(context)
+        const {Auth, API} = withSSRContext(context)
 
         /* get the current user from Auth */
         const user = await Auth.currentAuthenticatedUser().catch(() => null)
@@ -72,7 +73,12 @@ export async function getServerSideProps(context) {
         else {
             /* fetch classroom data */
             const classroomID = context.params.id
-            const classroomData = await fetchClassroom(API, Storage, classroomID)
+            const classroomData = await fetchClassroom(API, classroomID)
+
+            if (classroomData.imageID) {
+                const key = classroomID + '/' + classroomData.imageID
+                classroomData.image = await fetchImage(Auth, key)
+            }
 
             const userSub = user.attributes.sub
             const profileData = await fetchProfile(API, userSub)
