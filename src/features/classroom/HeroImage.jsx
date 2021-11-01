@@ -2,6 +2,7 @@ import {useContext} from 'react';
 import ImageContainer from "../ImageContainer/ImageContainer";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import {ClassroomContext} from "../../pages/classroom/[id]";
+import {Box, Container} from "@mui/material";
 
 const HeroImage = () => {
     const [profile] = useContext(ClassroomContext).profile
@@ -18,11 +19,23 @@ const HeroImage = () => {
         )
     } else {
         return (
-            <ImageContainer
-                src={classroom.image}
-                layout='fill'
-                priority
-            />
+            <Container
+                maxWidth='xs'
+            >
+                <Box
+                    maxHeight={400}
+                    overflow='hidden'
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='center'
+                >
+                    <ImageContainer
+                        src={classroom.image}
+                        layout='fill'
+                        priority
+                    />
+                </Box>
+            </Container>
         )
     }
 }
