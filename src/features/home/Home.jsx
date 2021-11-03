@@ -50,7 +50,8 @@ const Home = () => {
                 <Grid
                     container
                     alignItems='center'
-                    spacing={5}
+                    spacing={3}
+                    justifyContent='center'
                 >
                     <Grid item>
                         <TeacherSignupButton />
