@@ -10,18 +10,18 @@ const createTeacherPromise = async (API, input) => {
         try {
             const {first_name, id, last_name, school} = input
 
-            const classroomData = await API.graphql({
+            const createClassroomData = await API.graphql({
                 query: createClassroom,
                 variables: {input: {}}
             })
 
-            const classroom = classroomData.data.createClassroom
+            const classroomData = createClassroomData.data.createClassroom
 
-            const teacherData = await API.graphql({
+            const createTeacherData = await API.graphql({
                 query: createTeacher,
                 variables: {
                     input: {
-                        classroomID: classroom.id,
+                        classroomID: classroomData.id,
                         first_name: first_name,
                         id: id,
                         last_name: last_name,
@@ -30,15 +30,18 @@ const createTeacherPromise = async (API, input) => {
                 }
             });
 
-            const teacher = teacherData.data.createTeacher
-            classroom.classroomTeacherId = teacher.id
+            const teacherData = createTeacherData.data.createTeacher
 
             const updateClassroomData = await API.graphql({
                 query: updateClassroom,
-                variables: {input: classroom}
+                variables: {
+                    input: {
+                        id: classroomData.id,
+                        classroomTeacherId: teacherData.id
+                    }}
             })
 
-            return resolve(teacher)
+            return resolve(teacherData)
         }
         catch (error){
             reject(error)
