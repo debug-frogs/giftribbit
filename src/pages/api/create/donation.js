@@ -11,26 +11,25 @@ export const createDonationPromise = async (API, input) => {
         try {
             const {classroomID, parentID} = input
 
-            const classroomData = await API.graphql({
+            const getClassroomData = await API.graphql({
                 query: getClassroom,
                 variables: {id: classroomID}
             })
 
-            const {_deleted, Donations} = classroomData.data.getClassroom
-
+            const {_deleted, Donations} = getClassroomData.data.getClassroom
             if (_deleted) {
                 return reject(new Error("Classroom deleted"))
             }
-            else if (!!Donations.items.filter(c => !c._deleted && c.parentID === parentID)){
+            else if (!!(Donations.items.filter(c => !c._deleted && c.parentID === parentID))?.length){
                 return reject(new Error("Classroom Donations must have unique parentID"))
             }
             else {
-                const createdDonation = await API.graphql({
+                const createdDonationData = await API.graphql({
                     query: createDonation,
                     variables: {
                         input: {
                             classroomID: classroomID,
-                            parentId: parentID,
+                            parentID: parentID,
                         }
                     }
                 })
