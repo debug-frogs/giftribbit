@@ -2,24 +2,22 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import * as queries from "../../../../graphql/queries";
+import {getClassroom, getParent} from "../../../../graphql/queries";
 
 
-export const fetchClassroom = (API, classroomID) => {
+export const fetchClassroomPromise = (API, classroomID) => {
     return new Promise(async (resolve, reject) => {
         try {
             const classroomData = await API.graphql({
-                query: queries.getClassroom,
-                variables:
-                    {
-                        id: classroomID
-                    }
-            });
-            const {getClassroom} = classroomData.data
+                query: getClassroom,
+                variables: {id: classroomID}
+            })
 
-            if (getClassroom) {
-                /* return Classroom ViewModel */
-                const {id, imageID, Donations, Items, Teacher} = getClassroom
+            if (!classroomData.data.getClassroom) {
+                return reject(new Error("Classroom not found"))
+            }
+            else {
+                const {id, imageID, Donations, Items, Teacher} = classroomData.data.getClassroom
 
                 const teacher = {
                     first_name: Teacher.first_name,
@@ -41,8 +39,16 @@ export const fetchClassroom = (API, classroomID) => {
                     })
                 )
 
-                const donations = Donations.items.map(donation => {
-                    return({
+                const donations = Donations.items.map(async donation => {
+
+                    const parentData = await API.graphql({
+                        query: getParent,
+                        variables: {id: donation.parentID}
+                    })
+
+                    const parent = parentData.data.getParent
+
+                    return ({
                         id: donation.id,
                         items: donation?.Items?.items
                             ?.filter(item => !item._deleted)
@@ -57,9 +63,9 @@ export const fetchClassroom = (API, classroomID) => {
                                 })
                             ),
                         Parent: {
-                            first_name: donation.Parent.first_name,
-                            id: donation.Parent.id,
-                            last_name: donation.Parent.last_name,
+                            first_name: parent.first_name,
+                            id: parent.id,
+                            last_name: parent.last_name,
                         },
                     })
                 })
@@ -73,8 +79,6 @@ export const fetchClassroom = (API, classroomID) => {
                     Teacher: teacher,
                 })
             }
-            /* classroom not found */
-            return reject(new Error("Classroom not found"))
         }
         catch (error){
             return reject(error)
@@ -85,15 +89,13 @@ export const fetchClassroom = (API, classroomID) => {
 
 const api = async (req, res) => {
     if (req.method !== 'GET'){
-        res.status(405).end()
+        res.status(400).end()
     }
     else {
-        const {id} = req.query
-        const {API, Storage} = withSSRContext({req});
-
         try {
-            const classroomVM = await fetchClassroom(API, Storage, id)
-            res.status(200).send(classroomVM)
+            const {id} = req.query
+            const {API} = withSSRContext({req});
+            res.status(200).send(await fetchClassroomPromise(API, id))
         }
         catch (error) {
             console.log(error)
