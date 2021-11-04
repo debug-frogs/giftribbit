@@ -24,7 +24,6 @@ export const fetchImage = (Auth, key) => {
                 Bucket: bucket,
                 Key: key,
             })
-
             return resolve(image)
         }
         catch (error){
