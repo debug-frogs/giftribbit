@@ -2,104 +2,91 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import * as queries from "../../../../graphql/queries";
+import {getParent, getTeacher} from "../../../../graphql/queries";
 
 
-export const fetchProfile = (API, userSub) => {
+export const fetchProfilePromise = (API, userSub) => {
     return new Promise(async (resolve, reject) => {
         try {
-            /* fetch parent profile info */
-            const parentData = await API.graphql({
-                query: queries.getParent, variables:
-                    {
-                        id: userSub
-                    }
-            });
-            const parent = parentData.data.getParent
-            if (parent) {
-                /* return Parent ViewModel */
-                const {classroomID, child, first_name, id, last_name, teacherID} = parent
+            /* Check Parent */
+            const getParentData = await API.graphql({
+                query: getParent, variables: {id: userSub}
+            })
+            if (getParentData.data.getParent) {
+                const {child, Donations, first_name, id, last_name, teacherID} = getParentData.data.getParent
 
-                /* Fetch Teacher data */
-                const getTeacherData = teacherID ? await API.graphql({
-                    query: queries.getTeacher,
-                    variables: { id: teacherID }
-                }) : {}
-
-                const teacher = getTeacherData?.data?.getTeacher
-
-                /* Teacher ViewModel */
-                const teacherVM = teacher ?
-                    {
-                        first_name: teacher.first_name,
-                        last_name: teacher.last_name,
-                        school: teacher.school
-                    } : null
-
-                return resolve({
-                    classroomID: classroomID,
+                const parentViewModel = {
                     child: child,
+                    Donations: Donations.items
+                        .filter(c => !c._deleted)
+                        .map(c => ({id: c.id})),
                     first_name: first_name,
                     id: id,
                     last_name: last_name,
-                    Teacher: teacherVM,
+                    Teacher: {},
                     type: "Parent"
-                })
+                }
+
+                if (teacherID) {
+                    const getTeacherData = await API.graphql({
+                        query: getTeacher,
+                        variables: { id: teacherID }
+                    })
+
+                    if (getTeacherData.data.getTeacher) {
+                        const teacher = getTeacherData.data.getTeacher
+                        parentViewModel.Teacher = {
+                            first_name: teacher.first_name,
+                            last_name: teacher.last_name,
+                            school: teacher.school
+                        }
+                    }
+                }
+                return resolve(parentViewModel)
             }
 
-            /* fetch teacher profile info */
-            const teacherData = await API.graphql({
-                query: queries.getTeacher,
-                variables:
-                    {
-                        id: userSub
-                    }
-            });
-            const teacher = teacherData.data.getTeacher
-            if (teacher) {
-                /* return Teacher ViewModel */
-                const {classroomID, first_name, id, last_name, Parents, school} = teacher
-                const parents = Parents ? Parents.items.map( parent => {
-                    return ({
-                        child: parent.child,
-                        first_name: parent.first_name,
-                        id: parent.id,
-                        last_name: parent.last_name,
-                    })
-                }) : []
+            /* Check Teacher */
+            const getTeacherData = await API.graphql({
+                query: getTeacher,
+                variables: {id: userSub}
+            })
+            if (getTeacher.data.getTeacher) {
+                const {classroomID, first_name, id, last_name, Parents, school} = getTeacher.data.getTeacher
 
-
-                return resolve({
+                const teacherViewModel = {
                     classroomID: classroomID,
                     first_name: first_name,
                     id: id,
                     last_name: last_name,
-                    Parents: parents,
+                    Parents: Parents.items.map( parent => ({
+                            child: parent.child,
+                            first_name: parent.first_name,
+                            id: parent.id,
+                            last_name: parent.last_name,
+                        })),
                     school: school,
                     type: "Teacher"
-                })
-            }
+                }
 
-            /* implied else - user not found */
+                return resolve(teacherViewModel)
+            }
             return reject(new Error("User not found"))
         }
         catch (error){
             return reject(error)
         }
-
     })
 }
 
 const api = async (req, res) => {
     if (req.method !== 'GET'){
-        res.status(405).end()
+        res.status(400).end()
     }
     else {
-        const {id} = req.query
-        const {API} = withSSRContext({req});
-
         try {
-            const profileVM = await fetchProfile(API, id)
+            const {id} = req.query
+            const {API} = withSSRContext({req})
+            const profileVM = await fetchProfilePromise(API, id)
             res.status(200).send(profileVM)
         }
         catch (error) {
