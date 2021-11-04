@@ -7,16 +7,15 @@ type Item @model @auth(rules: [{allow: public}]) @key(name: "byDonation", fields
   donationID: ID
 }
 
-type Donation @model @auth(rules: [{allow: public}]) @key(name: "byClassroom", fields: ["classroomID"]) {
+type Donation @model @auth(rules: [{allow: public}]) @key(name: "byClassroom", fields: ["classroomID"]) @key(name: "byParent", fields: ["parentID"]) {
   id: ID!
   classroomID: ID
   Items: [Item] @connection(keyName: "byDonation", fields: ["id"])
-  Parent: Parent @connection
+  parentID: ID
 }
 
 type Classroom @model @auth(rules: [{allow: public}]) {
   id: ID!
-  Parents: [Parent] @connection(keyName: "byClassroom", fields: ["id"])
   Donations: [Donation] @connection(keyName: "byClassroom", fields: ["id"])
   Items: [Item] @connection(keyName: "byClassroom", fields: ["id"])
   Teacher: Teacher @connection
@@ -32,12 +31,12 @@ type Teacher @model @auth(rules: [{allow: public}]) {
   classroomID: String
 }
 
-type Parent @model @auth(rules: [{allow: public}]) @key(name: "byTeacher", fields: ["teacherID"]) @key(name: "byClassroom", fields: ["classroomID"]) {
+type Parent @model @auth(rules: [{allow: public}]) @key(name: "byTeacher", fields: ["teacherID"]) {
   id: ID!
   first_name: String
   last_name: String
   child: String
   teacherID: ID
-  classroomID: ID
+  Donations: [Donation] @connection(keyName: "byParent", fields: ["id"])
 }
  

@@ -12,15 +12,15 @@ type DonationMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type ParentMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
 type ClassroomMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
 type TeacherMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type ParentMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -41,29 +41,15 @@ export declare class Donation {
   readonly id: string;
   readonly classroomID?: string;
   readonly Items?: (Item | null)[];
-  readonly Parent?: Parent;
+  readonly parentID?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Donation, DonationMetaData>);
   static copyOf(source: Donation, mutator: (draft: MutableModel<Donation, DonationMetaData>) => MutableModel<Donation, DonationMetaData> | void): Donation;
 }
 
-export declare class Parent {
-  readonly id: string;
-  readonly first_name?: string;
-  readonly last_name?: string;
-  readonly child?: string;
-  readonly teacherID?: string;
-  readonly classroomID?: string;
-  readonly createdAt?: string;
-  readonly updatedAt?: string;
-  constructor(init: ModelInit<Parent, ParentMetaData>);
-  static copyOf(source: Parent, mutator: (draft: MutableModel<Parent, ParentMetaData>) => MutableModel<Parent, ParentMetaData> | void): Parent;
-}
-
 export declare class Classroom {
   readonly id: string;
-  readonly Parents?: (Parent | null)[];
   readonly Donations?: (Donation | null)[];
   readonly Items?: (Item | null)[];
   readonly Teacher?: Teacher;
@@ -85,4 +71,17 @@ export declare class Teacher {
   readonly updatedAt?: string;
   constructor(init: ModelInit<Teacher, TeacherMetaData>);
   static copyOf(source: Teacher, mutator: (draft: MutableModel<Teacher, TeacherMetaData>) => MutableModel<Teacher, TeacherMetaData> | void): Teacher;
+}
+
+export declare class Parent {
+  readonly id: string;
+  readonly first_name?: string;
+  readonly last_name?: string;
+  readonly child?: string;
+  readonly teacherID?: string;
+  readonly Donations?: (Donation | null)[];
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<Parent, ParentMetaData>);
+  static copyOf(source: Parent, mutator: (draft: MutableModel<Parent, ParentMetaData>) => MutableModel<Parent, ParentMetaData> | void): Parent;
 }
