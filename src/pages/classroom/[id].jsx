@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../../features/auth/authSlice";
 import ClassroomLayout from "../../features/classroom/ClassroomLayout";
 
-import {fetchClassroom} from "../api/fetch/classroom/[id]";
-import {fetchProfile} from "../api/fetch/profile/[id]";
+import {fetchClassroomPromise} from "../api/fetch/classroom/[id]";
+import {fetchProfilePromise} from "../api/fetch/profile/[id]";
 
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../aws-exports.js";
@@ -71,9 +71,8 @@ export async function getServerSideProps(context) {
             }
         }
         else {
-            /* fetch classroom data */
             const classroomID = context.params.id
-            const classroomData = await fetchClassroom(API, classroomID)
+            const classroomData = await fetchClassroomPromise(API, classroomID)
 
             if (classroomData.imageID) {
                 const key = classroomID + '/' + classroomData.imageID
@@ -81,7 +80,7 @@ export async function getServerSideProps(context) {
             }
 
             const userSub = user.attributes.sub
-            const profileData = await fetchProfile(API, userSub)
+            const profileData = await fetchProfilePromise(API, userSub)
 
             return {
                 props: {
