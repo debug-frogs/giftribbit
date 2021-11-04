@@ -1,16 +1,24 @@
-import {Fragment, useState} from 'react'
-import {Box, Collapse, Divider, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Modal, Typography} from "@mui/material";
+import {Fragment, useContext, useState} from 'react'
+import {Box, Collapse, Divider, Icon, IconButton, List, ListItem, ListItemIcon, ListItemText, Modal} from "@mui/material";
 import {FaGift, FaBackspace, FaRegEdit} from 'react-icons/fa'
-import EditItem from "../wishlist/EditItem";
-import RemoveItem from "../wishlist/RemoveItem";
+import WishlistEditItem from "./WishlistEditItem";
+import WishlistRemoveItem from "./WishlistRemoveItem";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
-import ItemUrl from "./ItemUrl";
-import ItemSummary from "./ItemSummary";
-import ItemDescription from "./ItemDescription";
+import ItemUrl from "../item/ItemUrl";
+import ItemSummary from "../item/ItemSummary";
+import ItemDescription from "../item/ItemDescription";
+import {WishlistContext} from "./Wishlist";
 
 
-const Item = ({item={}, editable=false, removable=false, disabled=false, dropdown=false}) => {
+const WishlistItem = ({item={}}) => {
+    const wishlistContext = useContext(WishlistContext)
+    const [editable, setEditable] = wishlistContext.editable
+    const [removable, setRemovable] = wishlistContext.removable
+
+    const disabled = !!item.donationID
+
     const [open, setOpen] = useState(false);
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -39,7 +47,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
             <ListItem
                 secondaryAction={
                     <Fragment>
-                        {editable &&
+                        {editable && !removable &&
                             <IconButton
                                 edge="end"
                                 size='small'
@@ -49,7 +57,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                                 <FaRegEdit/>
                             </IconButton>
                         }
-                        {removable &&
+                        {!editable && removable &&
                             <IconButton
                                 edge="end"
                                 size='small'
@@ -81,7 +89,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                     <ItemUrl disabled={disabled} href={item.url} />
                 }
             />
-            {open && !disabled && item.description && dropdown &&
+            {open && !disabled && !!item.description &&
                 <IconButton
                     color='secondary'
                     onClick={handleClose}
@@ -89,7 +97,7 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                     <ExpandLess />
                 </IconButton>
             }
-            {!open && !disabled && item.description && dropdown &&
+            {!open && !disabled && !!item.description &&
                 <IconButton
                     color='secondary'
                     onClick={handleOpen}
@@ -99,8 +107,9 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
             }
             </ListItem>
             <Collapse
-                in={open && !disabled && item.description && dropdown}
-                timeout="auto" unmountOnExit
+                in={open && !disabled && !!item.description}
+                timeout="auto"
+                unmountOnExit
             >
                 <Box maxWidth={300}>
                     <List disablePadding>
@@ -124,12 +133,12 @@ const Item = ({item={}, editable=false, removable=false, disabled=false, dropdow
                 style={{overflow: 'scroll',}}
             >
                 <Box style={modalContentStyle}>
-                    {editable && <EditItem item={item} handleModalClose={handleModalClose}/>}
-                    {removable && <RemoveItem item={item} handleModalClose={handleModalClose}/>}
+                    {editable && <WishlistEditItem item={item} handleModalClose={handleModalClose}/>}
+                    {removable && <WishlistRemoveItem item={item} handleModalClose={handleModalClose}/>}
                 </Box>
             </Modal>
         </Fragment>
     )
 }
 
-export default Item;
+export default WishlistItem;

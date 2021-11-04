@@ -3,7 +3,7 @@ import {Typography} from "@mui/material";
 import {ClassroomContext} from "../../pages/classroom/[id]";
 import {useContext} from "react";
 
-const Header = () => {
+const ClassroomHeader = () => {
     const [classroom] = useContext(ClassroomContext).classroom
     const {Teacher} = classroom
 
@@ -32,4 +32,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default ClassroomHeader;

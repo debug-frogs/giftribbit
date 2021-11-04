@@ -1,8 +1,8 @@
 import {Fragment} from 'react'
 import {Box, Divider, Grid, Paper} from "@mui/material";
-import Header from "./Header";
-import HeroImage from "./HeroImage";
-import Subheader from "./Subheader";
+import ClassroomHeader from "./ClassroomHeader";
+import ClassroomHeroImage from "./ClassroomHeroImage";
+import ClassroomSubheader from "./ClassroomSubheader";
 import DonationList from "./donation/DonationList";
 import ContributeButton from "./contribute/ContributeButton";
 import DonationsHeader from "./donation/DonationsHeader";
@@ -34,10 +34,10 @@ const ClassroomLayout = () => {
                                     spacing={3}
                                 >
                                     <Grid item>
-                                        <Header />
+                                        <ClassroomHeader />
                                     </Grid>
                                     <Grid item>
-                                        <HeroImage />
+                                        <ClassroomHeroImage />
                                     </Grid>
                                     <Grid item>
                                         <Box sx={{ display: { sm: 'block', md: 'none' } }}>
@@ -47,7 +47,7 @@ const ClassroomLayout = () => {
                                                 spacing={5}
                                             >
                                                 <Grid item>
-                                                    <Subheader/>
+                                                    <ClassroomSubheader/>
                                                 </Grid>
                                                 <Grid item>
                                                     <Wishlist />
@@ -97,7 +97,7 @@ const ClassroomLayout = () => {
                                         direction='column'
                                     >
                                         <Grid item>
-                                            <Subheader/>
+                                            <ClassroomSubheader/>
                                         </Grid>
                                         <Grid item>
                                             <Wishlist />
@@ -134,13 +134,13 @@ const ClassroomLayout = () => {
                             spacing={3}
                         >
                             <Grid item>
-                                <Header/>
+                                <ClassroomHeader/>
                             </Grid>
                             <Grid item>
-                                <HeroImage />
+                                <ClassroomHeroImage />
                             </Grid>
                             <Grid item>
-                                <Subheader/>
+                                <ClassroomSubheader/>
                             </Grid>
                             <Grid item>
                                 <Wishlist />

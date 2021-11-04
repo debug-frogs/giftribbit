@@ -1,14 +1,20 @@
-import Item from "../Item/Item";
-import hash from 'object-hash'
-import {Avatar, Card, CardContent, CardHeader, Grid, List, Typography} from "@mui/material";
+import {Avatar, Card, CardContent, CardHeader, Grid, IconButton, Typography} from "@mui/material";
 import {createContext, Fragment, useState} from "react";
 import theme from "../../../theme";
+import DonationItemList from "./DonationItemList";
+import {FaTimes} from 'react-icons/fa';
+import {IoBagRemoveOutline} from 'react-icons/io5'
 
 export const DonationContext = createContext({})
 
 const Donation = ({donation}) => {
     const [removable, setRemovable] = useState(false)
     const sortedItems = donation?.items?.sort((a, b) => a.summary.localeCompare(b.summary))
+
+    const handleClick = (event) => {
+        removable ? setRemovable(false) : setRemovable(true)
+
+    }
 
     return (
         <DonationContext.Provider value={{
@@ -22,6 +28,15 @@ const Donation = ({donation}) => {
                         >
                             {donation?.Parent?.first_name[0] + donation?.Parent?.last_name[0]}
                         </Avatar>
+                    }
+                    action={
+                        <IconButton
+                            size='small'
+                            color={removable ? 'default' : 'secondary'}
+                            onClick={handleClick}
+                        >
+                            {removable ? <FaTimes/> : <IoBagRemoveOutline/>}
+                        </IconButton>
                     }
                     subheader={
                         <Fragment>
@@ -45,15 +60,7 @@ const Donation = ({donation}) => {
                         direction='column'
                     >
                         <Grid item>
-                            <List dense>
-                                {sortedItems?.map(item =>
-                                    <Item
-                                        key={hash(item)}
-                                        item={item}
-                                        removable={removable}
-                                    />
-                                )}
-                            </List>
+                            <DonationItemList items={sortedItems}/>
                         </Grid>
                     </Grid>
                 </CardContent>

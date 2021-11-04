@@ -1,42 +1,37 @@
 import React, {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, Typography} from "@mui/material";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
-import {WishlistContext} from "./Wishlist";
-import {deleteItem} from "../../../pages/api/delete/item";
-import {API} from "aws-amplify";
-// import axios from "../../../../lib/axios";
+import {DonationContext} from "./Donation";
+import axios from "../../../../lib/axios";
 
 
-const RemoveItem = ({item}) => {
+const DonationRemoveItem = ({item}) => {
     const [classroom, setClassroom] = useContext(ClassroomContext).classroom
     const [disabled, setDisabled] = useState(false)
 
-    const [removable, setRemovable] = useContext(WishlistContext).removable
+    const [removable, setRemovable] = useContext(DonationContext).removable
 
     const handleRemoveItem = async () => {
         setDisabled(true)
 
-        /* FIX THIS - use instead */
-        // const removedItem = await axios.delete('/api/delete/item', {
-        //     data: {
-        //         id: item.id,
-        //         _version: item._version
-        //     }
-        // })
-        const deletedItem = await deleteItem(API, {
-            id: item.id,
-            _version: item._version
-        })
+        const updatedItem = {...item}
+        updatedItem.donationID = null
+
+        const {data} = await axios.patch('./api/update/item', updatedItem)
 
         const newClassroom = {...classroom}
         newClassroom.Items = newClassroom.Items?.filter(c => c.id !== item.id)
-        newClassroom.Donations = newClassroom.Donations.map(c => {
-            c.items = c.items?.filter(c => c.id !== item.id)
-            return c
-        })
+        newClassroom.Items.push(data)
 
-        setClassroom(newClassroom)
+        if (item.donationID) {
+            newClassroom.Donations = newClassroom.Donations.map(c => {
+                c.items = c.items?.filter(c => c.id !== item.id)
+                return c
+            })
+        }
+
         setRemovable(false)
+        setClassroom(newClassroom)
     }
 
     return (
@@ -60,8 +55,7 @@ const RemoveItem = ({item}) => {
                             <Typography
                                 variant='caption'
                             >
-                                You will also remove this item from all Gift Donations.
-                                This action cannot be undone!
+                                Are you sure you would like to remove this item from your donations?
                             </Typography>
                         </Grid>
                         <Grid item>
@@ -83,4 +77,4 @@ const RemoveItem = ({item}) => {
     );
 };
 
-export default RemoveItem;
+export default DonationRemoveItem;

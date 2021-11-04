@@ -5,7 +5,7 @@ import {WishlistContext} from "./Wishlist";
 import axios from "../../../../lib/axios";
 
 
-const EditItem = ({item = {}}) => {
+const WishlistEditItem = ({item = {}}) => {
     const {description, donationID, id, summary, url, _version} = item
     const [classroom, setClassroom] = useContext(ClassroomContext).classroom
 
@@ -124,4 +124,4 @@ const EditItem = ({item = {}}) => {
     );
 };
 
-export default EditItem;
+export default WishlistEditItem;

@@ -2,7 +2,7 @@ import {Fragment, useContext} from 'react'
 import {FaEdit, FaTimes} from 'react-icons/fa';
 import {Box, IconButton, Menu, MenuItem, Modal, Typography} from "@mui/material";
 import {useState} from "react";
-import AddItem from "./AddItem"
+import WishlistAddItem from "./WishlistAddItem"
 import {WishlistContext} from "./Wishlist";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 
@@ -126,7 +126,7 @@ const WishlistMenu = () => {
                     style={{overflow: 'scroll',}}
                 >
                     <Box style={modalContentStyle}>
-                        <AddItem handleModalClose={handleModalClose}/>
+                        <WishlistAddItem handleModalClose={handleModalClose}/>
                     </Box>
                 </Modal>
             </Fragment>

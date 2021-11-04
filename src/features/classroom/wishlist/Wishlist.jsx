@@ -1,6 +1,6 @@
 import {createContext, useState} from 'react';
 import WishlistHeader from "./WishlistHeader";
-import WishlistItems from "./WishlistItems";
+import WishlistItemList from "./WishlistItemList";
 
 export const WishlistContext = createContext({});
 
@@ -15,7 +15,7 @@ const Wishlist = () => {
             removable: [removable, setRemovable]
         }}>
             <WishlistHeader />
-            <WishlistItems />
+            <WishlistItemList />
         </WishlistContext.Provider>
     );
 };

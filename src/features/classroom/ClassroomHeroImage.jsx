@@ -4,7 +4,7 @@ import ImageUpload from "../ImageUpload/ImageUpload";
 import {ClassroomContext} from "../../pages/classroom/[id]";
 import {Box, Container} from "@mui/material";
 
-const HeroImage = () => {
+const ClassroomHeroImage = () => {
     const [profile] = useContext(ClassroomContext).profile
     const [classroom] = useContext(ClassroomContext).classroom
 
@@ -40,4 +40,4 @@ const HeroImage = () => {
     }
 }
 
-export default HeroImage;
+export default ClassroomHeroImage;

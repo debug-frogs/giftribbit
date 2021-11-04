@@ -4,7 +4,7 @@ import {ClassroomContext} from "../../../pages/classroom/[id]";
 import axios from "../../../../lib/axios";
 
 
-const AddItem = ({handleModalClose}) => {
+const WishlistAddItem = ({handleModalClose}) => {
     const [classroom, setClassroom] = useContext(ClassroomContext).classroom
     const {id} = classroom
 
@@ -110,4 +110,4 @@ const AddItem = ({handleModalClose}) => {
     );
 };
 
-export default AddItem;
+export default WishlistAddItem;

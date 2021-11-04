@@ -2,7 +2,7 @@ import {Fragment, useContext} from 'react';
 import {Typography} from "@mui/material";
 import {ClassroomContext} from "../../pages/classroom/[id]";
 
-const Subheader = () => {
+const ClassroomSubheader = () => {
     const [classroom] = useContext(ClassroomContext).classroom
     const {Teacher} = classroom
 
@@ -21,4 +21,4 @@ const Subheader = () => {
     );
 };
 
-export default Subheader;
+export default ClassroomSubheader;
