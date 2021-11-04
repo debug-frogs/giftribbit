@@ -1,13 +1,16 @@
 import {Avatar, Card, CardContent, CardHeader, Grid, IconButton, Typography} from "@mui/material";
-import {createContext, Fragment, useState} from "react";
+import {createContext, Fragment, useContext, useState} from "react";
 import theme from "../../../theme";
 import DonationItemList from "./DonationItemList";
 import {FaTimes} from 'react-icons/fa';
 import {IoBagRemoveOutline} from 'react-icons/io5'
+import {ClassroomContext} from "../../../pages/classroom/[id]";
 
 export const DonationContext = createContext({})
 
 const Donation = ({donation}) => {
+    const [profile] = useContext(ClassroomContext).profile
+
     const [removable, setRemovable] = useState(false)
     const sortedItems = donation?.items?.sort((a, b) => a.summary.localeCompare(b.summary))
 
@@ -30,6 +33,7 @@ const Donation = ({donation}) => {
                         </Avatar>
                     }
                     action={
+                        profile.id === donation.Parent.id &&
                         <IconButton
                             size='small'
                             color={removable ? 'default' : 'secondary'}
