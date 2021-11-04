@@ -15,25 +15,41 @@ const TeacherAddParent = ({handleClose=()=>{}}) => {
         e.preventDefault()
         setDisabled(true)
 
-        await API.post('fetchusersubapi', '/fetchusersub', {body: {email: parentEmail}})
-            .then( async parentID =>
-                !!Parents.find(c => c.id === parentID) ? null :
-                await axios.post("/api/update/parent/teacherid", {
+        try {
+            const parentID = await API.post('fetchusersubapi', '/fetchusersub', {body: {email: parentEmail}})
+
+            if (!Parents.find(c => c.id === parentID)) {
+
+                const createDonationRes = await axios.post("/api/create/donation", {
                     classroomID: classroomID,
                     parentID: parentID,
+                })
+
+                const updateParentRes = await axios.patch("/api/update/parent", {
+                    id: parentID,
                     teacherID: id
                 })
-            )
-            .then( res => {
-                const {data} = res
+
+                const fetchParentRes = await axios.get("/api/fetch/parent/" + parentID)
+
+                const parentData = fetchParentRes.data
+
                 const newProfile = {...profile}
                 const newParents = Parents
-                newParents.push(data)
+                newParents.push(parentData)
                 newProfile.Parents = newParents
                 setProfile(newProfile)
-            })
-            .catch(error => {})
-            .finally(() => handleClose())
+            }
+            else {
+                console.log("Email not found")
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+        finally {
+            handleClose()
+        }
     }
 
     return (
