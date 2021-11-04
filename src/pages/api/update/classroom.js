@@ -8,20 +8,26 @@ import {updateClassroom} from "../../../graphql/mutations";
 export const updateClassroomPromise = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const {classroomTeacherID, id, imageID} = input
+            const {classroomTeacherId, id, imageID} = input
 
-            const classroomData = await API.graphql({
+            const getClassroomData = await API.graphql({
                 query: getClassroom,
                 variables: {id: id}
             });
 
-            const {_deleted} = classroomData.data.getClassroom
-            if (_deleted) {
+            const classroomData = getClassroomData.data.getClassroom
+
+            if (classroomData._deleted) {
                 return reject(new Error("Classroom deleted"))
             }
             else {
-                const updatedClassroomInput = classroomData.data.getClassroom
-                if (typeof classroomTeacherID !== 'undefined') updatedClassroomInput.classroomTeacherID = classroomTeacherID
+                const updatedClassroomInput = {
+                    classroomTeacherId: classroomData.classroomTeacherId,
+                    id: classroomData.id,
+                    imageID: classroomData.imageID,
+                    _version: classroomData._version
+                }
+                if (typeof classroomTeacherId !== 'undefined') updatedClassroomInput.classroomTeacherId = classroomTeacherId
                 if (typeof imageID !== 'undefined') updatedClassroomInput.imageID = imageID
 
                 const updateClassroomData = await API.graphql({
