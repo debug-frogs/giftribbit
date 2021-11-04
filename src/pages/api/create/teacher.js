@@ -2,49 +2,43 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import * as mutations from "../../../graphql/mutations";
+import {createClassroom, createTeacher, updateClassroom} from "../../../graphql/mutations";
 
-const createTeacher = async (API, input) => {
+
+const createTeacherPromise = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const {email, first_name, id, last_name, school} = input
+            const {first_name, id, last_name, school} = input
 
             const classroomData = await API.graphql({
-                query: mutations.createClassroom,
-                variables: {
-                    input: {}
-                }
+                query: createClassroom,
+                variables: {input: {}}
             })
 
-            const classroomID = classroomData.data.createClassroom.id
+            const classroom = classroomData.data.createClassroom
 
             const teacherData = await API.graphql({
-                query: mutations.createTeacher,
+                query: createTeacher,
                 variables: {
                     input: {
-                        "classroomID": classroomID,
-                        "first_name": first_name,
-                        "id": id,
-                        "last_name": last_name,
-                        "school": school
+                        classroomID: classroom.id,
+                        first_name: first_name,
+                        id: id,
+                        last_name: last_name,
+                        school: school
                     }
                 }
             });
 
             const teacher = teacherData.data.createTeacher
+            classroom.classroomTeacherId = teacher.id
 
             const updateClassroomData = await API.graphql({
-                query: mutations.updateClassroom,
-                variables: {
-                    input: {
-                        id: classroomID,
-                        classroomTeacherId: teacher.id
-                    }
-                }
+                query: updateClassroom,
+                variables: {input: classroom}
             })
 
-            /* Return Teacher ID */
-            return resolve(teacher.id)
+            return resolve(teacher)
         }
         catch (error){
             reject(error)
@@ -55,14 +49,13 @@ const createTeacher = async (API, input) => {
 
 const api = async (req, res) => {
     if (req.method !== 'POST'){
-        res.status(405).end()
+        res.status(400).end()
     }
     else {
-        const {API} = withSSRContext({req})
-
         try {
-            const newTeacherID = await createTeacher(API, req.body)
-            res.status(200).send(newTeacherID)
+            const {API} = withSSRContext({req})
+            const {id} = await createTeacherPromise(API, req.body)
+            res.status(200).send(id)
         }
         catch (error) {
             console.log(error)
