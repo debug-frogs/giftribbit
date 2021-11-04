@@ -10,8 +10,6 @@ const WishlistMenu = () => {
     const wishlistContext = useContext(WishlistContext)
 
     const [profile] = useContext(ClassroomContext).profile
-    const {type} = profile
-
     const [classroom] = useContext(ClassroomContext).classroom
     const {Items} = classroom
 
@@ -61,7 +59,7 @@ const WishlistMenu = () => {
         transform: 'translate(-50%, -50%)',
     };
 
-    if (type === 'Teacher') {
+    if (profile.id === classroom.Teacher.id) {
         return (
             <Fragment>
                 <IconButton
