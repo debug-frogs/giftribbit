@@ -1,9 +1,9 @@
 import {Divider, Grid, Typography} from "@mui/material";
 import TeacherInformation from "./TeacherInformation";
 import SignoutButton from "../../auth/SignoutButton";
-import ParentsList from "./ParentsList";
-import AddParent from "./AddParent";
-import Classroom from "./Classroom";
+import TeacherParentList from "./TeacherParentList";
+import TeacherAddParent from "./TeacherAddParent";
+import TeacherClassroom from "./TeacherClassroom";
 
 const TeacherProfile = () => {
     return (
@@ -24,14 +24,14 @@ const TeacherProfile = () => {
                 <Divider />
             </Grid>
             <Grid item>
-                <Classroom />
+                <TeacherClassroom />
             </Grid>
             <Grid item>
                 <Divider />
             </Grid>
             <Grid item>
-                <AddParent />
-                <ParentsList />
+                <TeacherAddParent />
+                <TeacherParentList />
             </Grid>
             <Grid item>
                 <SignoutButton />
