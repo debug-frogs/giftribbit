@@ -2,22 +2,22 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import {getClassroom, getParent} from "../../../../graphql/queries";
+import {getClassroom} from "../../../../graphql/queries";
 
 
 export const fetchClassroomPromise = (API, classroomID) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const classroomData = await API.graphql({
+            const getClassroomData = await API.graphql({
                 query: getClassroom,
                 variables: {id: classroomID}
             })
 
-            if (!classroomData.data.getClassroom) {
+            if (!getClassroomData.data.getClassroom) {
                 return reject(new Error("Classroom not found"))
             }
             else {
-                const {id, imageID, Donations, Items, Teacher} = classroomData.data.getClassroom
+                const {id, imageID, Donations, Items, Teacher} = getClassroomData.data.getClassroom
 
                 const teacher = {
                     first_name: Teacher.first_name,
@@ -35,19 +35,10 @@ export const fetchClassroomPromise = (API, classroomID) => {
                         id: item.id,
                         summary: item.summary,
                         url: item.url,
-                        _version: item._version
                     })
                 )
 
-                const donations = Donations.items.map(async donation => {
-
-                    const parentData = await API.graphql({
-                        query: getParent,
-                        variables: {id: donation.parentID}
-                    })
-
-                    const parent = parentData.data.getParent
-
+                const donations = Donations.items.map(donation => {
                     return ({
                         id: donation.id,
                         items: donation?.Items?.items
@@ -59,14 +50,9 @@ export const fetchClassroomPromise = (API, classroomID) => {
                                     id: item.id,
                                     summary: item.summary,
                                     url: item.url,
-                                    _version: item._version
                                 })
                             ),
-                        Parent: {
-                            first_name: parent.first_name,
-                            id: parent.id,
-                            last_name: parent.last_name,
-                        },
+                        parentID: donation.parentID
                     })
                 })
 
@@ -95,7 +81,8 @@ const api = async (req, res) => {
         try {
             const {id} = req.query
             const {API} = withSSRContext({req});
-            res.status(200).send(await fetchClassroomPromise(API, id))
+            const classroomData = await fetchClassroomPromise(API, id)
+            res.status(200).send(classroomData)
         }
         catch (error) {
             console.log(error)
