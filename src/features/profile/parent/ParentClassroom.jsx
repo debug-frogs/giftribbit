@@ -5,7 +5,7 @@ import {NextLinkComposed} from "../../../../lib/Link";
 import {FaExternalLinkAlt} from "react-icons/fa";
 
 
-const Classroom = () => {
+const ParentClassroom = () => {
     const [profile] = useContext(ProfileContext)
     const {classroomID, Teacher} = profile
 
@@ -102,4 +102,4 @@ const Classroom = () => {
     }
 };
 
-export default Classroom;
+export default ParentClassroom;
