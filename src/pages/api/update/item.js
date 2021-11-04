@@ -10,17 +10,25 @@ export const updateItemPromise = async (API, input) => {
         try {
             const {description, donationID, id, summary, url} = input
 
-            const itemData = await API.graphql({
+            const getItemData = await API.graphql({
                 query: getItem,
                 variables: {id: id}
             });
 
-            const {_deleted} = itemData.data.getItem
-            if (_deleted) {
+            const itemData = getItemData.data.getItem
+
+            if (itemData._deleted) {
                 return reject(new Error("Item deleted"))
             }
             else {
-                const updatedItemInput = itemData.data.getItem
+                const updatedItemInput = {
+                    description: itemData.description,
+                    donationID: itemData.donationID,
+                    id: itemData.id,
+                    summary: itemData.summary,
+                    url: itemData.url,
+                    _version: itemData._version
+                }
                 if (typeof description !== 'undefined') updatedItemInput.description = description
                 if (typeof donationID !== 'undefined') updatedItemInput.donationID = donationID
                 if (typeof summary !== 'undefined') updatedItemInput.summary = summary
