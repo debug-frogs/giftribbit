@@ -10,17 +10,24 @@ export const updateParentPromise = async (API, input) => {
         try {
             const {child, first_name, id, last_name, teacherID} = input
 
-            const parentData = await API.graphql({
+            const getParentData = await API.graphql({
                 query: getParent,
                 variables: {id: id}
             });
 
-            const {_deleted} = parentData.data.getParent
-            if (_deleted) {
+            const parentData = getParentData.data.getParent
+
+            if (parentData._deleted) {
                 return reject(new Error("Parent deleted"))
             }
             else {
-                const updatedParentInput = parentData.data.getParent
+                const updatedParentInput = {
+                    child: parentData.child,
+                    first_name: parentData.first_name,
+                    id: parentData.id,
+                    last_name: parentData.last_name,
+                    teacherID: parentData.teacherID
+                }
                 if (typeof child !== 'undefined') updatedParentInput.child = child
                 if (typeof first_name !== 'undefined') updatedParentInput.first_name = first_name
                 if (typeof last_name !== 'undefined') updatedParentInput.last_name = last_name
