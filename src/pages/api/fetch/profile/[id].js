@@ -5,14 +5,14 @@ Amplify.configure({ ...config, ssr: true });
 import {getParent, getTeacher} from "../../../../graphql/queries";
 
 
-export const fetchProfilePromise = (API, userSub) => {
+export const fetchProfilePromise = (API, userID) => {
     return new Promise(async (resolve, reject) => {
         try {
             /* Check Parent */
             const getParentData = await API.graphql({
-                query: getParent, variables: {id: userSub}
+                query: getParent, variables: {id: userID}
             })
-            if (getParentData.data.getParent) {
+            if (!!getParentData.data.getParent) {
                 const {child, Donations, first_name, id, last_name, teacherID} = getParentData.data.getParent
 
                 const parentViewModel = {
@@ -32,7 +32,6 @@ export const fetchProfilePromise = (API, userSub) => {
                         query: getTeacher,
                         variables: { id: teacherID }
                     })
-
                     if (getTeacherData.data.getTeacher) {
                         const teacher = getTeacherData.data.getTeacher
                         parentViewModel.Teacher = {
@@ -48,17 +47,18 @@ export const fetchProfilePromise = (API, userSub) => {
             /* Check Teacher */
             const getTeacherData = await API.graphql({
                 query: getTeacher,
-                variables: {id: userSub}
+                variables: {id: userID}
             })
-            if (getTeacher.data.getTeacher) {
-                const {classroomID, first_name, id, last_name, Parents, school} = getTeacher.data.getTeacher
+            if (!!getTeacherData.data.getTeacher) {
+                const {classroomID, first_name, id, last_name, Parents, school} = getTeacherData.data.getTeacher
 
                 const teacherViewModel = {
                     classroomID: classroomID,
                     first_name: first_name,
                     id: id,
                     last_name: last_name,
-                    Parents: Parents.items.map( parent => ({
+                    Parents: Parents.items.map( parent => (
+                        {
                             child: parent.child,
                             first_name: parent.first_name,
                             id: parent.id,
