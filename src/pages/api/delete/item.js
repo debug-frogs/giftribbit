@@ -1,15 +1,15 @@
 import {withSSRContext} from "aws-amplify";
 
-import * as mutations from "../../../graphql/mutations";
+import {deleteItem} from "../../../graphql/mutations";
 
-export const deleteItem = async (API, input) => {
+
+export const deleteItemPromise = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
             const {id, _version} = input
 
-            /* Update Item data */
             const deleteItemData = await API.graphql({
-                query: mutations.deleteItem,
+                query: deleteItem,
                 variables: {
                     input: {
                         id: id,
@@ -29,13 +29,12 @@ export const deleteItem = async (API, input) => {
 
 const api = async (req, res) => {
     if (req.method !== 'DELETE'){
-        res.status(405).end()
+        res.status(400).end()
     }
     else {
-        const {API} = withSSRContext({req});
-
         try {
-            const deletedItem = await deleteItem(API, req.body)
+            const {API} = withSSRContext({req})
+            await deleteItemPromise(API, req.body)
             res.status(200).end()
         }
         catch (error) {
