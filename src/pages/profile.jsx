@@ -8,11 +8,12 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-
 export const ProfileContext = createContext({});
+
 
 const ProfilePage = ({isUserAuthorized, profileData}) => {
     const [profile, setProfile] = useState(profileData);
+    console.log(profile)
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
