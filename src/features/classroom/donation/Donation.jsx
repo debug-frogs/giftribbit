@@ -9,8 +9,7 @@ import {ClassroomContext} from "../../../pages/classroom/[id]";
 export const DonationContext = createContext({})
 
 const Donation = ({donation}) => {
-    const [profile] = useContext(ClassroomContext).profile
-
+    const [classroom] = useContext(ClassroomContext)
     const [removable, setRemovable] = useState(false)
     const sortedItems = donation?.items?.sort((a, b) => a.summary.localeCompare(b.summary))
 
@@ -33,7 +32,7 @@ const Donation = ({donation}) => {
                         </Avatar>
                     }
                     action={
-                        profile.id === donation.Parent.id &&
+                        classroom.userSub === donation.Parent.id &&
                         <IconButton
                             size='small'
                             color={removable ? 'default' : 'secondary'}
