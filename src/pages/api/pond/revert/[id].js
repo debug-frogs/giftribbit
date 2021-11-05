@@ -83,7 +83,7 @@ const api = async (req, res) => {
     }
     catch (error) {
         console.log(error)
-        res.status(405).end()
+        res.status(405).send(error)
     }
     finally {}
 }
