@@ -2,8 +2,6 @@ import React, {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
 import {TeacherParentsContext} from "./TeacherParents";
-import {deleteDonationPromise} from "../../../pages/api/delete/donation/[id]";
-import {API} from "aws-amplify";
 import axios from "../../../../lib/axios";
 
 
@@ -26,7 +24,8 @@ const TeacherRemoveParent = ({parent, handleModalClose}) => {
                     const updateItemRes = await axios.patch('./api/update/item', updatedItem)
                 }
 
-                const deleteDonationRes = await deleteDonationPromise(API, donation.id)
+                const deleteDonationRes = await axios.delete('/api/delete/donation/' + donation.id)
+
                 const newProfile = {...profile}
                 newProfile.Parents = newProfile.Parents.filter(c => c.id !== parent.id)
                 setProfile(newProfile)
