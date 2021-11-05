@@ -28,7 +28,6 @@ type Teacher @model @auth(rules: [{allow: public}]) {
   last_name: String
   school: String
   classroomID: String
-  TeacherParents: [TeacherParent] @connection(keyName: "byTeacher", fields: ["id"])
 }
 
 type Parent @model @auth(rules: [{allow: public}]) {
@@ -37,14 +36,5 @@ type Parent @model @auth(rules: [{allow: public}]) {
   last_name: String
   child: String
   Donations: [Donation] @connection(keyName: "byParent", fields: ["id"])
-  teachers: [TeacherParent] @connection(keyName: "byParent", fields: ["id"])
 }
-
-type TeacherParent @model(queries: null) @key(name: "byTeacher", fields: ["teacherID", "parentID"]) @key(name: "byParent", fields: ["parentID", "teacherID"]) @auth(rules: [{allow: public}, {allow: public}]) {
-  id: ID!
-  teacherID: ID!
-  parentID: ID!
-  teacher: Teacher! @connection(fields: ["teacherID"])
-  parent: Parent! @connection(fields: ["parentID"])
-}
- 
+  

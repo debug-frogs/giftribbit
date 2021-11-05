@@ -341,20 +341,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "TeacherParents": {
-                    "name": "TeacherParents",
-                    "isArray": true,
-                    "type": {
-                        "model": "TeacherParent"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "teacher"
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -383,115 +369,6 @@ export const schema = {
                     "type": "auth",
                     "properties": {
                         "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "TeacherParent": {
-            "name": "TeacherParent",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "teacher": {
-                    "name": "teacher",
-                    "isArray": false,
-                    "type": {
-                        "model": "Teacher"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "teacherID"
-                    }
-                },
-                "parent": {
-                    "name": "parent",
-                    "isArray": false,
-                    "type": {
-                        "model": "Parent"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "parentID"
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "TeacherParents",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {
-                        "queries": null
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byTeacher",
-                        "fields": [
-                            "teacherID",
-                            "parentID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byParent",
-                        "fields": [
-                            "parentID",
-                            "teacherID"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            },
                             {
                                 "allow": "public",
                                 "operations": [
@@ -551,20 +428,6 @@ export const schema = {
                         "associatedWith": "parentID"
                     }
                 },
-                "teachers": {
-                    "name": "teachers",
-                    "isArray": true,
-                    "type": {
-                        "model": "TeacherParent"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "parent"
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -610,5 +473,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "afb3c2b62c31f40a4972a893fa603897"
+    "version": "0c9990cd804099a1ea3ebc074e65d8b5"
 };
