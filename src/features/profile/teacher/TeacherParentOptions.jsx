@@ -84,7 +84,7 @@ const TeacherParentOptions = () => {
                 </Container>
             </Modal>
         </Fragment>
-    );
-};
+    )
+}
 
 export default TeacherParentOptions;
