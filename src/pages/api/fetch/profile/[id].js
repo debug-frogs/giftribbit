@@ -63,6 +63,7 @@ export const fetchProfilePromise = (API, userID) => {
                             first_name: parent.first_name,
                             id: parent.id,
                             last_name: parent.last_name,
+                            donationID: parent.Donations.items.find(c => !c._deleted && c.classroomID === classroomID).id
                         })),
                     school: school,
                     type: "Teacher"
