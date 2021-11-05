@@ -1,11 +1,11 @@
 import {Grid} from "@mui/material";
-import {useContext} from "react";
+import {memo, useContext} from "react";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 import Donation from "./Donation";
 import hash from "object-hash";
 
-const DonationList = () => {
-    const [classroom] = useContext(ClassroomContext).classroom
+const DonationList = memo(() => {
+    const [classroom] = useContext(ClassroomContext)
     const {Donations} = classroom
 
     return (
@@ -25,7 +25,7 @@ const DonationList = () => {
                 </Grid>
             )}
         </Grid>
-    );
-};
+    )
+})
 
 export default DonationList;
