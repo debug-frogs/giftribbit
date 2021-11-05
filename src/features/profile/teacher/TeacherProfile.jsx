@@ -3,8 +3,9 @@ import TeacherInformation from "./TeacherInformation";
 import SignoutButton from "../../auth/SignoutButton";
 import TeacherClassroom from "./TeacherClassroom";
 import TeacherParents from "./TeacherParents";
+import {memo} from "react";
 
-const TeacherProfile = () => {
+const TeacherProfile = memo(() => {
     return (
         <Grid
             container
@@ -36,6 +37,6 @@ const TeacherProfile = () => {
             </Grid>
         </Grid>
     )
-};
+})
 
 export default TeacherProfile
