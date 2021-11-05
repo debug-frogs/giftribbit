@@ -14,7 +14,7 @@ const TeacherParents = () => {
             <TeacherParentOptions />
             <TeacherParentList />
         </TeacherParentsContext.Provider>
-    );
-};
+    )
+}
 
 export default TeacherParents;
