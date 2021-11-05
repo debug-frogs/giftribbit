@@ -1,7 +1,8 @@
 import {Typography} from "@mui/material";
+import {memo} from "react";
 
 
-const ItemSummary = ({disabled, summary}) => {
+const ItemSummary = memo(({disabled, summary}) => {
     return (
         <Typography
             color={disabled ? 'textSecondary' : 'textPrimary'}
@@ -16,6 +17,6 @@ const ItemSummary = ({disabled, summary}) => {
             {summary}
         </Typography>
     )
-};
+})
 
 export default ItemSummary;
