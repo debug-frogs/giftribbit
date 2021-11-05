@@ -11,9 +11,9 @@ const ClassroomHeroImage = () => {
         return (
             <ImageUpload
                 source={classroom.image}
-                url={'/api/pond'}
-                processUrl={'/process/'+classroom.id}
-                revertUrl={'/revert/'+classroom.id}
+                url={'/api/pond/'}
+                processUrl={'process/' + classroom.id}
+                revertUrl={'revert/' + classroom.id}
             />
         )
     } else {
