@@ -15,6 +15,7 @@ export const ClassroomContext = createContext({});
 
 const ClassroomPage = ({isUserAuthorized, classroomData}) => {
     const [classroom, setClassroom] = useState(classroomData)
+    console.log(classroom)
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
