@@ -1,11 +1,11 @@
-import {useContext} from 'react';
+import {memo, useContext} from 'react';
 import {Grid, IconButton, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
 import {NextLinkComposed} from "../../../../lib/Link";
 import {FaExternalLinkAlt} from "react-icons/fa";
 
 
-const ParentClassroom = () => {
+const ParentClassroom = memo(() => {
     const [profile] = useContext(ProfileContext)
     const {classroomID, Teacher} = profile
 
@@ -100,6 +100,6 @@ const ParentClassroom = () => {
     else {
         return null
     }
-};
+})
 
 export default ParentClassroom;
