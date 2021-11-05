@@ -76,10 +76,17 @@ export const fetchProfilePromise = (API, userID) => {
 
                         const donations = parentData.Donations.items
                             .filter( c => !c._deleted)
-                            .map( c => ({
-                                id: c.id,
-                                classroomID: c.classroomID
-                            }))
+                            .map( c => {
+                                const items = c.Items.items
+                                    .filter( c => !c._deleted)
+                                    .map(c => ({
+                                        id: c.id
+                                    }))
+                                return ({
+                                    classroomID: c.classroomID,
+                                    id: c.id,
+                                    Items: items
+                                })})
 
                         return ({
                             child: parentData.child,
