@@ -1,7 +1,7 @@
 import {memo, useContext} from 'react';
-import {Grid, IconButton, Typography} from "@mui/material";
+import {Grid, IconButton} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
-import {NextLinkComposed} from "../../../../lib/Link";
+import Link, {NextLinkComposed} from "../../../../lib/Link";
 import {FaExternalLinkSquareAlt} from "react-icons/fa";
 
 
@@ -17,15 +17,14 @@ const TeacherClassroom = memo(() => {
             alignItems='center'
         >
             <Grid item>
-                <Typography
-                    noLinkStyle
-                    style={{textDecoration: "none", fontWeight: 600}}
+                <Link
+                    style={{fontWeight: 600}}
+                    underline='none'
                     color='secondary'
-                    component={NextLinkComposed}
-                    to={{pathname: '/classroom/' + classroomID}}
+                    href={'/classroom/' + classroomID}
                 >
                     Your Classroom
-                </Typography>
+                </Link>
             </Grid>
             <Grid item>
                 <IconButton
