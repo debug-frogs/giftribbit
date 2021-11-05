@@ -2,7 +2,7 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import {getClassroom} from "../../../../graphql/queries";
+import {getClassroom, getParent} from "../../../../graphql/queries";
 
 
 export const fetchClassroomPromise = (API, classroomID) => {
@@ -17,33 +17,32 @@ export const fetchClassroomPromise = (API, classroomID) => {
                 return reject(new Error("Classroom not found"))
             }
             else {
-                const {id, imageID, Donations, Items, Teacher} = getClassroomData.data.getClassroom
+                const classroomData = getClassroomData.data.getClassroom
 
                 const teacher = {
-                    first_name: Teacher.first_name,
-                    id: Teacher.id,
-                    last_name: Teacher.last_name,
-                    school: Teacher.school
+                    first_name: classroomData.Teacher.first_name,
+                    id: classroomData.Teacher.id,
+                    last_name: classroomData.Teacher.last_name,
+                    school: classroomData.Teacher.school
                 }
 
-                const items = Items?.items
-                    ?.filter(item => !item._deleted)
-                    ?.map( item =>
-                    ({
-                        donationID: item.donationID,
-                        description: item.description,
-                        id: item.id,
-                        summary: item.summary,
-                        url: item.url,
-                    })
-                )
+                const items = classroomData.Items.items
+                    .filter(item => !item._deleted)
+                    .map( item => (
+                        {
+                            donationID: item.donationID,
+                            description: item.description,
+                            id: item.id,
+                            summary: item.summary,
+                            url: item.url,
+                        }))
 
-                const donations = Donations.items.map(donation => {
-                    return ({
-                        id: donation.id,
-                        items: donation?.Items?.items
-                            ?.filter(item => !item._deleted)
-                            ?.map(item =>
+                const donationPromises = classroomData.Donations.items
+                    .filter( donation => !donation._deleted)
+                    .map(async donation => {
+                        const items = donation?.Items?.items
+                            .filter(item => !item._deleted)
+                            .map(item =>
                                 ({
                                     donationID: item.donationID,
                                     description: item.description,
@@ -51,15 +50,34 @@ export const fetchClassroomPromise = (API, classroomID) => {
                                     summary: item.summary,
                                     url: item.url,
                                 })
-                            ),
-                        parentID: donation.parentID
+                            )
+
+                        const getParentData = await API.graphql({
+                            query: getParent,
+                            variables: {id: donation.parentID}
+                        })
+
+                        const parentData = getParentData.data.getParent
+
+                        const parent = {
+                            id: parentData.id,
+                            first_name: parentData.first_name,
+                            last_name: parentData.last_name
+                        }
+
+                        return ({
+                            id: donation.id,
+                            items: items,
+                            Parent: parent
+                        })
                     })
-                })
+
+                const donations = await Promise.all(donationPromises)
 
                 /* return classroom View Model */
                 return resolve({
-                    id: id,
-                    imageID: imageID,
+                    id: classroomData.id,
+                    imageID: classroomData.imageID,
                     Donations: donations,
                     Items: items,
                     Teacher: teacher,
