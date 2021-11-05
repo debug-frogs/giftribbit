@@ -1,8 +1,9 @@
 import {Box, Grid, IconButton, Typography} from "@mui/material";
 import {FaGithub} from 'react-icons/fa';
 import {NextLinkComposed} from "../../../lib/Link";
+import {memo} from "react";
 
-const Footer = () => {
+const Footer = memo(() => {
     return (
         <Box pb={1}>
             <Grid
@@ -23,7 +24,7 @@ const Footer = () => {
                 <Grid item>
                     <IconButton
                         component={NextLinkComposed}
-                        to={{pathname: 'https://github.com/debug-frogs',}}
+                        to={{pathname: 'https://github.com/debug-frogs'}}
                     >
                         <FaGithub/>
                     </IconButton>
@@ -31,6 +32,6 @@ const Footer = () => {
             </Grid>
         </Box>
     )
-}
+})
 
 export default Footer
