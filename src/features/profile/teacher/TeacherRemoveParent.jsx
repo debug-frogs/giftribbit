@@ -2,6 +2,8 @@ import React, {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
 import {TeacherParentsContext} from "./TeacherParents";
+import {deleteDonationPromise} from "../../../pages/api/delete/donation/[id]";
+import {API} from "aws-amplify";
 import axios from "../../../../lib/axios";
 
 
@@ -15,10 +17,16 @@ const TeacherRemoveParent = ({parent, handleModalClose}) => {
         setDisabled(true)
 
         try {
-            const donationID = parent.Donations.find( c => c.classroomID === profile.classroomID).id
+            const donation = parent.Donations.find( c => c.classroomID === profile.classroomID)
 
-            if (donationID) {
-                await axios.delete('api/delete/donation/' + donationID)
+            if (donation?.id) {
+                for (const item of donation.Items){
+                    const updatedItem = {...item}
+                    updatedItem.donationID = null
+                    const updateItemRes = await axios.patch('./api/update/item', updatedItem)
+                }
+
+                const deleteDonationRes = await deleteDonationPromise(API, donation.id)
                 const newProfile = {...profile}
                 newProfile.Parents = newProfile.Parents.filter(c => c.id !== parent.id)
                 setProfile(newProfile)
