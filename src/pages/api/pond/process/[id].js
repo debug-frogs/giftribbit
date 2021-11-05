@@ -2,14 +2,14 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import awsconfig from "../../../../aws-exports.js";
 Amplify.configure({ ...awsconfig, ssr: true });
 
-import S3 from 'aws-sdk/clients/s3';
+import S3 from "aws-sdk/clients/s3";
+
+import * as mutations from "../../../../graphql/mutations";
+import * as queries from "../../../../graphql/queries";
 
 import formidable from 'formidable';
 import fs from 'fs'
 import cuid from "cuid";
-import {getClassroom} from "../../../../graphql/queries";
-import {updateClassroom} from "../../../../graphql/mutations";
-
 
 
 /**
@@ -100,13 +100,13 @@ const api = async (req, res) => {
             .then(result => result.Key )
 
         const getClassroomData = await API.graphql({
-            query: getClassroom,
+            query: queries.getClassroom,
             variables: {id: classroomID}
         });
         const classroomData = getClassroomData.data.getClassroom
 
         const updateClassroomData = await API.graphql({
-            query: updateClassroom,
+            query: mutations.updateClassroom,
             variables: {
                 input: {
                     id: classroomData.id,
