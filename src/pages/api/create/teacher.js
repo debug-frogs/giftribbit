@@ -44,7 +44,7 @@ const createTeacherPromise = async (API, input) => {
             return resolve(teacherData)
         }
         catch (error){
-            reject(error)
+            return reject(error)
         }
     })
 }
