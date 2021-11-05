@@ -14,6 +14,8 @@ const TeacherRemoveParent = ({parent, handleModalClose}) => {
     const handleRemoveItem = async () => {
         setDisabled(true)
 
+
+
         const newProfile = {...profile}
         newProfile.Parents = newProfile.Parents.filter(c => c.id !== parent.id)
         setProfile(newProfile)
@@ -64,7 +66,7 @@ const TeacherRemoveParent = ({parent, handleModalClose}) => {
                 </Grid>
             </Box>
         </Paper>
-    );
-};
+    )
+}
 
 export default TeacherRemoveParent;
