@@ -1,9 +1,9 @@
-import {Fragment, useContext} from 'react';
+import {Fragment, memo, useContext} from 'react';
 import {Typography} from "@mui/material";
 import {ClassroomContext} from "../../pages/classroom/[id]";
 
-const ClassroomSubheader = () => {
-    const [classroom] = useContext(ClassroomContext).classroom
+const ClassroomSubheader = memo(() => {
+    const [classroom] = useContext(ClassroomContext)
     const {Teacher} = classroom
 
     return (
@@ -18,7 +18,7 @@ const ClassroomSubheader = () => {
                 classroom by donating items on their wishlist!
             </Typography>
         </Fragment>
-    );
-};
+    )
+})
 
 export default ClassroomSubheader;
