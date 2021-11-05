@@ -2,8 +2,9 @@ import {Container, Grid, Typography} from "@mui/material";
 import TeacherSignupButton from "../auth/TeacherSignupButton";
 import ParentSignupButton from "../auth/ParentSignupButton";
 import FrogBoi from "../../assets/FrogBoi";
+import {memo} from "react";
 
-const Home = () => {
+const Home = memo(() => {
     return (
         <Grid
             container
@@ -63,6 +64,6 @@ const Home = () => {
             </Grid>
         </Grid>
     )
-}
+})
 
 export default Home
