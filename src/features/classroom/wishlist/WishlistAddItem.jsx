@@ -5,11 +5,9 @@ import axios from "../../../../lib/axios";
 
 
 const WishlistAddItem = ({handleModalClose}) => {
-    const [classroom, setClassroom] = useContext(ClassroomContext).classroom
-    const {id} = classroom
+    const [classroom, setClassroom] = useContext(ClassroomContext)
 
     const [disabled, setDisabled] = useState(false)
-
     const [newItemSummary, setNewItemSummary] = useState('')
     const [newItemUrl, setNewItemUrl] = useState('')
     const [newItemDescription, setNewItemDescription] = useState('')
@@ -20,7 +18,7 @@ const WishlistAddItem = ({handleModalClose}) => {
         setDisabled(true)
 
         const {data} = await axios.post('./api/create/item', {
-            classroomID: id,
+            classroomID: classroom.id,
             description: newItemDescription,
             summary: newItemSummary,
             url: newItemUrl
