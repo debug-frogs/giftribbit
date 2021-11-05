@@ -7,7 +7,7 @@ import axios from "../../../../lib/axios";
 
 const WishlistEditItem = ({item = {}}) => {
     const {description, summary, url} = item
-    const [classroom, setClassroom] = useContext(ClassroomContext).classroom
+    const [classroom, setClassroom] = useContext(ClassroomContext)
 
     const [editable, setEditable] = useContext(WishlistContext).editable
     const [disabled, setDisabled] = useState(false)
@@ -25,16 +25,16 @@ const WishlistEditItem = ({item = {}}) => {
         updatedItem.summary = newItemSummary
         updatedItem.url = newItemUrl
 
-        const {data} = await axios.patch('./api/update/item', updatedItem)
+        const updateItemRes = await axios.patch('./api/update/item', updatedItem)
         const newClassroom = {...classroom}
         newClassroom.Items = newClassroom.Items
-            ?.filter(c => c.id !== item.id)
-        newClassroom.Items.push(data)
+            ?.filter(c => c.id !== updatedItem.id)
+        newClassroom.Items.push(updatedItem)
 
-        if (item.donationID) {
+        if (updatedItem.donationID) {
             newClassroom.Donations = newClassroom.Donations.map(c => {
-                c.items = c.items?.filter(c => c.id !== item.id)
-                c.items.push(data)
+                c.items = c.items?.filter(c => c.id !== updatedItem.id)
+                c.items.push(updatedItem)
                 return c
             })
         }
