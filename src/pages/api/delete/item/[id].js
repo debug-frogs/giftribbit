@@ -28,11 +28,11 @@ export const deleteItemPromise = async (API, id) => {
                 return resolve()
             }
             else {
-                reject(new Error("Item not found"))
+                return reject(new Error("Item not found"))
             }
         }
         catch (error){
-            reject(error)
+            return reject(error)
         }
     })
 }
@@ -51,7 +51,7 @@ const api = async (req, res) => {
         }
         catch (error) {
             console.log(error)
-            res.status(405).end()
+            res.status(405).send(error)
         }
         finally {}
     }
