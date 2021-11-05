@@ -1,7 +1,8 @@
 import {Typography} from "@mui/material";
+import {memo} from "react";
 
 
-const ItemDescription = ({description}) => {
+const ItemDescription = memo(({description}) => {
     return (
         <Typography
             color='textPrimary'
@@ -16,6 +17,6 @@ const ItemDescription = ({description}) => {
             {description}
         </Typography>
     )
-};
+})
 
 export default ItemDescription;
