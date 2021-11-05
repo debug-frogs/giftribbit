@@ -1,7 +1,6 @@
 import {AmplifyAuthContainer, AmplifyAuthenticator, AmplifyConfirmSignIn, AmplifyForgotPassword, AmplifyRequireNewPassword, AmplifySignIn, AmplifySignUp} from "@aws-amplify/ui-react";
 import {useRouter} from "next/router";
 import axios from "../../../lib/axios";
-import {memo} from "react";
 
 
 const handleTeacherSignUp = async (formData) => {
@@ -39,7 +38,7 @@ const handleTeacherSignUp = async (formData) => {
 }
 
 
-const TeacherAuthenticator = memo(({initialAuthState="signup"}) => {
+const TeacherAuthenticator = ({initialAuthState="signup"}) => {
     const router = useRouter()
 
     const handleAuthStateChange = (async (nextAuthState, authData) => {
@@ -114,5 +113,5 @@ const TeacherAuthenticator = memo(({initialAuthState="signup"}) => {
             </AmplifyAuthenticator>
         </AmplifyAuthContainer>
     )
-})
+}
 export default TeacherAuthenticator;
