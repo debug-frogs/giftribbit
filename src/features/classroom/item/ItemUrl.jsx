@@ -1,5 +1,6 @@
 import Link from "../../../../lib/Link";
 import {Box, Typography} from "@mui/material";
+import {memo} from "react";
 
 const isValidUrl = (href) => {
     try {
@@ -10,7 +11,7 @@ const isValidUrl = (href) => {
     }
 }
 
-const ItemUrl = ({disabled, href}) => {
+const ItemUrl = memo(({disabled, href}) => {
 
     if (disabled || !isValidUrl(href)) {
         return (
@@ -59,6 +60,6 @@ const ItemUrl = ({disabled, href}) => {
             </Link>
         )
     }
-};
+})
 
 export default ItemUrl;
