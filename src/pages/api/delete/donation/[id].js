@@ -1,4 +1,6 @@
-import {withSSRContext} from "aws-amplify";
+import Amplify, {withSSRContext} from "aws-amplify";
+import config from "../../../../aws-exports.js";
+Amplify.configure({ ...config, ssr: true });
 
 import {deleteDonation} from "../../../../graphql/mutations";
 import {getDonation} from "../../../../graphql/queries";
