@@ -1,8 +1,8 @@
-import {useContext} from 'react';
+import {memo, useContext} from 'react';
 import {Grid, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
 
-const TeacherInfo = () => {
+const TeacherInfo = memo(() => {
     const [profile] = useContext(ProfileContext)
     const {first_name, last_name, email, child} = profile
 
@@ -118,7 +118,7 @@ const TeacherInfo = () => {
                 </Grid>
             </Grid>
         </Grid>
-    );
-};
+    )
+})
 
 export default TeacherInfo;
