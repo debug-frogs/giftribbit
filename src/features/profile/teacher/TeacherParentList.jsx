@@ -93,6 +93,6 @@ const TeacherParentList = () => {
             </List>
         )
     }
-};
+}
 
 export default TeacherParentList;
