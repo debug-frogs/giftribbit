@@ -1,7 +1,8 @@
 import {AmplifySignOut} from "@aws-amplify/ui-react";
 import {useRouter} from "next/router";
+import {memo} from "react";
 
-const SignoutButton = () => {
+const SignoutButton = memo(() => {
     const router = useRouter()
 
     const handleAuthStateChange = (async (nextAuthState, authData) => {
@@ -13,6 +14,6 @@ const SignoutButton = () => {
     return(
         <AmplifySignOut handleAuthStateChange={handleAuthStateChange} />
     )
-};
+})
 
 export default SignoutButton;
