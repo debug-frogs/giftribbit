@@ -1,8 +1,9 @@
 import hash from "object-hash";
 import {List} from "@mui/material";
 import DonationItem from "./DonationItem";
+import {memo} from "react";
 
-const DonationItemList = ({items = []}) => {
+const DonationItemList = memo(({items = []}) => {
     return (
         <List dense>
             {items.map(item =>
@@ -12,7 +13,7 @@ const DonationItemList = ({items = []}) => {
                 />
             )}
         </List>
-    );
-};
+    )
+})
 
 export default DonationItemList;
