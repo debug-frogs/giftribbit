@@ -1,8 +1,9 @@
 import {Box, Button, Grid, Typography} from "@mui/material";
 import {NextLinkComposed} from "../../../lib/Link";
 import {RiParentLine} from "react-icons/ri"
+import {memo} from "react";
 
-const ParentSignupButton = () => {
+const ParentSignupButton = memo(() => {
     return (
         <Button
             variant='outlined'
@@ -33,6 +34,6 @@ const ParentSignupButton = () => {
             </Box>
         </Button>
     )
-};
+})
 
 export default ParentSignupButton;
