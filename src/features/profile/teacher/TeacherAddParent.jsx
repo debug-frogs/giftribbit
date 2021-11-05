@@ -8,6 +8,7 @@ import axios from "../../../../lib/axios";
 const TeacherAddParent = ({handleClose=()=>{}}) => {
     const [profile, setProfile] = useContext(ProfileContext)
     const {classroomID, id, Parents} = profile
+
     const [parentEmail, setParentEmail] = useState('')
     const [disabled, setDisabled] = useState(false)
 
@@ -92,7 +93,7 @@ const TeacherAddParent = ({handleClose=()=>{}}) => {
                 </Grid>
             </Grid>
         </form>
-    );
-};
+    )
+}
 
 export default TeacherAddParent;
