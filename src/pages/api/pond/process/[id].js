@@ -14,8 +14,8 @@ import {updateClassroom} from "../../../../graphql/mutations";
 
 /**
  * @pre ImageUpload component processes file my-file.jpeg as multipart/form-data using a POST request
- * @post file is saved as to AWS_BUCKET_NAME as RegistryUid/my-file.jpeg
- * @return unique key id my-file.jpeg in text/plain response
+ * @post file is saved as to s3 bucket as classroomID/my-file.jpeg
+ * @return unique objectName of my-file.jpeg in text/plain response
  */
 const api = async (req, res) => {
     const {API, Auth} = withSSRContext({req});
@@ -118,7 +118,7 @@ const api = async (req, res) => {
         res.status(200).send(objectName)
     } catch (error) {
         console.log(error);
-        res.status(500).send(error);
+        res.status(405).send(error);
     } finally {}
 }
 
