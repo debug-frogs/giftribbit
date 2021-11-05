@@ -1,8 +1,9 @@
 import {Box, Button, Grid, Typography} from "@mui/material";
 import {NextLinkComposed} from "../../../lib/Link";
 import {FaChalkboardTeacher} from "react-icons/fa";
+import {memo} from "react";
 
-const TeacherSignupButton = () => {
+const TeacherSignupButton = memo(() => {
     return (
         <Button
             variant='outlined'
@@ -33,6 +34,6 @@ const TeacherSignupButton = () => {
             </Box>
         </Button>
     )
-};
+})
 
 export default TeacherSignupButton;
