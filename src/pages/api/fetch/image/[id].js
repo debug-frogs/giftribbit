@@ -1,5 +1,6 @@
-import {withSSRContext} from "aws-amplify";
+import Amplify, {withSSRContext} from "aws-amplify";
 import awsconfig from "../../../../aws-exports.js";
+Amplify.configure({ ...awsconfig, ssr: true });
 
 import S3 from 'aws-sdk/clients/s3';
 
