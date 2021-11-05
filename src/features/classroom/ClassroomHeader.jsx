@@ -1,10 +1,10 @@
-import {Fragment} from 'react'
+import {Fragment, memo} from 'react'
 import {Typography} from "@mui/material";
 import {ClassroomContext} from "../../pages/classroom/[id]";
 import {useContext} from "react";
 
-const ClassroomHeader = () => {
-    const [classroom] = useContext(ClassroomContext).classroom
+const ClassroomHeader = memo(() => {
+    const [classroom] = useContext(ClassroomContext)
     const {Teacher} = classroom
 
     return (
@@ -29,7 +29,7 @@ const ClassroomHeader = () => {
                 classroom!
             </Typography>
         </Fragment>
-    );
-};
+    )
+})
 
 export default ClassroomHeader;
