@@ -1,11 +1,10 @@
 import {Fragment, useContext, useState} from 'react';
 import {ProfileContext} from "../../../pages/profile";
-import {Box, Grid, Icon, IconButton, List, ListItem, ListItemText, Modal, Typography} from "@mui/material";
+import {Box, IconButton, List, ListItem, ListItemText, Modal, Typography} from "@mui/material";
 import hash from 'object-hash'
 import {FaBackspace} from "react-icons/fa";
 import {TeacherParentsContext} from "./TeacherParents";
 import TeacherRemoveParent from "./TeacherRemoveParent";
-import {GiFrog} from 'react-icons/gi'
 
 
 const TeacherParentList = () => {
@@ -32,26 +31,11 @@ const TeacherParentList = () => {
     if (!Parents.length) {
         return (
             <Box py={3}>
-                <Grid
-                    container
-                    alignItems='center'
-                    justifyContent='center'
+                <Typography
+                    variant='body2'
                 >
-                    <Grid item>
-                        <Typography
-                            variant='body2'
-                            display='inline'
-                        >
-                            Invite Parents to your Classroom..&nbsp;
-                        </Typography>
-                        <Icon
-                            fontSize='small'
-                            color='primary'
-                        >
-                            <GiFrog />
-                        </Icon>
-                    </Grid>
-                </Grid>
+                    Invite Parents to your Classroom..&nbsp;
+                </Typography>
             </Box>
         )
     }
