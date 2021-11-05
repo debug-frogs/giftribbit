@@ -57,11 +57,9 @@ const ImageUpload = ({source, url, processUrl, revertUrl}) => {
 
                     const request = new XMLHttpRequest();
                     request.open('POST', url + processUrl)
-
                     request.upload.onprogress = (e) => {
                         progress(e.lengthComputable, e.loaded, e.total);
                     }
-
                     request.onload = function() {
                         if (request.status >= 200 && request.status < 300) {
                             load(request.responseText);
@@ -70,10 +68,8 @@ const ImageUpload = ({source, url, processUrl, revertUrl}) => {
                             console.log(request.response)
                             error('oh no')
                         }
-                    };
-
+                    }
                     request.send(formData);
-
                 },
                 revert: {
                     url: revertUrl,
