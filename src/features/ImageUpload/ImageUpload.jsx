@@ -48,8 +48,32 @@ const ImageUpload = ({source, url, processUrl, revertUrl}) => {
             maxParallelUploads={1}
             server={{
                 url: url,
-                process: {
-                    url: processUrl,
+                // process: {
+                //     url: processUrl,
+                // },
+                process: (fieldName, file, metadata, load, error, progress, abort) => {
+                    const formData = new FormData();
+                    formData.append(fieldName, file, file.name)
+
+                    const request = new XMLHttpRequest();
+                    request.open('POST', url + processUrl)
+
+                    request.upload.onprogress = (e) => {
+                        progress(e.lengthComputable, e.loaded, e.total);
+                    }
+
+                    request.onload = function() {
+                        if (request.status >= 200 && request.status < 300) {
+                            load(request.responseText);
+                        }
+                        else {
+                            console.log(request.response)
+                            error('oh no')
+                        }
+                    };
+
+                    request.send(formData);
+
                 },
                 revert: {
                     url: revertUrl,
