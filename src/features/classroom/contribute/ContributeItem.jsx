@@ -6,8 +6,7 @@ import axios from "../../../../lib/axios";
 
 
 const ContributeItem = ({handleClose}) => {
-    const [classroom, setClassroom] = useContext(ClassroomContext).classroom
-    const [profile] = useContext(ClassroomContext).profile
+    const [classroom, setClassroom] = useContext(ClassroomContext)
 
     const {Items} = classroom
     const filteredItems = Items.filter(item => !item.donationID)
@@ -18,19 +17,17 @@ const ContributeItem = ({handleClose}) => {
     const handleDonate = async () => {
         setDisabled(true)
 
-        const parentID = profile.id
+        const parentID = classroom.userSub
         const donationID = classroom.Donations.find(donation => donation.Parent.id === parentID).id
         const checkedIDs = checkedItems.map(c => c.id)
         const updatedItems = []
         for (const item of checkedItems) {
-            const {data} = await axios.patch('./api/update/item', {
-                            donationID: donationID,
-                            id: item.id,
-                            summary: item.summary,
-                            url: item.url,
-                            _version: item._version
-                        })
-            updatedItems.push(data)
+            const updateItemRes = await axios.patch('./api/update/item',
+                {
+                    donationID: donationID,
+                    id: item.id,
+                })
+            updatedItems.push(item)
         }
 
         const newClassroom = {...classroom}
