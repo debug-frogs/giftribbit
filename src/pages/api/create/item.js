@@ -19,7 +19,7 @@ export const createItemPromise = async (API, input) => {
             const {_deleted} = classroomData.data.getClassroom
 
             if (_deleted) {
-                return reject(new Error("Classroom deleted"))
+                return reject(new Error("Cannot add Item to deleted Classroom"))
             }
             else {
                 const createItemData = await API.graphql({
