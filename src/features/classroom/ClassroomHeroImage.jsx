@@ -1,14 +1,13 @@
-import {useContext} from 'react';
+import {memo, useContext} from 'react';
 import ImageContainer from "../ImageContainer/ImageContainer";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import {ClassroomContext} from "../../pages/classroom/[id]";
 import {Box, Container} from "@mui/material";
 
-const ClassroomHeroImage = () => {
-    const [profile] = useContext(ClassroomContext).profile
-    const [classroom] = useContext(ClassroomContext).classroom
+const ClassroomHeroImage = memo(() => {
+    const [classroom] = useContext(ClassroomContext)
 
-   if (classroom.Teacher.id === profile.id) {
+   if (classroom.Teacher.id === classroom.userSub) {
         return (
             <ImageUpload
                 source={classroom.image}
@@ -38,6 +37,6 @@ const ClassroomHeroImage = () => {
             </Container>
         )
     }
-}
+})
 
 export default ClassroomHeroImage;
