@@ -1,8 +1,8 @@
 import {memo, useContext} from 'react';
-import {Divider, Grid, IconButton, Typography} from "@mui/material";
+import {Divider, Grid, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
-import {NextLinkComposed} from "../../../../lib/Link";
-import {FaExternalLinkSquareAlt} from "react-icons/fa";
+import Link from "../../../../lib/Link";
+import hash from "object-hash";
 
 
 const ParentClassrooms = memo(() => {
@@ -16,7 +16,10 @@ const ParentClassrooms = memo(() => {
                 spacing={2}
             >
                 {profile.Classrooms.map(classroom =>
-                    <Grid item>
+                    <Grid
+                        key={hash(classroom)}
+                        item
+                    >
                         <Grid
                             container
                             direction='column'
@@ -26,23 +29,20 @@ const ParentClassrooms = memo(() => {
                                 <Divider />
                             </Grid>
                             <Grid item>
-                                <Typography
-                                    noLinkStyle
-                                    style={{textDecoration: "none", fontWeight: 600}}
+                                <Link
+                                    style={{fontWeight: 600}}
+                                    underline='none'
                                     color='secondary'
-                                    component={NextLinkComposed}
-                                    to={{pathname: '/classroom/' + classroom.id}}
+                                    href={'/classroom/' + classroom.id}
                                 >
                                     {classroom.Teacher.first_name} {classroom.Teacher.last_name}'s Classroom
-                                </Typography>
+                                </Link>
                                 <br />
-                                {profile.Classrooms.length > 0 &&
-                                    <Typography
-                                        variant='caption'
-                                    >
-                                        at {classroom.Teacher.school}
-                                    </Typography>
-                                }
+                                <Typography
+                                    variant='caption'
+                                >
+                                    at {classroom.Teacher.school}
+                                </Typography>
                             </Grid>
                         </Grid>
                     </Grid>
