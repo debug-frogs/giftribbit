@@ -7,9 +7,9 @@ import S3 from 'aws-sdk/clients/s3';
 import formidable from 'formidable';
 import fs from 'fs'
 import cuid from "cuid";
+import {getClassroom} from "../../../../graphql/queries";
+import {updateClassroom} from "../../../../graphql/mutations";
 
-import * as mutations from "../../../../graphql/mutations";
-import * as queries from "../../../../graphql/queries";
 
 
 /**
@@ -99,29 +99,26 @@ const api = async (req, res) => {
             .then(readStream => uploadObject(classroomID + '/' + objectName, readStream))
             .then(result => result.Key )
 
-        const classroomData = await API.graphql({
-            query: queries.getClassroom,
-            variables:
-                {
-                    id: classroomID
-                }
+        const getClassroomData = await API.graphql({
+            query: getClassroom,
+            variables: {id: classroomID}
         });
-        const {_version} = classroomData.data.getClassroom
+        const classroomData = getClassroomData.data.getClassroom
 
         const updateClassroomData = await API.graphql({
-            query: mutations.updateClassroom,
+            query: updateClassroom,
             variables: {
                 input: {
-                    id: classroomID,
+                    id: classroomData.id,
                     imageID: objectName,
-                    _version: _version
+                    _version: classroomData._version
                 }
             }
         })
         res.status(200).send(objectName)
     } catch (error) {
         console.log(error);
-        res.status(405).send(error);
+        res.status(500).send(error);
     } finally {}
 }
 
