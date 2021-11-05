@@ -17,14 +17,21 @@ export const fetchParentPromise = (API, id) => {
                 return reject(new Error("Parent not found"))
             }
             else {
-                const {child, first_name, id, last_name, teacherID} = getParentData.data.getParent
+                const parentData = getParentData.data.getParent
+
+                const donations = parentData.Donations.items
+                    .filter( c => !c._deleted)
+                    .map( c => ({
+                        id: c.id,
+                        classroomID: c.classroomID
+                    }))
 
                 return resolve({
-                    child: child,
-                    first_name: first_name,
-                    id: id,
-                    last_name: last_name,
-                    teacherID: teacherID,
+                    child: parentData.child,
+                    Donations: donations,
+                    first_name: parentData.first_name,
+                    id: parentData.id,
+                    last_name: parentData.last_name,
                 })
             }
         }

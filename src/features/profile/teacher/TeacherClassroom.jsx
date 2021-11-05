@@ -2,7 +2,7 @@ import {memo, useContext} from 'react';
 import {Grid, IconButton, Typography} from "@mui/material";
 import {ProfileContext} from "../../../pages/profile";
 import {NextLinkComposed} from "../../../../lib/Link";
-import {FaExternalLinkAlt} from "react-icons/fa";
+import {FaExternalLinkSquareAlt} from "react-icons/fa";
 
 
 const TeacherClassroom = memo(() => {
@@ -12,34 +12,30 @@ const TeacherClassroom = memo(() => {
     return (
         <Grid
             container
-            direction='column'
-            spacing={2}
+            wrap='nowrap'
+            spacing={1}
+            alignItems='center'
         >
             <Grid item>
-                <Grid
-                    container
-                    wrap='nowrap'
-                    spacing={2}
-                    alignItems='center'
+                <Typography
+                    noLinkStyle
+                    style={{textDecoration: "none", fontWeight: 600}}
+                    color='secondary'
+                    component={NextLinkComposed}
+                    to={{pathname: '/classroom/' + classroomID}}
                 >
-                    <Grid item>
-                        <Typography
-                            style={{ fontWeight: 600 }}
-                        >
-                            Classroom
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <IconButton
-                            size='small'
-                            color='secondary'
-                            component={NextLinkComposed}
-                            to={{pathname: '/classroom/' + classroomID}}
-                        >
-                            <FaExternalLinkAlt />
-                        </IconButton>
-                    </Grid>
-                </Grid>
+                    Your Classroom
+                </Typography>
+            </Grid>
+            <Grid item>
+                <IconButton
+                    size='small'
+                    color='secondary'
+                    component={NextLinkComposed}
+                    to={{pathname: '/classroom/' + classroomID}}
+                >
+                    <FaExternalLinkSquareAlt />
+                </IconButton>
             </Grid>
         </Grid>
     )

@@ -4,19 +4,18 @@ import {selectIsAuthorized, selectIsAuthPage} from "../../features/auth/authSlic
 import ClassroomLayout from "../../features/classroom/ClassroomLayout";
 
 import {fetchClassroomPromise} from "../api/fetch/classroom/[id]";
-import {fetchProfilePromise} from "../api/fetch/profile/[id]";
+import {fetchImage} from "../api/fetch/image/[id]";
 
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../aws-exports.js";
-import {fetchImage} from "../api/fetch/image/[id]";
 Amplify.configure({ ...config, ssr: true });
 
 
 export const ClassroomContext = createContext({});
 
-const ClassroomPage = ({isUserAuthorized, classroomData, profileData}) => {
+const ClassroomPage = ({isUserAuthorized, classroomData}) => {
     const [classroom, setClassroom] = useState(classroomData)
-    const [profile, setProfile] = useState(profileData)
+    console.log(classroom)
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
@@ -41,10 +40,7 @@ const ClassroomPage = ({isUserAuthorized, classroomData, profileData}) => {
     }
     else {
         return (
-            <ClassroomContext.Provider value={{
-                "classroom": [classroom, setClassroom],
-                "profile": [profile, setProfile]
-            }}>
+            <ClassroomContext.Provider value={[classroom, setClassroom]}>
                 <ClassroomLayout />
             </ClassroomContext.Provider>
         )
@@ -73,20 +69,17 @@ export async function getServerSideProps(context) {
         else {
             const classroomID = context.params.id
             const classroomData = await fetchClassroomPromise(API, classroomID)
+            classroomData.userSub = user.attributes.sub
 
             if (classroomData.imageID) {
                 const key = classroomID + '/' + classroomData.imageID
                 classroomData.image = await fetchImage(Auth, key)
             }
 
-            const userSub = user.attributes.sub
-            const profileData = await fetchProfilePromise(API, userSub)
-
             return {
                 props: {
                     isUserAuthorized: !!user,
                     classroomData: classroomData,
-                    profileData: profileData
                 }
             }
         }

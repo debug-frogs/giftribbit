@@ -26,18 +26,14 @@ export const updateParentPromise = async (API, input) => {
                     first_name: parentData.first_name,
                     id: parentData.id,
                     last_name: parentData.last_name,
-                    teacherID: parentData.teacherID
                 }
                 if (typeof child !== 'undefined') updatedParentInput.child = child
                 if (typeof first_name !== 'undefined') updatedParentInput.first_name = first_name
                 if (typeof last_name !== 'undefined') updatedParentInput.last_name = last_name
-                if (typeof teacherID !== 'undefined') updatedParentInput.teacherID = teacherID
 
                 const updatedParentData = await API.graphql({
                     query: updateParent,
-                    variables: {
-                        input: updatedParentInput
-                    }
+                    variables: {input: updatedParentInput}
                 })
 
                 return resolve()

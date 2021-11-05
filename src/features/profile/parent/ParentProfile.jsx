@@ -1,7 +1,7 @@
 import {Divider, Grid, Typography} from "@mui/material";
 import SignoutButton from "../../auth/SignoutButton";
 import ParentInfo from "./ParentInformation";
-import ParentClassroom from './ParentClassroom'
+import ParentClassrooms from './ParentClassrooms'
 import {memo} from "react";
 
 const ParentProfile = memo(() => {
@@ -20,7 +20,7 @@ const ParentProfile = memo(() => {
                 <ParentInfo/>
             </Grid>
             <Grid item>
-                <ParentClassroom />
+                <ParentClassrooms />
             </Grid>
             <Grid item>
                 <Divider />

@@ -7,7 +7,7 @@ import {TeacherParentsContext} from "./TeacherParents";
 
 
 const TeacherParentOptions = () => {
-    const {Parents} = useContext(ProfileContext)
+    const [profile] = useContext(ProfileContext)
     const [removable, setRemovable] = useContext(TeacherParentsContext).removable
     const handleClickRemove = () => {
         removable ? setRemovable(false) : setRemovable(true)
@@ -50,7 +50,7 @@ const TeacherParentOptions = () => {
                         </Grid>
                         <Grid item>
                             <IconButton
-                                disabled={!!Parents?.length}
+                                disabled={!profile.Parents.length}
                                 color='secondary'
                                 size='small'
                                 onClick={handleClickRemove}

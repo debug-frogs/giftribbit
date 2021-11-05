@@ -13,32 +13,40 @@ export const fetchProfilePromise = (API, userID) => {
                 query: getParent, variables: {id: userID}
             })
             if (!!getParentData.data.getParent) {
-                const {child, Donations, first_name, id, last_name} = getParentData.data.getParent
+                if (getParentData.data.getParent._deleted) {
+                    return reject(new Error("cannot fetch a deleted Parent"))
+                }
 
-                const parentViewModel = {
-                    child: child,
-                    Classrooms: Donations.items
+                const parentData = getParentData.data.getParent
+
+                const classroomsPromises = parentData.Donations.items
                         .filter(c => !c._deleted)
                         .map( async c => {
                             const getClassroomData = await API.graphql({
                                 query: getClassroom, variables: {id: c.classroomID}
                             })
-                            const {id, imageID, Donations, Items, Teacher} = getClassroomData.data.getClassroom
-                            return ({
-                                id: id,
-                                Teacher: {
-                                    first_name: Teacher.first_name,
-                                    last_name: Teacher.last_name,
-                                    school: Teacher.school
-                                }})
-                        }),
-                    first_name: first_name,
-                    id: id,
-                    last_name: last_name,
-                    type: "Parent"
-                }
 
-                return resolve(parentViewModel)
+                            const classroomData = getClassroomData.data.getClassroom
+
+                            return ({
+                                id: classroomData.id,
+                                Teacher: {
+                                    first_name: classroomData.Teacher.first_name,
+                                    last_name: classroomData.Teacher.last_name,
+                                    school: classroomData.Teacher.school
+                                }})
+                        })
+
+                const classrooms = await Promise.all(classroomsPromises)
+
+                return resolve({
+                    child: parentData.child,
+                    Classrooms: classrooms,
+                    first_name: parentData.first_name,
+                    id: parentData.id,
+                    last_name: parentData.last_name,
+                    type: "Parent"
+                })
             }
 
             /* Check Teacher */
@@ -47,18 +55,52 @@ export const fetchProfilePromise = (API, userID) => {
                 variables: {id: userID}
             })
             if (!!getTeacherData.data.getTeacher) {
-                const {classroomID, first_name, id, last_name, school} = getTeacherData.data.getTeacher
+                const teacherData = getTeacherData.data.getTeacher
 
-                const teacherViewModel = {
-                    classroomID: classroomID,
-                    first_name: first_name,
-                    id: id,
-                    last_name: last_name,
-                    school: school,
-                    type: "Teacher"
+                if (teacherData._deleted) {
+                    return reject(new Error("Cannot fetch a deleted Teacher"))
                 }
 
-                return resolve(teacherViewModel)
+                const getClassroomData = await API.graphql({
+                    query: getClassroom, variables: {id: teacherData.classroomID}
+                })
+                const classroomData = getClassroomData.data.getClassroom
+
+                const parentPromises = classroomData.Donations.items
+                    .filter(c => !c._deleted)
+                    .map(async c => {
+                        const getParentData = await API.graphql({
+                            query: getParent, variables: {id: c.parentID}
+                        })
+                        const parentData = getParentData.data.getParent
+
+                        const donations = parentData.Donations.items
+                            .filter( c => !c._deleted)
+                            .map( c => ({
+                                id: c.id,
+                                classroomID: c.classroomID
+                            }))
+
+                        return ({
+                            child: parentData.child,
+                            Donations: donations,
+                            id: parentData.id,
+                            first_name: parentData.first_name,
+                            last_name: parentData.last_name,
+                        })
+                    })
+
+                const parents = await Promise.all(parentPromises)
+
+                return resolve({
+                    classroomID: teacherData.classroomID,
+                    first_name: teacherData.first_name,
+                    id: teacherData.id,
+                    last_name: teacherData.last_name,
+                    Parents: parents,
+                    school: teacherData.school,
+                    type: "Teacher"
+                })
             }
             return reject(new Error("User not found"))
         }

@@ -14,14 +14,20 @@ const TeacherRemoveParent = ({parent, handleModalClose}) => {
     const handleRemoveItem = async () => {
         setDisabled(true)
 
+        try {
+            const donationID = parent.Donations.find( c => c.classroomID === profile.classroomID).id
 
-
-        const newProfile = {...profile}
-        newProfile.Parents = newProfile.Parents.filter(c => c.id !== parent.id)
-        setProfile(newProfile)
-
-        setRemovable(false)
-        handleModalClose()
+            if (donationID) {
+                await axios.delete('api/delete/donation/' + donationID)
+                const newProfile = {...profile}
+                newProfile.Parents = newProfile.Parents.filter(c => c.id !== parent.id)
+                setProfile(newProfile)
+            }
+        }
+        finally {
+            setRemovable(false)
+            handleModalClose()
+        }
     }
 
     return (

@@ -20,15 +20,9 @@ const TeacherAddParent = ({handleClose=()=>{}}) => {
             const parentID = await API.post('fetchusersubapi', '/fetchusersub', {body: {email: parentEmail}})
 
             if (!Parents.find(c => c.id === parentID)) {
-
                 const createDonationRes = await axios.post("/api/create/donation", {
                     classroomID: classroomID,
                     parentID: parentID,
-                })
-
-                const updateParentRes = await axios.patch("/api/update/parent", {
-                    id: parentID,
-                    teacherID: id
                 })
 
                 const fetchParentRes = await axios.get("/api/fetch/parent/" + parentID)
@@ -40,9 +34,6 @@ const TeacherAddParent = ({handleClose=()=>{}}) => {
                 newParents.push(parentData)
                 newProfile.Parents = newParents
                 setProfile(newProfile)
-            }
-            else {
-                console.log("Email not found")
             }
         }
         catch (error) {
