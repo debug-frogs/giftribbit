@@ -1,7 +1,6 @@
 import {AmplifyAuthContainer, AmplifyAuthenticator, AmplifyConfirmSignIn, AmplifyForgotPassword, AmplifyRequireNewPassword, AmplifySignIn, AmplifySignUp} from "@aws-amplify/ui-react";
 import {useRouter} from "next/router";
 import axios from "../../../lib/axios";
-import {memo} from "react";
 
 
 const handleParentSignUp = async (formData) => {
@@ -42,7 +41,7 @@ const handleParentSignUp = async (formData) => {
 }
 
 
-const ParentAuthenticator = memo(({initialAuthState="signup"}) => {
+const ParentAuthenticator = ({initialAuthState="signup"}) => {
     const router = useRouter()
 
     const handleAuthStateChange = (async (nextAuthState, authData) => {
@@ -116,5 +115,5 @@ const ParentAuthenticator = memo(({initialAuthState="signup"}) => {
             </AmplifyAuthenticator>
         </AmplifyAuthContainer>
     )
-})
+}
 export default ParentAuthenticator;
