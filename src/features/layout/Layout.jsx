@@ -4,9 +4,9 @@ import Navigation from "../navigation/Navigation";
 import Footer from "../footer/Footer";
 import LoadingIcon from "../loading/LoadingIcon";
 import {selectIsAuthPage} from "../auth/authSlice";
-import {memo} from "react";
 
-const Layout = memo((props) => {
+
+const Layout = (props) => {
     const isLoading = props.isLoading
     const isAuthPage = useSelector(selectIsAuthPage)
 
@@ -36,6 +36,6 @@ const Layout = memo((props) => {
             </Container>
         )
     }
-})
+}
 
 export default Layout
