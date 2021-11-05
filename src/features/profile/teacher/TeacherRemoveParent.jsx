@@ -15,7 +15,12 @@ const TeacherRemoveParent = ({parent, handleModalClose}) => {
         setDisabled(true)
 
         try {
-            const donation = parent.Donations.find( c => c.classroomID === profile.classroomID)
+            const fetchParentRes = await axios.get('/api/fetch/parent/' + parent.id)
+
+            const parentData = fetchParentRes.data
+
+            const donation = parentData.Donations.find( c => c.classroomID === profile.classroomID)
+            console.log(donation)
 
             if (donation?.id) {
                 for (const item of donation.Items){
