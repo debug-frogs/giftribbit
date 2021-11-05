@@ -9,8 +9,7 @@ import {ClassroomContext} from "../../../pages/classroom/[id]";
 const WishlistMenu = () => {
     const wishlistContext = useContext(WishlistContext)
 
-    const [profile] = useContext(ClassroomContext).profile
-    const [classroom] = useContext(ClassroomContext).classroom
+    const [classroom] = useContext(ClassroomContext)
     const {Items} = classroom
 
     const [editable, setEditable] = wishlistContext.editable
@@ -59,7 +58,7 @@ const WishlistMenu = () => {
         transform: 'translate(-50%, -50%)',
     };
 
-    if (profile.id === classroom.Teacher.id) {
+    if (classroom.userSub === classroom.Teacher.id) {
         return (
             <Fragment>
                 <IconButton
@@ -133,6 +132,6 @@ const WishlistMenu = () => {
     else {
         return null;
     }
-};
+}
 
 export default WishlistMenu;
