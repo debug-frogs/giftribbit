@@ -5,8 +5,8 @@ import {DonationContext} from "./Donation";
 import axios from "../../../../lib/axios";
 
 
-const DonationRemoveItem = ({item}) => {
-    const [classroom, setClassroom] = useContext(ClassroomContext).classroom
+const DonationRemoveItem = ({item, handleModalClose}) => {
+    const [classroom, setClassroom] = useContext(ClassroomContext)
     const [disabled, setDisabled] = useState(false)
 
     const [removable, setRemovable] = useContext(DonationContext).removable
@@ -17,15 +17,15 @@ const DonationRemoveItem = ({item}) => {
         const updatedItem = {...item}
         updatedItem.donationID = null
 
-        const {data} = await axios.patch('./api/update/item', updatedItem)
+        const updateItemRes = await axios.patch('./api/update/item', updatedItem)
 
         const newClassroom = {...classroom}
-        newClassroom.Items = newClassroom.Items?.filter(c => c.id !== item.id)
-        newClassroom.Items.push(data)
+        newClassroom.Items = newClassroom.Items?.filter(c => c.id !== updatedItem.id)
+        newClassroom.Items.push(updatedItem)
 
         if (item.donationID) {
             newClassroom.Donations = newClassroom.Donations.map(c => {
-                c.items = c.items?.filter(c => c.id !== item.id)
+                c.items = c.items?.filter(c => c.id !== updatedItem.id)
                 return c
             })
         }
