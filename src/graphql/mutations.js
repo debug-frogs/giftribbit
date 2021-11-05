@@ -235,48 +235,227 @@ export const createClassroom = /* GraphQL */ `
         _lastChangedAt
         createdAt
         updatedAt
-        Parents {
+        TeacherParents {
           items {
             id
-            first_name
-            last_name
-            child
             teacherID
+            parentID
             _version
             _deleted
             _lastChangedAt
             createdAt
             updatedAt
-            Donations {
-              items {
-                id
-                classroomID
-                parentID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-                Items {
-                  items {
+            teacher {
+              id
+              first_name
+              last_name
+              school
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              TeacherParents {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
                     id
-                    description
-                    summary
-                    url
+                    first_name
+                    last_name
+                    school
                     classroomID
-                    donationID
                     _version
                     _deleted
                     _lastChangedAt
                     createdAt
                     updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
                   }
-                  nextToken
-                  startedAt
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
                 }
+                nextToken
+                startedAt
               }
-              nextToken
-              startedAt
+            }
+            parent {
+              id
+              first_name
+              last_name
+              child
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Donations {
+                items {
+                  id
+                  classroomID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Items {
+                    items {
+                      id
+                      description
+                      summary
+                      url
+                      classroomID
+                      donationID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                nextToken
+                startedAt
+              }
+              teachers {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
             }
           }
           nextToken
@@ -358,48 +537,227 @@ export const updateClassroom = /* GraphQL */ `
         _lastChangedAt
         createdAt
         updatedAt
-        Parents {
+        TeacherParents {
           items {
             id
-            first_name
-            last_name
-            child
             teacherID
+            parentID
             _version
             _deleted
             _lastChangedAt
             createdAt
             updatedAt
-            Donations {
-              items {
-                id
-                classroomID
-                parentID
-                _version
-                _deleted
-                _lastChangedAt
-                createdAt
-                updatedAt
-                Items {
-                  items {
+            teacher {
+              id
+              first_name
+              last_name
+              school
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              TeacherParents {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
                     id
-                    description
-                    summary
-                    url
+                    first_name
+                    last_name
+                    school
                     classroomID
-                    donationID
                     _version
                     _deleted
                     _lastChangedAt
                     createdAt
                     updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
                   }
-                  nextToken
-                  startedAt
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
                 }
+                nextToken
+                startedAt
               }
-              nextToken
-              startedAt
+            }
+            parent {
+              id
+              first_name
+              last_name
+              child
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Donations {
+                items {
+                  id
+                  classroomID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Items {
+                    items {
+                      id
+                      description
+                      summary
+                      url
+                      classroomID
+                      donationID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                nextToken
+                startedAt
+              }
+              teachers {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
             }
           }
           nextToken
@@ -481,13 +839,408 @@ export const deleteClassroom = /* GraphQL */ `
         _lastChangedAt
         createdAt
         updatedAt
-        Parents {
+        TeacherParents {
           items {
+            id
+            teacherID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            teacher {
+              id
+              first_name
+              last_name
+              school
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              TeacherParents {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+            parent {
+              id
+              first_name
+              last_name
+              child
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Donations {
+                items {
+                  id
+                  classroomID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Items {
+                    items {
+                      id
+                      description
+                      summary
+                      url
+                      classroomID
+                      donationID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                nextToken
+                startedAt
+              }
+              teachers {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+          }
+          nextToken
+          startedAt
+        }
+      }
+    }
+  }
+`;
+export const createTeacher = /* GraphQL */ `
+  mutation CreateTeacher(
+    $input: CreateTeacherInput!
+    $condition: ModelTeacherConditionInput
+  ) {
+    createTeacher(input: $input, condition: $condition) {
+      id
+      first_name
+      last_name
+      school
+      classroomID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      TeacherParents {
+        items {
+          id
+          teacherID
+          parentID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          teacher {
+            id
+            first_name
+            last_name
+            school
+            classroomID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            TeacherParents {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
+                  id
+                  first_name
+                  last_name
+                  school
+                  classroomID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+              }
+              nextToken
+              startedAt
+            }
+          }
+          parent {
             id
             first_name
             last_name
             child
-            teacherID
             _version
             _deleted
             _lastChangedAt
@@ -524,72 +1277,135 @@ export const deleteClassroom = /* GraphQL */ `
               nextToken
               startedAt
             }
-          }
-          nextToken
-          startedAt
-        }
-      }
-    }
-  }
-`;
-export const createTeacher = /* GraphQL */ `
-  mutation CreateTeacher(
-    $input: CreateTeacherInput!
-    $condition: ModelTeacherConditionInput
-  ) {
-    createTeacher(input: $input, condition: $condition) {
-      id
-      first_name
-      last_name
-      school
-      classroomID
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-      Parents {
-        items {
-          id
-          first_name
-          last_name
-          child
-          teacherID
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-          Donations {
-            items {
-              id
-              classroomID
-              parentID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-              Items {
-                items {
+            teachers {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
                   id
-                  description
-                  summary
-                  url
+                  first_name
+                  last_name
+                  school
                   classroomID
-                  donationID
                   _version
                   _deleted
                   _lastChangedAt
                   createdAt
                   updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
                 }
-                nextToken
-                startedAt
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
               }
+              nextToken
+              startedAt
             }
-            nextToken
-            startedAt
           }
         }
         nextToken
@@ -614,48 +1430,327 @@ export const updateTeacher = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Parents {
+      TeacherParents {
         items {
           id
-          first_name
-          last_name
-          child
           teacherID
+          parentID
           _version
           _deleted
           _lastChangedAt
           createdAt
           updatedAt
-          Donations {
-            items {
-              id
-              classroomID
-              parentID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-              Items {
-                items {
+          teacher {
+            id
+            first_name
+            last_name
+            school
+            classroomID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            TeacherParents {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
                   id
-                  description
-                  summary
-                  url
+                  first_name
+                  last_name
+                  school
                   classroomID
-                  donationID
                   _version
                   _deleted
                   _lastChangedAt
                   createdAt
                   updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
                 }
-                nextToken
-                startedAt
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
               }
+              nextToken
+              startedAt
             }
-            nextToken
-            startedAt
+          }
+          parent {
+            id
+            first_name
+            last_name
+            child
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            Donations {
+              items {
+                id
+                classroomID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                Items {
+                  items {
+                    id
+                    description
+                    summary
+                    url
+                    classroomID
+                    donationID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                  }
+                  nextToken
+                  startedAt
+                }
+              }
+              nextToken
+              startedAt
+            }
+            teachers {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
+                  id
+                  first_name
+                  last_name
+                  school
+                  classroomID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+              }
+              nextToken
+              startedAt
+            }
           }
         }
         nextToken
@@ -680,48 +1775,327 @@ export const deleteTeacher = /* GraphQL */ `
       _lastChangedAt
       createdAt
       updatedAt
-      Parents {
+      TeacherParents {
         items {
           id
-          first_name
-          last_name
-          child
           teacherID
+          parentID
           _version
           _deleted
           _lastChangedAt
           createdAt
           updatedAt
-          Donations {
-            items {
-              id
-              classroomID
-              parentID
-              _version
-              _deleted
-              _lastChangedAt
-              createdAt
-              updatedAt
-              Items {
-                items {
+          teacher {
+            id
+            first_name
+            last_name
+            school
+            classroomID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            TeacherParents {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
                   id
-                  description
-                  summary
-                  url
+                  first_name
+                  last_name
+                  school
                   classroomID
-                  donationID
                   _version
                   _deleted
                   _lastChangedAt
                   createdAt
                   updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
                 }
-                nextToken
-                startedAt
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
               }
+              nextToken
+              startedAt
             }
-            nextToken
-            startedAt
+          }
+          parent {
+            id
+            first_name
+            last_name
+            child
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            Donations {
+              items {
+                id
+                classroomID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                Items {
+                  items {
+                    id
+                    description
+                    summary
+                    url
+                    classroomID
+                    donationID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                  }
+                  nextToken
+                  startedAt
+                }
+              }
+              nextToken
+              startedAt
+            }
+            teachers {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
+                  id
+                  first_name
+                  last_name
+                  school
+                  classroomID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+              }
+              nextToken
+              startedAt
+            }
           }
         }
         nextToken
@@ -740,7 +2114,6 @@ export const createParent = /* GraphQL */ `
       first_name
       last_name
       child
-      teacherID
       _version
       _deleted
       _lastChangedAt
@@ -772,6 +2145,332 @@ export const createParent = /* GraphQL */ `
             }
             nextToken
             startedAt
+          }
+        }
+        nextToken
+        startedAt
+      }
+      teachers {
+        items {
+          id
+          teacherID
+          parentID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          teacher {
+            id
+            first_name
+            last_name
+            school
+            classroomID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            TeacherParents {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
+                  id
+                  first_name
+                  last_name
+                  school
+                  classroomID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+              }
+              nextToken
+              startedAt
+            }
+          }
+          parent {
+            id
+            first_name
+            last_name
+            child
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            Donations {
+              items {
+                id
+                classroomID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                Items {
+                  items {
+                    id
+                    description
+                    summary
+                    url
+                    classroomID
+                    donationID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                  }
+                  nextToken
+                  startedAt
+                }
+              }
+              nextToken
+              startedAt
+            }
+            teachers {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
+                  id
+                  first_name
+                  last_name
+                  school
+                  classroomID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+              }
+              nextToken
+              startedAt
+            }
           }
         }
         nextToken
@@ -790,7 +2489,6 @@ export const updateParent = /* GraphQL */ `
       first_name
       last_name
       child
-      teacherID
       _version
       _deleted
       _lastChangedAt
@@ -827,6 +2525,332 @@ export const updateParent = /* GraphQL */ `
         nextToken
         startedAt
       }
+      teachers {
+        items {
+          id
+          teacherID
+          parentID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          teacher {
+            id
+            first_name
+            last_name
+            school
+            classroomID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            TeacherParents {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
+                  id
+                  first_name
+                  last_name
+                  school
+                  classroomID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+              }
+              nextToken
+              startedAt
+            }
+          }
+          parent {
+            id
+            first_name
+            last_name
+            child
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            Donations {
+              items {
+                id
+                classroomID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                Items {
+                  items {
+                    id
+                    description
+                    summary
+                    url
+                    classroomID
+                    donationID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                  }
+                  nextToken
+                  startedAt
+                }
+              }
+              nextToken
+              startedAt
+            }
+            teachers {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
+                  id
+                  first_name
+                  last_name
+                  school
+                  classroomID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+              }
+              nextToken
+              startedAt
+            }
+          }
+        }
+        nextToken
+        startedAt
+      }
     }
   }
 `;
@@ -840,7 +2864,6 @@ export const deleteParent = /* GraphQL */ `
       first_name
       last_name
       child
-      teacherID
       _version
       _deleted
       _lastChangedAt
@@ -876,6 +2899,1901 @@ export const deleteParent = /* GraphQL */ `
         }
         nextToken
         startedAt
+      }
+      teachers {
+        items {
+          id
+          teacherID
+          parentID
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+          teacher {
+            id
+            first_name
+            last_name
+            school
+            classroomID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            TeacherParents {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
+                  id
+                  first_name
+                  last_name
+                  school
+                  classroomID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+              }
+              nextToken
+              startedAt
+            }
+          }
+          parent {
+            id
+            first_name
+            last_name
+            child
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            Donations {
+              items {
+                id
+                classroomID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                Items {
+                  items {
+                    id
+                    description
+                    summary
+                    url
+                    classroomID
+                    donationID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                  }
+                  nextToken
+                  startedAt
+                }
+              }
+              nextToken
+              startedAt
+            }
+            teachers {
+              items {
+                id
+                teacherID
+                parentID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+                teacher {
+                  id
+                  first_name
+                  last_name
+                  school
+                  classroomID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  TeacherParents {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                parent {
+                  id
+                  first_name
+                  last_name
+                  child
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Donations {
+                    items {
+                      id
+                      classroomID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      Items {
+                        nextToken
+                        startedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                  teachers {
+                    items {
+                      id
+                      teacherID
+                      parentID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                      teacher {
+                        id
+                        first_name
+                        last_name
+                        school
+                        classroomID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      parent {
+                        id
+                        first_name
+                        last_name
+                        child
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+              }
+              nextToken
+              startedAt
+            }
+          }
+        }
+        nextToken
+        startedAt
+      }
+    }
+  }
+`;
+export const createTeacherParent = /* GraphQL */ `
+  mutation CreateTeacherParent(
+    $input: CreateTeacherParentInput!
+    $condition: ModelTeacherParentConditionInput
+  ) {
+    createTeacherParent(input: $input, condition: $condition) {
+      id
+      teacherID
+      parentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      teacher {
+        id
+        first_name
+        last_name
+        school
+        classroomID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        TeacherParents {
+          items {
+            id
+            teacherID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            teacher {
+              id
+              first_name
+              last_name
+              school
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              TeacherParents {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+            parent {
+              id
+              first_name
+              last_name
+              child
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Donations {
+                items {
+                  id
+                  classroomID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Items {
+                    items {
+                      id
+                      description
+                      summary
+                      url
+                      classroomID
+                      donationID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                nextToken
+                startedAt
+              }
+              teachers {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+          }
+          nextToken
+          startedAt
+        }
+      }
+      parent {
+        id
+        first_name
+        last_name
+        child
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Donations {
+          items {
+            id
+            classroomID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            Items {
+              items {
+                id
+                description
+                summary
+                url
+                classroomID
+                donationID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+              }
+              nextToken
+              startedAt
+            }
+          }
+          nextToken
+          startedAt
+        }
+        teachers {
+          items {
+            id
+            teacherID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            teacher {
+              id
+              first_name
+              last_name
+              school
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              TeacherParents {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+            parent {
+              id
+              first_name
+              last_name
+              child
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Donations {
+                items {
+                  id
+                  classroomID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Items {
+                    items {
+                      id
+                      description
+                      summary
+                      url
+                      classroomID
+                      donationID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                nextToken
+                startedAt
+              }
+              teachers {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+          }
+          nextToken
+          startedAt
+        }
+      }
+    }
+  }
+`;
+export const updateTeacherParent = /* GraphQL */ `
+  mutation UpdateTeacherParent(
+    $input: UpdateTeacherParentInput!
+    $condition: ModelTeacherParentConditionInput
+  ) {
+    updateTeacherParent(input: $input, condition: $condition) {
+      id
+      teacherID
+      parentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      teacher {
+        id
+        first_name
+        last_name
+        school
+        classroomID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        TeacherParents {
+          items {
+            id
+            teacherID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            teacher {
+              id
+              first_name
+              last_name
+              school
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              TeacherParents {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+            parent {
+              id
+              first_name
+              last_name
+              child
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Donations {
+                items {
+                  id
+                  classroomID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Items {
+                    items {
+                      id
+                      description
+                      summary
+                      url
+                      classroomID
+                      donationID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                nextToken
+                startedAt
+              }
+              teachers {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+          }
+          nextToken
+          startedAt
+        }
+      }
+      parent {
+        id
+        first_name
+        last_name
+        child
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Donations {
+          items {
+            id
+            classroomID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            Items {
+              items {
+                id
+                description
+                summary
+                url
+                classroomID
+                donationID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+              }
+              nextToken
+              startedAt
+            }
+          }
+          nextToken
+          startedAt
+        }
+        teachers {
+          items {
+            id
+            teacherID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            teacher {
+              id
+              first_name
+              last_name
+              school
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              TeacherParents {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+            parent {
+              id
+              first_name
+              last_name
+              child
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Donations {
+                items {
+                  id
+                  classroomID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Items {
+                    items {
+                      id
+                      description
+                      summary
+                      url
+                      classroomID
+                      donationID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                nextToken
+                startedAt
+              }
+              teachers {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+          }
+          nextToken
+          startedAt
+        }
+      }
+    }
+  }
+`;
+export const deleteTeacherParent = /* GraphQL */ `
+  mutation DeleteTeacherParent(
+    $input: DeleteTeacherParentInput!
+    $condition: ModelTeacherParentConditionInput
+  ) {
+    deleteTeacherParent(input: $input, condition: $condition) {
+      id
+      teacherID
+      parentID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      teacher {
+        id
+        first_name
+        last_name
+        school
+        classroomID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        TeacherParents {
+          items {
+            id
+            teacherID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            teacher {
+              id
+              first_name
+              last_name
+              school
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              TeacherParents {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+            parent {
+              id
+              first_name
+              last_name
+              child
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Donations {
+                items {
+                  id
+                  classroomID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Items {
+                    items {
+                      id
+                      description
+                      summary
+                      url
+                      classroomID
+                      donationID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                nextToken
+                startedAt
+              }
+              teachers {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+          }
+          nextToken
+          startedAt
+        }
+      }
+      parent {
+        id
+        first_name
+        last_name
+        child
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+        Donations {
+          items {
+            id
+            classroomID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            Items {
+              items {
+                id
+                description
+                summary
+                url
+                classroomID
+                donationID
+                _version
+                _deleted
+                _lastChangedAt
+                createdAt
+                updatedAt
+              }
+              nextToken
+              startedAt
+            }
+          }
+          nextToken
+          startedAt
+        }
+        teachers {
+          items {
+            id
+            teacherID
+            parentID
+            _version
+            _deleted
+            _lastChangedAt
+            createdAt
+            updatedAt
+            teacher {
+              id
+              first_name
+              last_name
+              school
+              classroomID
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              TeacherParents {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+            parent {
+              id
+              first_name
+              last_name
+              child
+              _version
+              _deleted
+              _lastChangedAt
+              createdAt
+              updatedAt
+              Donations {
+                items {
+                  id
+                  classroomID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  Items {
+                    items {
+                      id
+                      description
+                      summary
+                      url
+                      classroomID
+                      donationID
+                      _version
+                      _deleted
+                      _lastChangedAt
+                      createdAt
+                      updatedAt
+                    }
+                    nextToken
+                    startedAt
+                  }
+                }
+                nextToken
+                startedAt
+              }
+              teachers {
+                items {
+                  id
+                  teacherID
+                  parentID
+                  _version
+                  _deleted
+                  _lastChangedAt
+                  createdAt
+                  updatedAt
+                  teacher {
+                    id
+                    first_name
+                    last_name
+                    school
+                    classroomID
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    TeacherParents {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                  parent {
+                    id
+                    first_name
+                    last_name
+                    child
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    createdAt
+                    updatedAt
+                    Donations {
+                      items {
+                        id
+                        classroomID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                    teachers {
+                      items {
+                        id
+                        teacherID
+                        parentID
+                        _version
+                        _deleted
+                        _lastChangedAt
+                        createdAt
+                        updatedAt
+                      }
+                      nextToken
+                      startedAt
+                    }
+                  }
+                }
+                nextToken
+                startedAt
+              }
+            }
+          }
+          nextToken
+          startedAt
+        }
       }
     }
   }

@@ -20,6 +20,10 @@ type TeacherMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+type TeacherParentMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type ParentMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -63,14 +67,24 @@ export declare class Classroom {
 export declare class Teacher {
   readonly id: string;
   readonly first_name?: string;
-  readonly Parents?: (Parent | null)[];
   readonly last_name?: string;
   readonly school?: string;
   readonly classroomID?: string;
+  readonly TeacherParents?: (TeacherParent | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Teacher, TeacherMetaData>);
   static copyOf(source: Teacher, mutator: (draft: MutableModel<Teacher, TeacherMetaData>) => MutableModel<Teacher, TeacherMetaData> | void): Teacher;
+}
+
+export declare class TeacherParent {
+  readonly id: string;
+  readonly teacher: Teacher;
+  readonly parent: Parent;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<TeacherParent, TeacherParentMetaData>);
+  static copyOf(source: TeacherParent, mutator: (draft: MutableModel<TeacherParent, TeacherParentMetaData>) => MutableModel<TeacherParent, TeacherParentMetaData> | void): TeacherParent;
 }
 
 export declare class Parent {
@@ -78,8 +92,8 @@ export declare class Parent {
   readonly first_name?: string;
   readonly last_name?: string;
   readonly child?: string;
-  readonly teacherID?: string;
   readonly Donations?: (Donation | null)[];
+  readonly teachers?: (TeacherParent | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Parent, ParentMetaData>);
