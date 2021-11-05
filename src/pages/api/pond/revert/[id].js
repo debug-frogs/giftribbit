@@ -1,8 +1,7 @@
 import Amplify, {withSSRContext} from "aws-amplify";
-import awsConfig from "../../../../aws-exports.js";
-Amplify.configure({ ...awsConfig, ssr: true });
+import awsconfig from "../../../../aws-exports.js";
+Amplify.configure({ ...awsconfig, ssr: true });
 
-import awsconfig from "../../../../aws-exports";
 import S3 from "aws-sdk/clients/s3";
 
 import * as mutations from "../../../../graphql/mutations";
