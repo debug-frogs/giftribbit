@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import {useContext, useState} from 'react';
 import {Box, Button, Grid, Paper, Typography} from "@mui/material";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 import {WishlistContext} from "./Wishlist";
@@ -6,7 +6,7 @@ import axios from "../../../../lib/axios";
 
 
 const WishlistRemoveItem = ({item}) => {
-    const [classroom, setClassroom] = useContext(ClassroomContext).classroom
+    const [classroom, setClassroom] = useContext(ClassroomContext)
     const [disabled, setDisabled] = useState(false)
 
     const [removable, setRemovable] = useContext(WishlistContext).removable
@@ -14,7 +14,7 @@ const WishlistRemoveItem = ({item}) => {
     const handleRemoveItem = async () => {
         setDisabled(true)
 
-        const removedItem = await axios.delete('/api/delete/item', {data: {...item}})
+        const deleteItemRes = await axios.delete('/api/delete/item/' + item.id)
 
         const newClassroom = {...classroom}
         newClassroom.Items = newClassroom.Items?.filter(c => c.id !== item.id)
