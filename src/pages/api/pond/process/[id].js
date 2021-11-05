@@ -121,7 +121,7 @@ const api = async (req, res) => {
         res.status(200).send(objectName)
     } catch (error) {
         console.log(error);
-        res.status(405).end();
+        res.status(405).send(error);
     } finally {}
 }
 
