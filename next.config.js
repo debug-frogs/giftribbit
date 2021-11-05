@@ -6,7 +6,7 @@ const nextConfig = {
             `giftribbit32638-feature.s3.us-west-1.amazonaws.com`,
         ]
     },
-    webpack5: false
+    webpack5: true
 }
 
 module.exports = withPlugins([], nextConfig)
