@@ -1,4 +1,4 @@
-import {Fragment} from 'react'
+import {Fragment, memo} from 'react'
 import {Box, Divider, Grid, Paper} from "@mui/material";
 import ClassroomHeader from "./ClassroomHeader";
 import ClassroomHeroImage from "./ClassroomHeroImage";
@@ -9,7 +9,7 @@ import DonationsHeader from "./donation/DonationsHeader";
 import Wishlist from "./wishlist/Wishlist";
 
 
-const ClassroomLayout = () => {
+const ClassroomLayout = memo(() => {
     return (
         <Fragment>
             {/*desktop view*/}
@@ -173,6 +173,6 @@ const ClassroomLayout = () => {
             </Box>
         </Fragment>
     )
-};
+})
 
 export default ClassroomLayout;
