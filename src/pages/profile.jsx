@@ -13,7 +13,6 @@ export const ProfileContext = createContext({});
 
 const ProfilePage = ({isUserAuthorized, profileData}) => {
     const [profile, setProfile] = useState(profileData);
-    console.log(profile)
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
