@@ -8,7 +8,7 @@ import {getParent} from "../../../graphql/queries";
 export const updateParentPromise = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const {child, first_name, id, last_name, teacherID} = input
+            const {child, first_name, id, last_name} = input
 
             const getParentData = await API.graphql({
                 query: getParent,
@@ -26,6 +26,7 @@ export const updateParentPromise = async (API, input) => {
                     first_name: parentData.first_name,
                     id: parentData.id,
                     last_name: parentData.last_name,
+                    _version: parentData._version
                 }
                 if (typeof child !== 'undefined') updatedParentInput.child = child
                 if (typeof first_name !== 'undefined') updatedParentInput.first_name = first_name
