@@ -32,7 +32,7 @@ export const updateClassroomPromise = async (API, input) => {
 
                 const updateClassroomData = await API.graphql({
                     query: updateClassroom,
-                    variables: updatedClassroomInput
+                    variables: { input: updatedClassroomInput}
                 })
 
                 return resolve()
