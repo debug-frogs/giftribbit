@@ -4,6 +4,7 @@ import ImageUpload from "../ImageUpload/ImageUpload";
 import {ClassroomContext} from "../../pages/classroom/[id]";
 import {Box, Container} from "@mui/material";
 
+
 const ClassroomHeroImage = memo(() => {
     const [classroom] = useContext(ClassroomContext)
 
@@ -12,8 +13,8 @@ const ClassroomHeroImage = memo(() => {
             <ImageUpload
                 source={classroom.image}
                 url={'/api/pond/'}
-                processUrl={'process/' + classroom.id}
-                revertUrl={'revert/' + classroom.id}
+                classroomID={classroom.id}
+                imageID={classroom.imageID}
             />
         )
     } else {
