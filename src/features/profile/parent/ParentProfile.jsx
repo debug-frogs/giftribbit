@@ -13,7 +13,7 @@ const ParentProfile = memo(() => {
         >
             <Grid item>
                 <Typography style={{ fontWeight: 600 }}>
-                    Parent Profile
+                    Your Parent Profile
                 </Typography>
             </Grid>
             <Grid item>

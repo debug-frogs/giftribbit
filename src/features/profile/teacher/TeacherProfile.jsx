@@ -14,7 +14,7 @@ const TeacherProfile = memo(() => {
         >
             <Grid item>
                 <Typography style={{ fontWeight: 600 }}>
-                    Teacher Profile
+                    Your Teacher Profile
                 </Typography>
             </Grid>
             <Grid item>

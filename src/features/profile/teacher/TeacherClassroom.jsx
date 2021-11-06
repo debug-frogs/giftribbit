@@ -15,6 +15,7 @@ const TeacherClassroom = memo(() => {
             wrap='nowrap'
             spacing={1}
             alignItems='center'
+            justifyContent='space-between'
         >
             <Grid item>
                 <Link
@@ -23,7 +24,7 @@ const TeacherClassroom = memo(() => {
                     color='secondary'
                     href={'/classroom/' + classroomID}
                 >
-                    Your Classroom
+                    Click here to go to your Classroom
                 </Link>
             </Grid>
             <Grid item>

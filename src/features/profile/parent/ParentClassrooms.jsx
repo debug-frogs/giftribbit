@@ -39,7 +39,7 @@ const ParentClassrooms = memo(() => {
                                 </Link>
                                 <br />
                                 <Typography
-                                    variant='caption'
+                                    variant='body2'
                                 >
                                     at {classroom.Teacher.school}
                                 </Typography>
