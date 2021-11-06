@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import {FilePond, registerPlugin} from 'react-filepond'
+import {Storage} from "aws-amplify";
 
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
@@ -10,6 +11,8 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
 import FilePondPluginImageResize from 'filepond-plugin-image-resize';
+import cuid from "cuid";
+import axios from "../../../lib/axios";
 
 registerPlugin(
     FilePondPluginImageExifOrientation,
@@ -21,7 +24,7 @@ registerPlugin(
 )
 
 
-const ImageUpload = ({source, url, processUrl, revertUrl}) => {
+const ImageUpload = ({source, classroomID, imageID}) => {
     const [image, setImage] = useState(
         source ? [{source: source, options: {type: "local"}}] : []
     )
@@ -47,45 +50,57 @@ const ImageUpload = ({source, url, processUrl, revertUrl}) => {
             maxFileSize={'10MB'}
             maxParallelUploads={1}
             server={{
-                url: url,
-                // process: {
-                //     url: processUrl,
-                // },
-                process: (fieldName, file, metadata, load, error, progress, abort) => {
-                    const formData = new FormData();
-                    formData.append(fieldName, file, file.name)
-
-                    const request = new XMLHttpRequest();
-                    request.open('POST', url + processUrl)
-                    request.upload.onprogress = (e) => {
-                        progress(e.lengthComputable, e.loaded, e.total);
-                    }
-                    request.onload = function() {
-                        if (request.status >= 200 && request.status < 300) {
-                            load(request.responseText);
+                process: async (fieldName, file, metadata, load, error, progress, abort) => {
+                    const fileName = cuid() + '.jpeg'
+                    const prefix = `${classroomID}/`
+                    const key = `${classroomID}/${fileName}`
+                    const image = new File([file], fileName);
+                    try {
+                        const listItems = await Storage.list(prefix)
+                        for (const item of listItems) {
+                            const removeItem = await Storage.remove(item.key)
                         }
-                        else {
-                            console.log(request.response)
-                            error('oh no')
-                        }
+                        const storageUpload = await Storage.put(key, image, {
+                            contentType: 'image/jpeg'
+                        })
+                        const updateClassroomRes = axios.patch('/api/update/classroom', {
+                            id: classroomID,
+                            imageID: fileName
+                        })
+                        load(fileName)
                     }
-                    request.send(formData);
+                    catch (e) {error()}
                 },
-                revert: {
-                    url: revertUrl,
+                revert: async (uniqueFileId, load, error) => {
+                    const key = `${classroomID}/${uniqueFileId}`
+                    const storageRemove = await Storage.remove(key)
+                    const updateClassroomRes = await axios.patch('/api/update/classroom', {
+                        id: classroomID,
+                        imageID: null
+                    })
+                    setImage([])
+                    load()
                 },
-                remove: (source, load, error) => {
-                    fetch(url + revertUrl, {method: 'DELETE'})
-                        .then(() => {setImage([])})
-                        .finally(() => load())
+                remove: async (source, load, error) => {
+                    try {
+                        const key = `${classroomID}/${imageID}`
+                        const storageRemove = await Storage.remove(key)
+                        const updateClassroomRes = await axios.patch('/api/update/classroom', {
+                            id: classroomID,
+                            imageID: null
+                        })
+                        setImage([])
+                        load()
+                    }
+                    catch (e) {error()}
                 },
                 load: (source, load, error, progress, abort, headers) => {
                     const myRequest = new Request(source);
                     fetch(myRequest).then(function (response) {
                         response.blob().then(function (myBlob) {
                             load(myBlob)
-                        });
-                    });
+                        })
+                    })
                 },
             }}
             name="image"
