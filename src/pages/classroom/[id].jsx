@@ -3,18 +3,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../../features/auth/authSlice";
 import ClassroomLayout from "../../features/classroom/ClassroomLayout";
 
+import {fetchClassroomPromise} from "../api/fetch/classroom/[id]";
+import {fetchImage} from "../api/fetch/image/[id]";
+
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../aws-exports.js";
-import {fetchClassroom} from "../api/fetch/classroom/[id]";
-import {fetchProfile} from "../api/fetch/profile/[id]";
 Amplify.configure({ ...config, ssr: true });
 
 
 export const ClassroomContext = createContext({});
 
-const ClassroomPage = ({isUserAuthorized, classroomData, profileData}) => {
+const ClassroomPage = ({isUserAuthorized, classroomData}) => {
     const [classroom, setClassroom] = useState(classroomData)
-    const [profile, setProfile] = useState(profileData)
 
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
@@ -39,10 +39,7 @@ const ClassroomPage = ({isUserAuthorized, classroomData, profileData}) => {
     }
     else {
         return (
-            <ClassroomContext.Provider value={{
-                "classroom": [classroom, setClassroom],
-                "profile": [profile, setProfile]
-            }}>
+            <ClassroomContext.Provider value={[classroom, setClassroom]}>
                 <ClassroomLayout />
             </ClassroomContext.Provider>
         )
@@ -69,18 +66,19 @@ export async function getServerSideProps(context) {
             }
         }
         else {
-            /* fetch classroom data */
             const classroomID = context.params.id
-            const classroomData = await fetchClassroom(API, classroomID)
+            const classroomData = await fetchClassroomPromise(API, classroomID)
+            classroomData.userSub = user.attributes.sub
 
-            const userSub = user.attributes.sub
-            const profileData = await fetchProfile(API, userSub)
+            if (classroomData.imageID) {
+                const key = 'public/' + classroomID + '/' + classroomData.imageID
+                classroomData.image = await fetchImage(Auth, key)
+            }
 
             return {
                 props: {
                     isUserAuthorized: !!user,
                     classroomData: classroomData,
-                    profileData: profileData
                 }
             }
         }

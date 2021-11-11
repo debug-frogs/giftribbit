@@ -2,30 +2,29 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import * as mutations from "../../../graphql/mutations";
+import {createParent} from "../../../graphql/mutations";
 
-const createParent = async (API, input) => {
+
+const createParentPromise = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const {email, first_name, id, last_name, child} = input
-            /* Update Parent data */
+            const {first_name, id, last_name, child} = input
+
             const createParentData = await API.graphql({
-                query: mutations.createParent,
+                query: createParent,
                 variables: {
                     input: {
-                        "email": email,
-                        "first_name": first_name,
-                        "id": id,
-                        "last_name": last_name,
-                        "child": child
+                        first_name: first_name,
+                        id: id,
+                        last_name: last_name,
+                        child: child
                     }
                 }
-            });
-            /* return parent ID */
-            return resolve(createParentData.data.createParent.id)
+            })
+            return resolve(createParentData.data.createParent)
         }
         catch (error){
-            reject(error)
+            return reject(error)
         }
     })
 }
@@ -33,14 +32,13 @@ const createParent = async (API, input) => {
 
 const api = async (req, res) => {
     if (req.method !== 'POST'){
-        res.status(405).end()
+        res.status(400).end()
     }
     else {
-        const {API} = withSSRContext({req})
-
         try {
-            const newParentID = await createParent(API, req.body)
-            res.status(200).send(newParentID)
+            const {API} = withSSRContext({req})
+            const {id} = await createParentPromise(API, req.body)
+            res.status(200).send(id)
         }
         catch (error) {
             console.log(error)

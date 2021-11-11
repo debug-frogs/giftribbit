@@ -2,31 +2,50 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import * as mutations from "../../../graphql/mutations";
+import {getItem} from "../../../graphql/queries";
+import {updateItem} from "../../../graphql/mutations";
 
-export const updateItem = async (API, input) => {
+export const updateItemPromise = async (API, input) => {
     return new Promise(async (resolve, reject) => {
         try {
-            /* Update Item data */
-            const {description, donationID, id, summary, url, _version} = input
+            const {description, donationID, id, summary, url} = input
 
-            const updateItemData = await API.graphql({
-                query: mutations.updateItem,
-                variables: {
-                    input: {
-                        description: description,
-                        donationID: donationID,
-                        id: id,
-                        summary: summary,
-                        url: url,
-                        _version: _version
-                    }
+            const getItemData = await API.graphql({
+                query: getItem,
+                variables: {id: id}
+            });
+
+            const itemData = getItemData.data.getItem
+
+            if (itemData._deleted) {
+                return reject(new Error("Item deleted"))
+            }
+            else {
+                const updatedItemInput = {
+                    description: itemData.description,
+                    donationID: itemData.donationID,
+                    id: itemData.id,
+                    summary: itemData.summary,
+                    url: itemData.url,
+                    _version: itemData._version
                 }
-            })
-            return resolve(updateItemData.data.updateItem)
+                if (typeof description !== 'undefined') updatedItemInput.description = description
+                if (typeof donationID !== 'undefined') updatedItemInput.donationID = donationID
+                if (typeof summary !== 'undefined') updatedItemInput.summary = summary
+                if (typeof url !== 'undefined') updatedItemInput.url = url
+
+                const updateItemData = await API.graphql({
+                    query: updateItem,
+                    variables: {
+                        input: updatedItemInput
+                    }
+                })
+
+                return resolve()
+            }
         }
         catch (error){
-            reject(error)
+            return reject(error)
         }
     })
 }
@@ -34,20 +53,13 @@ export const updateItem = async (API, input) => {
 
 const api = async (req, res) => {
     if (req.method !== 'PATCH'){
-        res.status(405).end()
+        res.status(400).end()
     }
     else {
-        const {API} = withSSRContext({req})
         try {
-            const updatedItem = await updateItem(API, req.body)
-            res.status(200).send({
-                description: updatedItem.description,
-                donationID: updatedItem.donationID,
-                id: updatedItem.id,
-                summary: updatedItem.summary,
-                url: updatedItem.url,
-                _version: updatedItem._version
-            })
+            const {API} = withSSRContext({req})
+            await updateItemPromise(API, req.body)
+            res.status(200).end()
         }
         catch (error) {
             console.log(error)

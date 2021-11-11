@@ -2,17 +2,14 @@ import {Fragment, useContext} from 'react'
 import {FaEdit, FaTimes} from 'react-icons/fa';
 import {Box, IconButton, Menu, MenuItem, Modal, Typography} from "@mui/material";
 import {useState} from "react";
-import AddItem from "./AddItem"
+import WishlistAddItem from "./WishlistAddItem"
 import {WishlistContext} from "./Wishlist";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 
 const WishlistMenu = () => {
     const wishlistContext = useContext(WishlistContext)
 
-    const [profile] = useContext(ClassroomContext).profile
-    const {type} = profile
-
-    const [classroom] = useContext(ClassroomContext).classroom
+    const [classroom] = useContext(ClassroomContext)
     const {Items} = classroom
 
     const [editable, setEditable] = wishlistContext.editable
@@ -61,7 +58,7 @@ const WishlistMenu = () => {
         transform: 'translate(-50%, -50%)',
     };
 
-    if (type === 'Teacher') {
+    if (classroom.userSub === classroom.Teacher.id) {
         return (
             <Fragment>
                 <IconButton
@@ -126,7 +123,7 @@ const WishlistMenu = () => {
                     style={{overflow: 'scroll',}}
                 >
                     <Box style={modalContentStyle}>
-                        <AddItem handleModalClose={handleModalClose}/>
+                        <WishlistAddItem handleModalClose={handleModalClose}/>
                     </Box>
                 </Modal>
             </Fragment>
@@ -135,6 +132,6 @@ const WishlistMenu = () => {
     else {
         return null;
     }
-};
+}
 
 export default WishlistMenu;

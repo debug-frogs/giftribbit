@@ -1,6 +1,7 @@
 import {Box, CircularProgress} from "@mui/material";
+import {memo} from "react";
 
-const LoadingIcon = () => {
+const LoadingIcon = memo(() => {
     return (
         <Box
             position='fixed'
@@ -16,7 +17,7 @@ const LoadingIcon = () => {
                 />
             </Box>
         </Box>
-    );
-};
+    )
+})
 
 export default LoadingIcon;

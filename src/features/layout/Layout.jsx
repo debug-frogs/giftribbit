@@ -5,6 +5,7 @@ import Footer from "../footer/Footer";
 import LoadingIcon from "../loading/LoadingIcon";
 import {selectIsAuthPage} from "../auth/authSlice";
 
+
 const Layout = (props) => {
     const isLoading = props.isLoading
     const isAuthPage = useSelector(selectIsAuthPage)

@@ -1,14 +1,14 @@
-import {useEffect} from 'react';
+import {memo, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import ParentAuthenticator from "../features/auth/ParentAuthenticator";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 
-import Amplify, {withSSRContext, DataStore} from "aws-amplify";
+import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
 
-const SignupParent = ({isUserAuthorized}) => {
+const SignupParent = memo(({isUserAuthorized}) => {
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
@@ -27,7 +27,7 @@ const SignupParent = ({isUserAuthorized}) => {
             <ParentAuthenticator initialAuthState='signup'/>
         )
     }
-};
+})
 
 export default SignupParent;
 

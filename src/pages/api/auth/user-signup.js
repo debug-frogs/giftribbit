@@ -3,23 +3,20 @@ import config from "../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
 
-export default async (req, res) => {
+const api = async (req, res) => {
     if (req.method !== 'POST'){
-        res.status(405).end()
+        res.status(400).end()
     }
     else {
-        const {Auth} = withSSRContext({req});
         try {
+            const {Auth} = withSSRContext({req});
             const {email, password, username} = req.body
-            /* Signup new user with Amplify Auth */
-            const user = await Auth.signUp({
-                attributes: {
-                    email: email,
-                },
+
+            res.status(200).send(await Auth.signUp({
+                attributes: {email: email},
                 password: password,
                 username: username
-            })
-            res.status(200).send(user)
+            }))
         }
         catch (error) {
             console.log(error)
@@ -28,3 +25,5 @@ export default async (req, res) => {
         finally {}
     }
 }
+
+export default api

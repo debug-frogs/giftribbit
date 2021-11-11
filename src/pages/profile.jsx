@@ -2,14 +2,14 @@ import {createContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 import ProfileLayout from "../features/profile/ProfileLayout";
+import {fetchProfilePromise} from "./api/fetch/profile/[id]";
 
 import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../aws-exports.js";
-import {fetchProfile} from "./api/fetch/profile/[id]";
 Amplify.configure({ ...config, ssr: true });
 
-
 export const ProfileContext = createContext({});
+
 
 const ProfilePage = ({isUserAuthorized, profileData}) => {
     const [profile, setProfile] = useState(profileData);
@@ -65,7 +65,9 @@ export async function getServerSideProps(context) {
         }
         else {
             const userSub = user.attributes.sub
-            const profileData = await fetchProfile(API, userSub)
+            const userEmail = user.attributes.email
+            const profileData = await fetchProfilePromise(API, userSub)
+            profileData.email = userEmail
 
             return {
                 props: {

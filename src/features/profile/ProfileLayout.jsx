@@ -1,8 +1,8 @@
-import {Fragment} from 'react'
+import {Fragment, memo} from 'react'
 import {Box, Container, Paper} from "@mui/material";
 import Profile from "./Profile";
 
-const ProfileLayout = () => {
+const ProfileLayout = memo(() => {
     return (
         <Fragment>
             <Container
@@ -22,7 +22,7 @@ const ProfileLayout = () => {
                 <Profile />
             </Container>
         </Fragment>
-    );
-};
+    )
+})
 
 export default ProfileLayout;

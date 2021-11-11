@@ -1,12 +1,11 @@
-import {useContext} from 'react';
+import {memo, useContext} from 'react';
 import {ProfileContext} from "../../pages/profile";
 import ParentProfile from "./parent/ParentProfile";
 import TeacherProfile from "./teacher/TeacherProfile";
 
-const Profile = () => {
+const Profile = memo(() => {
     const [profile] = useContext(ProfileContext)
     const {type} = profile
-
 
     switch (type){
         case 'Parent':
@@ -20,6 +19,6 @@ const Profile = () => {
         default:
             return null
     }
-};
+})
 
 export default Profile

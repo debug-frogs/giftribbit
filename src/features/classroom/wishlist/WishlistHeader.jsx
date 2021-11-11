@@ -1,7 +1,8 @@
 import {Grid, Typography} from "@mui/material";
 import WishlistMenu from "./WishlistMenu"
+import {memo} from "react";
 
-const WishlistHeader = () => {
+const WishlistHeader = memo(() => {
     return (
         <Grid
             container
@@ -17,7 +18,7 @@ const WishlistHeader = () => {
                 <WishlistMenu />
             </Grid>
         </Grid>
-    );
-};
+    )
+})
 
 export default WishlistHeader;

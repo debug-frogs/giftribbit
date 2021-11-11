@@ -2,106 +2,130 @@ import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../../../../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
-import * as queries from "../../../../graphql/queries";
+import {getClassroom, getParent, getTeacher} from "../../../../graphql/queries";
 
 
-export const fetchProfile = (API, userSub) => {
+export const fetchProfilePromise = (API, userID) => {
     return new Promise(async (resolve, reject) => {
         try {
-            /* fetch parent profile info */
-            const parentData = await API.graphql({
-                query: queries.getParent, variables:
-                    {
-                        id: userSub
-                    }
-            });
-            const parent = parentData.data.getParent
-            if (parent) {
-                /* return Parent ViewModel */
-                const {classroomID, child, email, first_name, id, last_name, teacherID} = parent
+            /* Check Parent */
+            const getParentData = await API.graphql({
+                query: getParent, variables: {id: userID}
+            })
+            if (!!getParentData.data.getParent) {
+                if (getParentData.data.getParent._deleted) {
+                    return reject(new Error("cannot fetch a deleted Parent"))
+                }
 
-                /* Fetch Teacher data */
-                const getTeacherData = teacherID ? await API.graphql({
-                    query: queries.getTeacher,
-                    variables: { id: teacherID }
-                }) : {}
+                const parentData = getParentData.data.getParent
 
-                const teacher = getTeacherData?.data?.getTeacher
+                const classroomsPromises = parentData.Donations.items
+                        .filter(c => !c._deleted)
+                        .map( async c => {
+                            const getClassroomData = await API.graphql({
+                                query: getClassroom, variables: {id: c.classroomID}
+                            })
 
-                /* Teacher ViewModel */
-                const teacherVM = teacher ?
-                    {
-                        first_name: teacher.first_name,
-                        last_name: teacher.last_name,
-                        school: teacher.school
-                    } : null
+                            const classroomData = getClassroomData.data.getClassroom
+
+                            return ({
+                                id: classroomData.id,
+                                Teacher: {
+                                    first_name: classroomData.Teacher.first_name,
+                                    last_name: classroomData.Teacher.last_name,
+                                    school: classroomData.Teacher.school
+                                }})
+                        })
+
+                const classrooms = await Promise.all(classroomsPromises)
 
                 return resolve({
-                    classroomID: classroomID,
-                    child: child,
-                    email: email,
-                    first_name: first_name,
-                    id: id,
-                    last_name: last_name,
-                    Teacher: teacherVM,
+                    child: parentData.child,
+                    Classrooms: classrooms,
+                    first_name: parentData.first_name,
+                    id: parentData.id,
+                    last_name: parentData.last_name,
                     type: "Parent"
                 })
             }
 
-            /* fetch teacher profile info */
-            const teacherData = await API.graphql({
-                query: queries.getTeacher,
-                variables:
-                    {
-                        id: userSub
-                    }
-            });
-            const teacher = teacherData.data.getTeacher
-            if (teacher) {
-                /* return Teacher ViewModel */
-                const {classroomID, email, first_name, id, last_name, Parents, school} = teacher
-                const parents = Parents ? Parents.items.map( parent => {
-                    return ({
-                        child: parent.child,
-                        first_name: parent.first_name,
-                        id: parent.id,
-                        last_name: parent.last_name,
-                    })
-                }) : []
+            /* Check Teacher */
+            const getTeacherData = await API.graphql({
+                query: getTeacher,
+                variables: {id: userID}
+            })
+            if (!!getTeacherData.data.getTeacher) {
+                const teacherData = getTeacherData.data.getTeacher
 
+                if (teacherData._deleted) {
+                    return reject(new Error("Cannot fetch a deleted Teacher"))
+                }
+
+                const getClassroomData = await API.graphql({
+                    query: getClassroom, variables: {id: teacherData.classroomID}
+                })
+                const classroomData = getClassroomData.data.getClassroom
+
+                const parentPromises = classroomData.Donations.items
+                    .filter(c => !c._deleted)
+                    .map(async c => {
+                        const getParentData = await API.graphql({
+                            query: getParent, variables: {id: c.parentID}
+                        })
+                        const parentData = getParentData.data.getParent
+
+                        const donations = parentData.Donations.items
+                            .filter( c => !c._deleted)
+                            .map( c => {
+                                const items = c.Items.items
+                                    .filter( c => !c._deleted)
+                                    .map(c => ({
+                                        id: c.id
+                                    }))
+                                return ({
+                                    classroomID: c.classroomID,
+                                    id: c.id,
+                                    Items: items
+                                })})
+
+                        return ({
+                            child: parentData.child,
+                            Donations: donations,
+                            id: parentData.id,
+                            first_name: parentData.first_name,
+                            last_name: parentData.last_name,
+                        })
+                    })
+
+                const parents = await Promise.all(parentPromises)
 
                 return resolve({
-                    classroomID: classroomID,
-                    email: email,
-                    first_name: first_name,
-                    id: id,
-                    last_name: last_name,
+                    classroomID: teacherData.classroomID,
+                    first_name: teacherData.first_name,
+                    id: teacherData.id,
+                    last_name: teacherData.last_name,
                     Parents: parents,
-                    school: school,
+                    school: teacherData.school,
                     type: "Teacher"
                 })
             }
-
-            /* implied else - user not found */
             return reject(new Error("User not found"))
         }
         catch (error){
-            throw error
+            return reject(error)
         }
-
     })
 }
 
 const api = async (req, res) => {
     if (req.method !== 'GET'){
-        res.status(405).end()
+        res.status(400).end()
     }
     else {
-        const {id} = req.query
-        const {API} = withSSRContext({req});
-
         try {
-            const profileVM = await fetchProfile(API, id)
+            const {id} = req.query
+            const {API} = withSSRContext({req})
+            const profileVM = await fetchProfilePromise(API, id)
             res.status(200).send(profileVM)
         }
         catch (error) {

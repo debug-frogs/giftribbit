@@ -1,14 +1,14 @@
-import {useEffect} from 'react';
+import {memo, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import TeacherAuthenticator from "../features/auth/TeacherAuthenticator";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
 
-import Amplify, {withSSRContext, DataStore} from "aws-amplify";
+import Amplify, {withSSRContext} from "aws-amplify";
 import config from "../aws-exports.js";
 Amplify.configure({ ...config, ssr: true });
 
 
-const SignupTeacher = ({isUserAuthorized}) => {
+const SignupTeacher = memo(({isUserAuthorized}) => {
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
@@ -27,7 +27,7 @@ const SignupTeacher = ({isUserAuthorized}) => {
             <TeacherAuthenticator initialAuthState='signup'/>
         )
     }
-};
+})
 
 export default SignupTeacher;
 

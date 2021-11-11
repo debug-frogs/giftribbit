@@ -13,6 +13,6 @@ const SignoutButton = () => {
     return(
         <AmplifySignOut handleAuthStateChange={handleAuthStateChange} />
     )
-};
+}
 
 export default SignoutButton;

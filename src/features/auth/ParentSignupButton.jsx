@@ -2,6 +2,7 @@ import {Box, Button, Grid, Typography} from "@mui/material";
 import {NextLinkComposed} from "../../../lib/Link";
 import {RiParentLine} from "react-icons/ri"
 
+
 const ParentSignupButton = () => {
     return (
         <Button
@@ -33,6 +34,6 @@ const ParentSignupButton = () => {
             </Box>
         </Button>
     )
-};
+}
 
 export default ParentSignupButton;

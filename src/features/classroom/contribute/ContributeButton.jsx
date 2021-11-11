@@ -4,10 +4,7 @@ import ContributeItem from "./ContributeItem";
 import {ClassroomContext} from "../../../pages/classroom/[id]";
 
 const ContributeButton = () => {
-    const [profile] = useContext(ClassroomContext).profile
-    const {type} = profile
-
-    const [classroom] = useContext(ClassroomContext).classroom
+    const [classroom] = useContext(ClassroomContext)
     const {Items} = classroom
     const filteredItems = Items.filter(item => !item.donationID)
 
@@ -25,7 +22,7 @@ const ContributeButton = () => {
     return (
         <Fragment>
             <Button
-                disabled={type === 'Teacher' || filteredItems.length === 0}
+                disabled={classroom.Teacher.id === classroom.userSub || filteredItems.length === 0}
                 variant='contained'
                 size='large'
                 color='secondary'
@@ -45,7 +42,7 @@ const ContributeButton = () => {
                 </Box>
             </Modal>
         </Fragment>
-    );
-};
+    )
+}
 
 export default ContributeButton;

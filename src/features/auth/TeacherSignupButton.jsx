@@ -33,6 +33,6 @@ const TeacherSignupButton = () => {
             </Box>
         </Button>
     )
-};
+}
 
 export default TeacherSignupButton;
