@@ -49,6 +49,7 @@ const WishlistItem = ({item={}}) => {
                     <Fragment>
                         {editable && !removable &&
                             <IconButton
+                                id={`wishlist-edit-button-${item.summary.replace(/\s/g, '-')}`}
                                 edge="end"
                                 size='small'
                                 color='secondary'
@@ -59,6 +60,7 @@ const WishlistItem = ({item={}}) => {
                         }
                         {!editable && removable &&
                             <IconButton
+                                id={`wishlist-remove-button-${item.summary.replace(/\s/g, '-')}`}
                                 edge="end"
                                 size='small'
                                 color='secondary'
@@ -91,6 +93,7 @@ const WishlistItem = ({item={}}) => {
             />
             {open && !disabled && !!item.description &&
                 <IconButton
+                    id={`wishlist-exandless-button`}
                     color='secondary'
                     onClick={handleClose}
                 >
@@ -99,6 +102,7 @@ const WishlistItem = ({item={}}) => {
             }
             {!open && !disabled && !!item.description &&
                 <IconButton
+                    id={`wishlist-exandmore-button`}
                     color='secondary'
                     onClick={handleOpen}
                 >
