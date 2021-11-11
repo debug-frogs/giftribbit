@@ -70,6 +70,7 @@ const ContributeItem = ({handleClose}) => {
                                     >
                                         <ListItemIcon>
                                             <Checkbox
+                                                id={`add-item-checkbox-${item.summary.replace(/\s/g, '-')}`}
                                                 onClick={(event) => {
                                                     const newCheckedItems = [...checkedItems].filter(c => c.id !== item.id)
                                                     if (event.target.checked) {
