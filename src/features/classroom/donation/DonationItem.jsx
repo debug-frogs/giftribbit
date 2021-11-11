@@ -33,6 +33,7 @@ const Item = ({item={}}) => {
                     <Fragment>
                         {removable &&
                             <IconButton
+                                id={`donation-remove-button-${item.summary.replace(/\s/g, '-')}`}
                                 edge="end"
                                 size='small'
                                 color='secondary'
