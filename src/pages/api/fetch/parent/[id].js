@@ -29,13 +29,13 @@ export const fetchParentPromise = (API, id) => {
                         return ({
                             classroomID: c.classroomID,
                             id: c.id,
-                            Items: items
+                            Items: items.filter(c => c)
                         })
                     })
 
                 return resolve({
                     child: parentData.child,
-                    Donations: donations,
+                    Donations: donations.filter(c => c),
                     first_name: parentData.first_name,
                     id: parentData.id,
                     last_name: parentData.last_name,
