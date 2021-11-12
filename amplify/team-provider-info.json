@@ -1,14 +1,14 @@
 {
-  "feature": {
+  "stag": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-giftribbit-feature-32638-authRole",
-      "UnauthRoleArn": "arn:aws:iam::130869747827:role/amplify-giftribbit-feature-32638-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::130869747827:role/amplify-giftribbit-feature-32638-authRole",
+      "AuthRoleName": "amplify-giftribbit-stag-05314-authRole",
+      "UnauthRoleArn": "arn:aws:iam::130869747827:role/amplify-giftribbit-stag-05314-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::130869747827:role/amplify-giftribbit-stag-05314-authRole",
       "Region": "us-west-1",
-      "DeploymentBucketName": "amplify-giftribbit-feature-32638-deployment",
-      "UnauthRoleName": "amplify-giftribbit-feature-32638-unauthRole",
-      "StackName": "amplify-giftribbit-feature-32638",
-      "StackId": "arn:aws:cloudformation:us-west-1:130869747827:stack/amplify-giftribbit-feature-32638/089c1f00-33b1-11ec-8601-028d528946df",
+      "DeploymentBucketName": "amplify-giftribbit-stag-05314-deployment",
+      "UnauthRoleName": "amplify-giftribbit-stag-05314-unauthRole",
+      "StackName": "amplify-giftribbit-stag-05314",
+      "StackId": "arn:aws:cloudformation:us-west-1:130869747827:stack/amplify-giftribbit-stag-05314/ea9c8bf0-4352-11ec-b5c4-02b62e58842d",
       "AmplifyAppId": "dvcphyfdliprj"
     },
     "categories": {
@@ -17,7 +17,7 @@
       },
       "function": {
         "fetchusersub": {
-          "deploymentBucketName": "amplify-giftribbit-feature-32638-deployment",
+          "deploymentBucketName": "amplify-giftribbit-stag-05314-deployment",
           "s3Key": "amplify-builds/fetchusersub-4f68657249684a475343-build.zip"
         }
       },
