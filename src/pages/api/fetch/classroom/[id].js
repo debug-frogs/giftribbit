@@ -67,7 +67,7 @@ export const fetchClassroomPromise = (API, classroomID) => {
 
                         return ({
                             id: donation.id,
-                            items: items,
+                            items: items.filter(c => c),
                             Parent: parent
                         })
                     })
@@ -79,7 +79,7 @@ export const fetchClassroomPromise = (API, classroomID) => {
                     id: classroomData.id,
                     imageID: classroomData.imageID,
                     Donations: donations,
-                    Items: items,
+                    Items: items.filter(c => c),
                     Teacher: teacher,
                 })
             }
