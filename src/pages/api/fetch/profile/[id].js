@@ -41,7 +41,7 @@ export const fetchProfilePromise = (API, userID) => {
 
                 return resolve({
                     child: parentData.child,
-                    Classrooms: classrooms,
+                    Classrooms: classrooms.filter(c => c),
                     first_name: parentData.first_name,
                     id: parentData.id,
                     last_name: parentData.last_name,
@@ -64,6 +64,7 @@ export const fetchProfilePromise = (API, userID) => {
                 const getClassroomData = await API.graphql({
                     query: getClassroom, variables: {id: teacherData.classroomID}
                 })
+
                 const classroomData = getClassroomData.data.getClassroom
 
                 const parentPromises = classroomData.Donations.items
@@ -72,29 +73,36 @@ export const fetchProfilePromise = (API, userID) => {
                         const getParentData = await API.graphql({
                             query: getParent, variables: {id: c.parentID}
                         })
+
                         const parentData = getParentData.data.getParent
 
-                        const donations = parentData.Donations.items
-                            .filter( c => !c._deleted)
-                            .map( c => {
-                                const items = c.Items.items
-                                    .filter( c => !c._deleted)
-                                    .map(c => ({
-                                        id: c.id
-                                    }))
-                                return ({
-                                    classroomID: c.classroomID,
-                                    id: c.id,
-                                    Items: items
-                                })})
+                        if (!parentData) {
+                            return null
+                        }
+                        else {
+                            const donations = parentData.Donations.items
+                                .filter(c => !c._deleted)
+                                .map(c => {
+                                    const items = c.Items.items
+                                        .filter(c => !c._deleted)
+                                        .map(c => ({
+                                            id: c.id
+                                        }))
+                                    return ({
+                                        classroomID: c.classroomID,
+                                        id: c.id,
+                                        Items: items.filter(c => c)
+                                    })
+                                })
 
-                        return ({
-                            child: parentData.child,
-                            Donations: donations,
-                            id: parentData.id,
-                            first_name: parentData.first_name,
-                            last_name: parentData.last_name,
-                        })
+                            return ({
+                                child: parentData.child,
+                                Donations: donations.filter(c => c),
+                                id: parentData.id,
+                                first_name: parentData.first_name,
+                                last_name: parentData.last_name,
+                            })
+                        }
                     })
 
                 const parents = await Promise.all(parentPromises)
@@ -104,7 +112,7 @@ export const fetchProfilePromise = (API, userID) => {
                     first_name: teacherData.first_name,
                     id: teacherData.id,
                     last_name: teacherData.last_name,
-                    Parents: parents,
+                    Parents: parents.filter(c => c),
                     school: teacherData.school,
                     type: "Teacher"
                 })
