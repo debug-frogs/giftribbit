@@ -40,7 +40,8 @@ export const fetchClassroomPromise = (API, classroomID) => {
                 const donationPromises = classroomData.Donations.items
                     .filter( donation => !donation._deleted)
                     .map(async donation => {
-                        const items = donation?.Items?.items
+
+                        const items = donation.Items.items
                             .filter(item => !item._deleted)
                             .map(item =>
                                 ({
@@ -59,11 +60,11 @@ export const fetchClassroomPromise = (API, classroomID) => {
 
                         const parentData = getParentData.data.getParent
 
-                        const parent = {
+                        const parent = parentData ? {
                             id: parentData.id,
                             first_name: parentData.first_name,
                             last_name: parentData.last_name
-                        }
+                        } : null
 
                         return ({
                             id: donation.id,
