@@ -20,7 +20,7 @@ const TeacherRemoveParent = ({parent, handleModalClose}) => {
             const parentData = fetchParentRes.data
 
             const donation = parentData.Donations.find( c => c.classroomID === profile.classroomID)
-            
+
             if (donation?.id) {
                 for (const item of donation.Items){
                     const updatedItem = {...item}
