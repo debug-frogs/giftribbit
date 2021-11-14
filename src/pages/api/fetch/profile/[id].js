@@ -19,9 +19,9 @@ export const fetchProfilePromise = (API, userID) => {
 
                 const parentData = getParentData.data.getParent
 
-                const classroomsPromises = parentData.Donations.items
-                        .filter(c => !c._deleted)
-                        .map( async c => {
+                const classroomsPromises = parentData.Donations?.items
+                        ?.filter(c => !c._deleted)
+                        ?.map( async c => {
                             const getClassroomData = await API.graphql({
                                 query: getClassroom, variables: {id: c.classroomID}
                             })
@@ -31,9 +31,9 @@ export const fetchProfilePromise = (API, userID) => {
                             return ({
                                 id: classroomData.id,
                                 Teacher: {
-                                    first_name: classroomData.Teacher.first_name,
-                                    last_name: classroomData.Teacher.last_name,
-                                    school: classroomData.Teacher.school
+                                    first_name: classroomData.Teacher?.first_name,
+                                    last_name: classroomData.Teacher?.last_name,
+                                    school: classroomData.Teacher?.school
                                 }})
                         })
 
@@ -41,7 +41,7 @@ export const fetchProfilePromise = (API, userID) => {
 
                 return resolve({
                     child: parentData.child,
-                    Classrooms: classrooms.filter(c => c),
+                    Classrooms: classrooms?.filter(c => c),
                     first_name: parentData.first_name,
                     id: parentData.id,
                     last_name: parentData.last_name,
@@ -67,9 +67,9 @@ export const fetchProfilePromise = (API, userID) => {
 
                 const classroomData = getClassroomData.data.getClassroom
 
-                const parentPromises = classroomData.Donations.items
-                    .filter(c => !c._deleted)
-                    .map(async c => {
+                const parentPromises = classroomData.Donations?.items
+                    ?.filter(c => !c._deleted)
+                    ?.map(async c => {
                         const getParentData = await API.graphql({
                             query: getParent, variables: {id: c.parentID}
                         })
@@ -80,24 +80,24 @@ export const fetchProfilePromise = (API, userID) => {
                             return null
                         }
                         else {
-                            const donations = parentData.Donations.items
-                                .filter(c => !c._deleted)
-                                .map(c => {
-                                    const items = c.Items.items
-                                        .filter(c => !c._deleted)
-                                        .map(c => ({
+                            const donations = parentData.Donations?.items
+                                ?.filter(c => !c._deleted)
+                                ?.map(c => {
+                                    const items = c.Items?.items
+                                        ?.filter(c => !c._deleted)
+                                        ?.map(c => ({
                                             id: c.id
                                         }))
                                     return ({
                                         classroomID: c.classroomID,
                                         id: c.id,
-                                        Items: items.filter(c => c)
+                                        Items: items?.filter(c => c)
                                     })
                                 })
 
                             return ({
                                 child: parentData.child,
-                                Donations: donations.filter(c => c),
+                                Donations: donations?.filter(c => c),
                                 id: parentData.id,
                                 first_name: parentData.first_name,
                                 last_name: parentData.last_name,
@@ -112,7 +112,7 @@ export const fetchProfilePromise = (API, userID) => {
                     first_name: teacherData.first_name,
                     id: teacherData.id,
                     last_name: teacherData.last_name,
-                    Parents: parents.filter(c => c),
+                    Parents: parents?.filter(c => c),
                     school: teacherData.school,
                     type: "Teacher"
                 })
