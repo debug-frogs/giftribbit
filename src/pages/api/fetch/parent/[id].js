@@ -19,23 +19,23 @@ export const fetchParentPromise = (API, id) => {
             else {
                 const parentData = getParentData.data.getParent
 
-                const donations = parentData.Donations.items
-                    .filter( c => !c._deleted)
-                    .map( c => {
-                        const items = c.Items.items
-                            .filter(c => !c._deleted)
-                            .map(c => ({id: c.id,}))
+                const donations = parentData.Donations?.items
+                    ?.filter( c => !c._deleted)
+                    ?.map( c => {
+                        const items = c.Items?.items
+                            ?.filter(c => !c._deleted)
+                            ?.map(c => ({id: c.id,}))
 
                         return ({
                             classroomID: c.classroomID,
                             id: c.id,
-                            Items: items.filter(c => c)
+                            Items: items?.filter(c => c)
                         })
                     })
 
                 return resolve({
                     child: parentData.child,
-                    Donations: donations.filter(c => c),
+                    Donations: donations?.filter(c => c),
                     first_name: parentData.first_name,
                     id: parentData.id,
                     last_name: parentData.last_name,
