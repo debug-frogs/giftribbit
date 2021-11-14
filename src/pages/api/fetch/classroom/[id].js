@@ -26,9 +26,9 @@ export const fetchClassroomPromise = (API, classroomID) => {
                     school: classroomData.Teacher.school
                 }
 
-                const items = classroomData.Items.items
-                    .filter(item => !item._deleted)
-                    .map( item => (
+                const items = classroomData.Items?.items
+                    ?.filter(item => !item._deleted)
+                    ?.map( item => (
                         {
                             donationID: item.donationID,
                             description: item.description,
@@ -37,13 +37,13 @@ export const fetchClassroomPromise = (API, classroomID) => {
                             url: item.url,
                         }))
 
-                const donationPromises = classroomData.Donations.items
-                    .filter( donation => !donation._deleted)
-                    .map(async donation => {
+                const donationPromises = classroomData.Donations?.items
+                    ?.filter( donation => !donation._deleted)
+                    ?.map(async donation => {
 
-                        const items = donation.Items.items
-                            .filter(item => !item._deleted)
-                            .map(item =>
+                        const items = donation.Items?.items
+                            ?.filter(item => !item._deleted)
+                            ?.map(item =>
                                 ({
                                     donationID: item.donationID,
                                     description: item.description,
@@ -68,7 +68,7 @@ export const fetchClassroomPromise = (API, classroomID) => {
 
                         return ({
                             id: donation.id,
-                            items: items.filter(c => c),
+                            items: items?.filter(c => c),
                             Parent: parent
                         })
                     })
@@ -80,7 +80,7 @@ export const fetchClassroomPromise = (API, classroomID) => {
                     id: classroomData.id,
                     imageID: classroomData.imageID,
                     Donations: donations,
-                    Items: items.filter(c => c),
+                    Items: items?.filter(c => c),
                     Teacher: teacher,
                 })
             }
