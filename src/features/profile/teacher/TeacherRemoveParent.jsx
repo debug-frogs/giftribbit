@@ -6,6 +6,8 @@ import axios from "../../../../lib/axios";
 
 
 const TeacherRemoveParent = ({parent, handleModalClose}) => {
+    console.log(parent)
+
     const [profile, setProfile] = useContext(ProfileContext)
     const [removable, setRemovable] = useContext(TeacherParentsContext).removable
 
