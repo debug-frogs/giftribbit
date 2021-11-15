@@ -1,7 +1,6 @@
 import {Fragment, useContext, useState} from 'react';
 import {ProfileContext} from "../../../pages/profile";
 import {Box, IconButton, List, ListItem, ListItemText, Modal, Typography} from "@mui/material";
-import hash from 'object-hash'
 import {FaBackspace} from "react-icons/fa";
 import {TeacherParentsContext} from "./TeacherParents";
 import TeacherRemoveParent from "./TeacherRemoveParent";
@@ -10,7 +9,8 @@ import TeacherRemoveParent from "./TeacherRemoveParent";
 const TeacherParentList = () => {
     const [profile] = useContext(ProfileContext)
     const {Parents} = profile
-
+    const [removeParent, setRemoveParent] = useState({})
+    
     const [modalOpen, setModalOpen] = useState(false);
     const handleModalOpen = () => {
         setModalOpen(true)
@@ -42,8 +42,8 @@ const TeacherParentList = () => {
     else {
         return (
             <List>
-                {Parents.map( (parent, i) =>
-                    <Fragment key={hash(parent)+`${i}`}>
+                {Parents.map( (parent) =>
+                    <Fragment key={parent.id}>
                         <ListItem dense>
                             <ListItemText
                                 primary={
@@ -54,13 +54,16 @@ const TeacherParentList = () => {
                                 }
                             />
                             {removable &&
-                            <IconButton
-                                edge="end"
-                                color='secondary'
-                                onClick={handleModalOpen}
-                            >
-                                <FaBackspace/>
-                            </IconButton>
+                                <IconButton
+                                    edge="end"
+                                    color='secondary'
+                                    onClick={ () => {
+                                        setRemoveParent(parent)
+                                        handleModalOpen()
+                                    }}
+                                >
+                                    <FaBackspace/>
+                                </IconButton>
                             }
                         </ListItem>
                         <Modal
@@ -69,7 +72,10 @@ const TeacherParentList = () => {
                             style={{overflow: 'scroll',}}
                         >
                             <Box style={modalContentStyle}>
-                                <TeacherRemoveParent parent={parent} handleModalClose={handleModalClose}/>
+                                <TeacherRemoveParent
+                                    parent={removeParent}
+                                    handleModalClose={handleModalClose}
+                                />
                             </Box>
                         </Modal>
                     </Fragment>
