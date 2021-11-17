@@ -1,5 +1,5 @@
 import {Fragment, memo} from 'react'
-import {Box, Divider, Grid, Paper} from "@mui/material";
+import {Box, Divider, GlobalStyles, Grid, Paper} from "@mui/material";
 import ClassroomHeader from "./ClassroomHeader";
 import ClassroomHeroImage from "./ClassroomHeroImage";
 import ClassroomSubheader from "./ClassroomSubheader";
@@ -7,12 +7,18 @@ import DonationList from "./donation/DonationList";
 import ContributeButton from "./contribute/ContributeButton";
 import DonationsHeader from "./donation/DonationsHeader";
 import Wishlist from "./wishlist/Wishlist";
+import {useTheme} from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 const ClassroomLayout = memo(() => {
+    const theme = useTheme();
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+
     return (
         <Fragment>
             {/*desktop view*/}
+            {isSm && <GlobalStyles styles={{body: {backgroundColor: "#efe5fd"}}}/>}
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                 <Grid
                     container
