@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "auth": {
+      "giftribbit": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

@@ -1,8 +1,8 @@
 :root {
-    --amplify-primary-color: #18A0FB;
+    --amplify-primary-color: #6200EE;
     --amplify-primary-contrast: #fff;
-    --amplify-primary-tint: rgb(70, 179, 251);
-    --amplify-primary-shade: rgb(16, 112, 175);
+    --amplify-primary-tint: rgb(129, 51, 241);
+    --amplify-primary-shade: rgb(68, 0, 166);
     --amplify-secondary-color: #152939;
     --amplify-secondary-contrast: #fff;
     --amplify-secondary-tint: #31465f;

@@ -1,14 +1,15 @@
 import {Container, Grid, Typography} from "@mui/material";
-import {GiFrogPrince} from 'react-icons/gi'
-import theme from "../../theme";
-import TeacherSignUpButton from "../auth/ButtonSignUpTeacher";
+import TeacherSignupButton from "../auth/TeacherSignupButton";
+import ParentSignupButton from "../auth/ParentSignupButton";
+import FrogBoi from "../../assets/FrogBoi";
+import {memo} from "react";
 
-const Home = () => {
+const Home = memo(() => {
     return (
         <Grid
             container
             direction='column'
-            spacing={4}
+            spacing={3}
             alignItems='center'
         >
             <Grid item>
@@ -18,10 +19,7 @@ const Home = () => {
                     alignItems='center'
                 >
                     <Grid item>
-                        <GiFrogPrince
-                            color={theme.palette.primary.main}
-                            size='8em'
-                        />
+                        <FrogBoi />
                     </Grid>
                     <Grid item>
                         <Typography
@@ -38,23 +36,33 @@ const Home = () => {
                 sx={{ display: { sm: 'block', xs: 'none' } }}
             >
                 <Container
-                    maxWidth='sm'
+                    maxWidth='xs'
                 >
                     <Typography
                         align='center'
                         variant='body2'
                     >
-                        GiftRibbit provides elementary school teachers an interface to request
-                        classroom supplies and donations for student success! Are you a teacher
-                        who is in need of additional classroom supplies? Sign up today!
+                        GiftRibbit provides elementary school teachers an easy and secure interface to request classroom supplies and donations to support student success!
                     </Typography>
                 </Container>
             </Grid>
             <Grid item>
-                <TeacherSignUpButton />
+                <Grid
+                    container
+                    alignItems='center'
+                    spacing={3}
+                    justifyContent='center'
+                >
+                    <Grid item>
+                        <TeacherSignupButton />
+                    </Grid>
+                    <Grid item>
+                        <ParentSignupButton />
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     )
-}
+})
 
 export default Home

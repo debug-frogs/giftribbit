@@ -1,16 +1,14 @@
-import React, {useEffect} from 'react';
+import {memo, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import { withSSRContext} from "aws-amplify";
-import AuthenticatorParent from "../features/auth/AuthenticatorParent";
+import ParentAuthenticator from "../features/auth/ParentAuthenticator";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
-import Amplify from 'aws-amplify'
-import config from '../aws-exports'
-Amplify.configure({
-    ...config,
-    ssr: true
-})
 
-const Signin = ({isUserAuthorized}) => {
+import Amplify, {withSSRContext} from "aws-amplify";
+import config from "../aws-exports.js";
+Amplify.configure({ ...config, ssr: true });
+
+
+const SignupParent = memo(({isUserAuthorized}) => {
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
@@ -26,12 +24,12 @@ const Signin = ({isUserAuthorized}) => {
     }
     else {
         return (
-            <AuthenticatorParent initialAuthState='signup'/>
+            <ParentAuthenticator initialAuthState='signup'/>
         )
     }
-};
+})
 
-export default Signin;
+export default SignupParent;
 
 export async function getServerSideProps(context) {
     try {

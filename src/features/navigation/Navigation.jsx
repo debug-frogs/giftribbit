@@ -1,10 +1,11 @@
 import {AppBar, Grid, Toolbar} from "@mui/material";
-import ButtonSignIn from "../auth/ButtonSignIn";
+import LoginButton from "./LoginButton";
 import {selectIsAuthorized} from "../auth/authSlice";
 import {useSelector} from "react-redux";
-import ProfileButton from "../profile/ProfileButton";
+import ProfileButton from "./ProfileButton";
+import {memo} from "react";
 
-const Navigation = () => {
+const Navigation = memo(() => {
     const isAuthorized = useSelector(selectIsAuthorized)
 
     return (
@@ -22,12 +23,12 @@ const Navigation = () => {
                 >
                     <Grid item/>
                     <Grid item >
-                        { isAuthorized ?  <ProfileButton /> : <ButtonSignIn/>}
+                        { isAuthorized ?  <ProfileButton /> : <LoginButton/>}
                     </Grid>
                 </Grid>
             </Toolbar>
         </AppBar>
     )
-}
+})
 
 export default Navigation

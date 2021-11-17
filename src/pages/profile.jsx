@@ -1,62 +1,45 @@
-import {createContext, useEffect} from "react";
-import {Box, Container, Paper} from "@mui/material";
-import Amplify, {withSSRContext} from 'aws-amplify';
+import {createContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import theme from "../theme";
 import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
-import Profile from "../features/profile/Profile";
-import {Parent, Teacher} from "../models";
-import config from '../aws-exports'
+import ProfileLayout from "../features/profile/ProfileLayout";
+import {fetchProfilePromise} from "./api/fetch/profile/[id]";
 
-Amplify.configure({
-    ...config,
-    ssr: true
-})
+import Amplify, {withSSRContext} from "aws-amplify";
+import config from "../aws-exports.js";
+Amplify.configure({ ...config, ssr: true });
 
 export const ProfileContext = createContext({});
 
-const ProfilePage = ({isUserAuthorized, userAttributes}) => {
+
+const ProfilePage = ({isUserAuthorized, profileData}) => {
+    const [profile, setProfile] = useState(profileData);
+
     const dispatch = useDispatch()
     const isAuthPage = useSelector(selectIsAuthPage)
     const isAuthorized = useSelector(selectIsAuthorized)
 
+    /* indicate that this is not a login or signup page */
     useEffect(() => {
         if (isAuthPage) {
             dispatch({type: 'auth/setIsAuthPage', payload: false})
         }
     },[])
 
+    /* indicate that the user is authorized */
     useEffect(() => {
-        if (isUserAuthorized && userAttributes && !isAuthorized) {
+        if (isUserAuthorized && !isAuthorized) {
             dispatch({type: 'auth/setIsAuthorized', payload: true})
-        }
-        else if (!isUserAuthorized && userAttributes && isAuthorized){
-            dispatch({type: 'auth/setIsAuthorized', payload: false})
         }
     },[])
 
-    if (!isUserAuthorized) {
+    if (!isUserAuthorized || !Object.keys(profile).length) {
         return null
     }
     else {
         return (
-            <ProfileContext.Provider value={userAttributes}>
-                <Container
-                    sx={{ display: { sm: 'block', xs: 'none' } }}
-                    maxWidth='xs'
-                >
-                    <Paper>
-                        <Box p={3}>
-                            <Profile />
-                        </Box>
-                    </Paper>
-                </Container>
-                <Container
-                    sx={{ display: { sm: 'none', xs: 'block' } }}
-                    maxWidth='xs'
-                >
-                    <Profile />
-                </Container>
+            <ProfileContext.Provider value={[profile, setProfile]}>
+                <ProfileLayout />
             </ProfileContext.Provider>
         )
     }
@@ -67,13 +50,12 @@ export default ProfilePage
 
 export async function getServerSideProps(context) {
     try {
-        const {Auth} = withSSRContext(context)
-        const {DataStore} = withSSRContext(context.req)
+        const {Auth, API} = withSSRContext(context)
 
-        /* get the current user from Auth*/
+        /* get the current user from Auth */
         const user = await Auth.currentAuthenticatedUser().catch(() => null)
 
-        /* protected page */
+        /* protected page - redirect if user is not authorized */
         if (!user) {
             return {
                 redirect: {
@@ -82,51 +64,18 @@ export async function getServerSideProps(context) {
                 },
             }
         }
+        else {
+            const userSub = user.attributes.sub
+            const userEmail = user.attributes.email
+            const profileData = await fetchProfilePromise(API, userSub)
+            profileData.email = userEmail
 
-        /* get the user details form Data content */
-        const userSub = user?.attributes?.sub
-        const teacher = (await DataStore.query(Teacher)).find(t => t.sub === userSub)
-        const parent = (await DataStore.query(Parent)).find(t => t.sub === userSub)
-
-        /* build out the user profile object */
-        const userAttributes = parent ? {...parent, group: 'parent'}
-            : teacher ? {...teacher, group: 'teacher'} : {}
-        // delete userAttributes.id
-        delete userAttributes.createdAt
-        delete userAttributes.updatedAt
-        delete userAttributes._version
-        delete userAttributes._lastChangedAt
-        delete userAttributes._deleted
-
-        if (parent?.teacherID) {
-            const teacherData = {...(await DataStore.query(Teacher)).find(c => c.id === parent.teacherID)}
-            delete teacherData.createdAt
-            delete teacherData.updatedAt
-            delete teacherData._version
-            delete teacherData._lastChangedAt
-            delete teacherData._deleted
-            delete userAttributes.teacherID
-            userAttributes.Teacher = teacherData
-        }
-
-        if (teacher?.id) {
-            const parentsList = (await DataStore.query(Parent)).filter(c => c.teacherID === teacher.id)
-            userAttributes.Parents = parentsList.map(c => {
-                const p = {...c}
-                delete p.createdAt
-                delete p.updatedAt
-                delete p._version
-                delete p._lastChangedAt
-                delete p._deleted
-                delete p.teacherID
-                return p
-            })
-        }
-
-        return {
-            props: {
-                isUserAuthorized: !!user,
-                userAttributes: user?.attributes ? userAttributes : null
+            return {
+                props: {
+                    isUserAuthorized: !!user,
+                    profileData: profileData,
+                    userSub: userSub
+                }
             }
         }
     }

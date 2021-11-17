@@ -1,33 +1,32 @@
 import './app.css'
 import {Provider} from 'react-redux'
 import {store} from '../store'
-import React from "react";
-import Layout from "../features/layout/Layout";
+
+import {useEffect, useState} from "react";
 import Head from "next/head";
 import Router from "next/router";
-import Loading from "../features/loading/Loading";
+
 import {CacheProvider, ThemeProvider} from "@emotion/react";
 import createEmotionCache from '../../lib/createEmotionCache';
 import theme from "../theme";
 import {CssBaseline} from "@mui/material";
-import Amplify from 'aws-amplify'
-import config from '../aws-exports'
-Amplify.configure({
-    ...config,
-    ssr: true
-})
-
 const clientSideEmotionCache = createEmotionCache();
+
+import Amplify from 'aws-amplify'
+import config from '../aws-exports.js'
+Amplify.configure({...config, ssr: true})
+
+import Layout from "../features/layout/Layout";
+
 
 const MyApp = (props) => {
     const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-    const [loading, setLoading] = React.useState(false);
-    React.useEffect(() => {
-        const start = () => setLoading(true);
+    const [isLoading, setIsLoading] = useState(false);
 
-        const end = () => setLoading(false);
-
+    useEffect(() => {
+        const start = () => setIsLoading(true);
+        const end = () => setIsLoading(false);
         Router.events.on("routeChangeStart", start);
         Router.events.on("routeChangeComplete", end);
         Router.events.on("routeChangeError", end);
@@ -46,8 +45,7 @@ const MyApp = (props) => {
             <Provider store={store}>
                 <ThemeProvider theme={theme}>
                     <CssBaseline/>
-                    <Loading isLoading={loading}/>
-                    <Layout>
+                    <Layout isLoading={isLoading}>
                         <Component {...pageProps} />
                     </Layout>
                 </ThemeProvider>

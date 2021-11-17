@@ -1,0 +1,35 @@
+{
+  "paths": [
+    {
+      "name": "/fetchusersub",
+      "lambdaFunction": "fetchusersub",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/fetchusersub"
+    }
+  ],
+  "resourceName": "fetchusersubapi",
+  "apiName": "fetchusersubapi",
+  "functionArns": [
+    {
+      "lambdaFunction": "fetchusersub"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-giftribbit-feature-32638-authRole",
+    "unAuthRoleName": "amplify-giftribbit-feature-32638-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "fetchusersub",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}
