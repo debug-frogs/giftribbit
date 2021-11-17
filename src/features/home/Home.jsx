@@ -42,8 +42,7 @@ const Home = memo(() => {
                         align='center'
                         variant='body2'
                     >
-                        Providing elementary school teachers an interface to request
-                        classroom supplies and donations for student success!
+                        GiftRibbit provides elementary school teachers an easy and secure interface to request classroom supplies and donations to support student success!
                     </Typography>
                 </Container>
             </Grid>
