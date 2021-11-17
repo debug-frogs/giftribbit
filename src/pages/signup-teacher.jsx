@@ -1,0 +1,66 @@
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import { withSSRContext} from "aws-amplify";
+import AuthenticatorTeacher from "../features/auth/AuthenticatorTeacher";
+import {selectIsAuthorized, selectIsAuthPage} from "../features/auth/authSlice";
+import Amplify from 'aws-amplify'
+import config from '../aws-exports'
+Amplify.configure({
+    ...config,
+    ssr: true
+})
+
+const Signin = ({isUserAuthorized}) => {
+    const dispatch = useDispatch()
+    const isAuthPage = useSelector(selectIsAuthPage)
+    const isAuthorized = useSelector(selectIsAuthorized)
+
+    useEffect(() => {
+        if (!isAuthPage) {
+            dispatch({type: 'auth/setIsAuthPage', payload: true})
+        }
+    },[])
+
+    if (isUserAuthorized){
+        return null
+    }
+    else {
+        return (
+            <AuthenticatorTeacher initialAuthState='signup'/>
+        )
+    }
+};
+
+export default Signin;
+
+export async function getServerSideProps(context) {
+    try {
+        const {Auth} = withSSRContext(context)
+        const user = await Auth.currentAuthenticatedUser().catch(() => null)
+
+        /* protected page */
+        if (user) {
+            return {
+                redirect: {
+                    destination: '/profile',
+                    permanent: false,
+                },
+            }
+        }
+
+        return {
+            props: {
+                auth: {
+                    isUserAuthorized: !!user,
+                }
+            }
+        }
+    }
+    catch (error) {
+        console.log(error)
+        return {
+            props: {},
+        }
+    }
+    finally {}
+}
