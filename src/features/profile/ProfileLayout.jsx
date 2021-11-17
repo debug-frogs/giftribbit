@@ -1,12 +1,18 @@
 import {Fragment, memo} from 'react'
-import {Box, Container, Paper} from "@mui/material";
+import {Box, Container, GlobalStyles, Paper} from "@mui/material";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Profile from "./Profile";
 
 const ProfileLayout = memo(() => {
+    const theme = useTheme();
+    const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+
     return (
         <Fragment>
+            {isSm && <GlobalStyles styles={{body: {backgroundColor: "#efe5fd"}}}/>}
             <Container
-                sx={{ display: { sm: 'block', xs: 'none' } }}
+                sx={{display: { sm: 'block', xs: 'none' }}}
                 maxWidth='xs'
             >
                 <Paper>
